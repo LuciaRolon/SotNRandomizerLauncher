@@ -31,13 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTutorials));
             this.lblTutorialDescription = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
-            this.btnLauncher = new System.Windows.Forms.Button();
-            this.btnRandoTutorial = new System.Windows.Forms.Button();
             this.lblRandoTutorial = new System.Windows.Forms.Label();
-            this.btnPresetsTutorial = new System.Windows.Forms.Button();
             this.lblSymphonyRando = new System.Windows.Forms.LinkLabel();
             this.lblPresetsTutorial = new System.Windows.Forms.Label();
             this.btnLongLibraryDiscord = new System.Windows.Forms.Button();
+            this.lblRandomizer = new System.Windows.Forms.Button();
+            this.lblLauncher = new System.Windows.Forms.Button();
+            this.lblPresets = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblTutorialDescription
@@ -64,30 +64,6 @@
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // btnLauncher
-            // 
-            this.btnLauncher.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLauncher.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnLauncher.Location = new System.Drawing.Point(12, 76);
-            this.btnLauncher.Name = "btnLauncher";
-            this.btnLauncher.Size = new System.Drawing.Size(149, 33);
-            this.btnLauncher.TabIndex = 2;
-            this.btnLauncher.Text = "Launcher Tutorial";
-            this.btnLauncher.UseVisualStyleBackColor = true;
-            this.btnLauncher.Click += new System.EventHandler(this.btnLauncher_Click);
-            // 
-            // btnRandoTutorial
-            // 
-            this.btnRandoTutorial.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRandoTutorial.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnRandoTutorial.Location = new System.Drawing.Point(12, 22);
-            this.btnRandoTutorial.Name = "btnRandoTutorial";
-            this.btnRandoTutorial.Size = new System.Drawing.Size(149, 33);
-            this.btnRandoTutorial.TabIndex = 3;
-            this.btnRandoTutorial.Text = "Randomizer Tutorial";
-            this.btnRandoTutorial.UseVisualStyleBackColor = true;
-            this.btnRandoTutorial.Click += new System.EventHandler(this.button1_Click);
-            // 
             // lblRandoTutorial
             // 
             this.lblRandoTutorial.BackColor = System.Drawing.Color.Transparent;
@@ -97,18 +73,6 @@
             this.lblRandoTutorial.Size = new System.Drawing.Size(461, 470);
             this.lblRandoTutorial.TabIndex = 4;
             this.lblRandoTutorial.Text = resources.GetString("lblRandoTutorial.Text");
-            // 
-            // btnPresetsTutorial
-            // 
-            this.btnPresetsTutorial.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPresetsTutorial.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnPresetsTutorial.Location = new System.Drawing.Point(12, 131);
-            this.btnPresetsTutorial.Name = "btnPresetsTutorial";
-            this.btnPresetsTutorial.Size = new System.Drawing.Size(149, 33);
-            this.btnPresetsTutorial.TabIndex = 5;
-            this.btnPresetsTutorial.Text = "Presets Tutorial";
-            this.btnPresetsTutorial.UseVisualStyleBackColor = true;
-            this.btnPresetsTutorial.Click += new System.EventHandler(this.btnPresetsTutorial_Click);
             // 
             // lblSymphonyRando
             // 
@@ -148,6 +112,69 @@
             this.btnLongLibraryDiscord.UseVisualStyleBackColor = true;
             this.btnLongLibraryDiscord.Click += new System.EventHandler(this.btnLongLibraryDiscord_Click);
             // 
+            // lblRandomizer
+            // 
+            this.lblRandomizer.BackColor = System.Drawing.Color.IndianRed;
+            this.lblRandomizer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.lblRandomizer.FlatAppearance.BorderSize = 0;
+            this.lblRandomizer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Brown;
+            this.lblRandomizer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
+            this.lblRandomizer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblRandomizer.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRandomizer.ForeColor = System.Drawing.Color.Transparent;
+            this.lblRandomizer.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblRandomizer.Location = new System.Drawing.Point(12, 23);
+            this.lblRandomizer.Name = "lblRandomizer";
+            this.lblRandomizer.Size = new System.Drawing.Size(149, 32);
+            this.lblRandomizer.TabIndex = 9;
+            this.lblRandomizer.Tag = "btn";
+            this.lblRandomizer.Text = "Randomizer Tutorial";
+            this.lblRandomizer.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.lblRandomizer.UseVisualStyleBackColor = false;
+            this.lblRandomizer.Click += new System.EventHandler(this.lblRandomizer_Click);
+            // 
+            // lblLauncher
+            // 
+            this.lblLauncher.BackColor = System.Drawing.Color.Transparent;
+            this.lblLauncher.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.lblLauncher.FlatAppearance.BorderSize = 0;
+            this.lblLauncher.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Brown;
+            this.lblLauncher.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
+            this.lblLauncher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblLauncher.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLauncher.ForeColor = System.Drawing.Color.Transparent;
+            this.lblLauncher.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblLauncher.Location = new System.Drawing.Point(12, 70);
+            this.lblLauncher.Name = "lblLauncher";
+            this.lblLauncher.Size = new System.Drawing.Size(149, 32);
+            this.lblLauncher.TabIndex = 10;
+            this.lblLauncher.Tag = "btn";
+            this.lblLauncher.Text = "Launcher Tutorial";
+            this.lblLauncher.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.lblLauncher.UseVisualStyleBackColor = false;
+            this.lblLauncher.Click += new System.EventHandler(this.lblLauncher_Click);
+            // 
+            // lblPresets
+            // 
+            this.lblPresets.BackColor = System.Drawing.Color.Transparent;
+            this.lblPresets.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.lblPresets.FlatAppearance.BorderSize = 0;
+            this.lblPresets.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Brown;
+            this.lblPresets.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
+            this.lblPresets.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblPresets.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresets.ForeColor = System.Drawing.Color.Transparent;
+            this.lblPresets.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblPresets.Location = new System.Drawing.Point(12, 122);
+            this.lblPresets.Name = "lblPresets";
+            this.lblPresets.Size = new System.Drawing.Size(149, 32);
+            this.lblPresets.TabIndex = 11;
+            this.lblPresets.Tag = "btn";
+            this.lblPresets.Text = "Presets Tutorial";
+            this.lblPresets.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.lblPresets.UseVisualStyleBackColor = false;
+            this.lblPresets.Click += new System.EventHandler(this.lblPresets_Click);
+            // 
             // frmTutorials
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -157,13 +184,13 @@
             this.ClientSize = new System.Drawing.Size(647, 504);
             this.Controls.Add(this.btnLongLibraryDiscord);
             this.Controls.Add(this.lblSymphonyRando);
-            this.Controls.Add(this.btnPresetsTutorial);
             this.Controls.Add(this.lblRandoTutorial);
-            this.Controls.Add(this.btnRandoTutorial);
-            this.Controls.Add(this.btnLauncher);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.lblTutorialDescription);
             this.Controls.Add(this.lblPresetsTutorial);
+            this.Controls.Add(this.lblRandomizer);
+            this.Controls.Add(this.lblLauncher);
+            this.Controls.Add(this.lblPresets);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -179,12 +206,12 @@
 
         private System.Windows.Forms.Label lblTutorialDescription;
         private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.Button btnLauncher;
-        private System.Windows.Forms.Button btnRandoTutorial;
         private System.Windows.Forms.Label lblRandoTutorial;
-        private System.Windows.Forms.Button btnPresetsTutorial;
         private System.Windows.Forms.LinkLabel lblSymphonyRando;
         private System.Windows.Forms.Label lblPresetsTutorial;
         private System.Windows.Forms.Button btnLongLibraryDiscord;
+        private System.Windows.Forms.Button lblRandomizer;
+        private System.Windows.Forms.Button lblLauncher;
+        private System.Windows.Forms.Button lblPresets;
     }
 }

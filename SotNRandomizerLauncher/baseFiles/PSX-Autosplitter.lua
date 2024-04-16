@@ -3,19 +3,19 @@
 -- Requires LiveSplit 1.7+
 
 local splits = {
-    ["SecondCastle"] = { on = true, split = false },
+    ["SecondCastle"] = { on = false, split = false },
 
     ["Shaft"] = { on = false, split = false },
     ["Dracula"] = { on = true, split = false },
 
-    ["SoulOfBat"] = { on = true, split = false, relic = true },
+    ["SoulOfBat"] = { on = false, split = false, relic = true },
     ["FireOfBat"] = { on = false, split = false, relic = true },
     ["EchoOfBat"] =  { on = false, split = false, relic = true },
     ["ForceOfEcho"] = { on = false, split = false, relic = true },
     ["SoulOfWolf"] = { on = false, split = false, relic = true },
     ["PowerOfWolf"] = { on = false, split = false, relic = true },
     ["SkillOfWolf"] = { on = false, split = false, relic = true },
-    ["FormOfMist"] = { on = true, split = false, relic = true },
+    ["FormOfMist"] = { on = false, split = false, relic = true },
     ["PowerOfMist"] = { on = false, split = false, relic = true },
     ["GasCloud"] = { on = false, split = false, relic = true },
     ["CubeOfZoe"] = { on = false, split = false, relic = true },
@@ -44,10 +44,10 @@ local splits = {
 
     ["DraculaPrologue"] = { on = false, split = false, boss = true },
     ["Olrox"] = { on = false, split = false, boss = true },
-    ["Doppleganger10"] = { on = true, split = false, boss = true },
+    ["Doppleganger10"] = { on = false, split = false, boss = true },
     ["Granfaloon"] = { on = false, split = false, boss = true },
     ["Scylla"] = { on = false, split = false, boss = true },
-    ["SlograGaibon"] = { on = true, split = false, boss = true },	
+    ["SlograGaibon"] = { on = false, split = false, boss = true },	
     ["Hippogryph"] = { on = false, split = false, boss = true },
     ["Beelzebub"] = { on = false, split = false, boss = true },
     ["Karasuman"] = { on = false, split = false, boss = true },
@@ -62,7 +62,7 @@ local splits = {
     ["Galamoth"] = { on = false, split = false, boss = true },
 
     ["ClockRush"] = {
-        on = true,
+        on = false,
         split = false,
         location = true,
         from = {
@@ -80,7 +80,7 @@ local splits = {
     },
 
     ["OuterWallFromLibrary"] = {
-        on = true,
+        on = false,
         split = false,
         location = true,
         from = {

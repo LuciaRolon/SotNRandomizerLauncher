@@ -137,8 +137,16 @@ namespace SotNRandomizerLauncher
                     MessageBoxIcon.Information
                 );
                 if (result != DialogResult.Yes) return;
-                await NewUserProcess();
-                LauncherClient.InitialSetupDone();
+                try
+                {
+                    await NewUserProcess();
+                    LauncherClient.InitialSetupDone();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show($"Error while downloading tools: {ex.Message}. Setup cancelled.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }                
                 this.Close();
             }            
         }

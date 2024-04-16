@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.grpNews = new System.Windows.Forms.GroupBox();
+            this.lblWeekSeed = new System.Windows.Forms.LinkLabel();
             this.lblEventSubtext = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblNextEvent = new System.Windows.Forms.Label();
@@ -56,7 +57,6 @@
             this.lblSelectedSeed = new System.Windows.Forms.Label();
             this.btnPpfFile = new System.Windows.Forms.Button();
             this.lblPlayLastSeed = new System.Windows.Forms.Label();
-            this.lblWeekSeed = new System.Windows.Forms.LinkLabel();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -82,14 +82,27 @@
             this.grpNews.TabStop = false;
             this.grpNews.Text = "News";
             // 
+            // lblWeekSeed
+            // 
+            this.lblWeekSeed.AutoSize = true;
+            this.lblWeekSeed.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWeekSeed.LinkColor = System.Drawing.Color.IndianRed;
+            this.lblWeekSeed.Location = new System.Drawing.Point(157, 69);
+            this.lblWeekSeed.Name = "lblWeekSeed";
+            this.lblWeekSeed.Size = new System.Drawing.Size(156, 21);
+            this.lblWeekSeed.TabIndex = 3;
+            this.lblWeekSeed.TabStop = true;
+            this.lblWeekSeed.Text = "Seed Not Available";
+            this.lblWeekSeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // lblEventSubtext
             // 
             this.lblEventSubtext.AutoSize = true;
             this.lblEventSubtext.Location = new System.Drawing.Point(107, 39);
             this.lblEventSubtext.Name = "lblEventSubtext";
-            this.lblEventSubtext.Size = new System.Drawing.Size(247, 13);
+            this.lblEventSubtext.Size = new System.Drawing.Size(130, 13);
             this.lblEventSubtext.TabIndex = 2;
-            this.lblEventSubtext.Text = "Watch on https://www.twitch.tv/jupiterclimb/";
+            this.lblEventSubtext.Text = "Event info not available";
             // 
             // label2
             // 
@@ -107,9 +120,9 @@
             this.lblNextEvent.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNextEvent.Location = new System.Drawing.Point(14, 18);
             this.lblNextEvent.Name = "lblNextEvent";
-            this.lblNextEvent.Size = new System.Drawing.Size(424, 21);
+            this.lblNextEvent.Size = new System.Drawing.Size(284, 21);
             this.lblNextEvent.TabIndex = 0;
-            this.lblNextEvent.Text = "Next Event: JupiterClimb\'s Bounty Hunter Tournament";
+            this.lblNextEvent.Text = "Next Event: Event title not available";
             // 
             // btnTutorials
             // 
@@ -307,6 +320,7 @@
             // 
             // btnPlay
             // 
+            this.btnPlay.Enabled = false;
             this.btnPlay.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPlay.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnPlay.Location = new System.Drawing.Point(538, 335);
@@ -389,19 +403,6 @@
             this.lblPlayLastSeed.Size = new System.Drawing.Size(247, 37);
             this.lblPlayLastSeed.TabIndex = 3;
             this.lblPlayLastSeed.Text = "Play Last Seed:\r\n-seedname-";
-            // 
-            // lblWeekSeed
-            // 
-            this.lblWeekSeed.AutoSize = true;
-            this.lblWeekSeed.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWeekSeed.LinkColor = System.Drawing.Color.IndianRed;
-            this.lblWeekSeed.Location = new System.Drawing.Point(157, 69);
-            this.lblWeekSeed.Name = "lblWeekSeed";
-            this.lblWeekSeed.Size = new System.Drawing.Size(43, 21);
-            this.lblWeekSeed.TabIndex = 3;
-            this.lblWeekSeed.TabStop = true;
-            this.lblWeekSeed.Text = "Safe";
-            this.lblWeekSeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // frmMain
             // 

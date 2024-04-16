@@ -39,7 +39,15 @@ namespace SotNRandomizerLauncher
                 NormalVisuals();
                 if (!LauncherClient.IsInitialSetup())
                 {
-                    CheckForUpdates();
+                    try
+                    {
+                        CheckForUpdates();
+                    }catch(Exception ex)
+                    {
+                        MessageBox.Show($"Error reaching latest version: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    
                 }                
             }
             LoadEvents();
@@ -47,13 +55,20 @@ namespace SotNRandomizerLauncher
 
         void LoadEvents()
         {
-            Dictionary<string, string> eventDict = LauncherClient.LoadCurrentEvent();
-            lblNextEvent.Text = $"Next Event: {eventDict["EventTitle"]}";
-            lblEventSubtext.Text = eventDict["EventSubtitle"];
+            try
+            {
+                Dictionary<string, string> eventDict = LauncherClient.LoadCurrentEvent();
+                lblNextEvent.Text = $"Next Event: {eventDict["EventTitle"]}";
+                lblEventSubtext.Text = eventDict["EventSubtitle"];
 
-            Dictionary<string, string> seedDict = LauncherClient.LoadSeedOfTheWeek();
-            lblWeekSeed.Text = seedDict["PresetName"];
-            seedUrl = seedDict["SeedURL"];
+                Dictionary<string, string> seedDict = LauncherClient.LoadSeedOfTheWeek();
+                lblWeekSeed.Text = seedDict["PresetName"];
+                seedUrl = seedDict["SeedURL"];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error obtaining current events: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         void CheckForUpdates()
@@ -83,6 +98,10 @@ namespace SotNRandomizerLauncher
             lblBizhawk.Text = $"BizHawk v{LauncherClient.GetConfigValue("BizHawkVersion")}";
             lblLivesplit.Text = $"LiveSplit v{LauncherClient.GetConfigValue("LiveSplitVersion")}";
             lblRandoTools.Text = $"SotN Rando Tools v{LauncherClient.GetConfigValue("RandoToolsVersion")}";
+            if (LauncherClient.GetConfigValue("LastSeed") != null)
+            {
+                btnPlay.Enabled = true;
+            }
         }
 
         void ImportedVisuals()
@@ -117,6 +136,7 @@ namespace SotNRandomizerLauncher
             string ppfFileName = Path.GetFileName(ppfFile).Split('.')[0];
             lblSelectedSeed.Text = $"Seed Selected: {ppfFileName}";
             btnRandomize.Enabled = true;
+            btnPlay.Enabled = true;
         }
 
         private void btnRandomize_Click(object sender, EventArgs e)
@@ -150,7 +170,7 @@ namespace SotNRandomizerLauncher
             string appPath = configs.AppSettings.Settings["BizHawkPath"].Value;
             Process process = new Process();
             process.StartInfo.FileName = "cmd.exe"; // Specify the command interpreter
-            process.StartInfo.Arguments = $"/c cd {appPath} && EmuHawk.exe"; // Could probably use a batch file ins
+            process.StartInfo.Arguments = $"/c cd {appPath} && start /b EmuHawk.exe"; // Could probably use a batch file ins
             process.StartInfo.CreateNoWindow = true;
             process.Start(); // Start the BizHawk process
             process.Close();
@@ -167,10 +187,16 @@ namespace SotNRandomizerLauncher
 
         private async void btnUpdateLiveSplit_Click(object sender, EventArgs e)
         {
-            await LauncherClient.UpdateLiveSplit();
-            pbLiveSplit.Image = Properties.Resources.v_update;
-            btnUpdateLiveSplit.Enabled = true;
-            btnUpdateLiveSplit.Text = "Up to Date";
+            try
+            {
+                await LauncherClient.UpdateLiveSplit();
+                pbLiveSplit.Image = Properties.Resources.v_update;
+                btnUpdateLiveSplit.Enabled = true;
+                btnUpdateLiveSplit.Text = "Up to Date";
+            }catch (Exception ex)
+            {
+                MessageBox.Show($"Error reaching updating LiveSplit: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }            
         }
 
         private void btnLaunchBizhawk_Click(object sender, EventArgs e)
@@ -187,10 +213,17 @@ namespace SotNRandomizerLauncher
 
         private async void btnUpdateRandoTools_Click(object sender, EventArgs e)
         {
-            await LauncherClient.UpdateRandoTools();
-            pbRandoTools.Image = Properties.Resources.v_update;
-            btnUpdateRandoTools.Enabled = true;
-            btnUpdateRandoTools.Text = "Up to Date";
+            try
+            {
+                await LauncherClient.UpdateRandoTools();
+                pbRandoTools.Image = Properties.Resources.v_update;
+                btnUpdateRandoTools.Enabled = true;
+                btnUpdateRandoTools.Text = "Up to Date";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error reaching updating RandoTools: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }            
         }
 
         private void frmMain_Activated(object sender, EventArgs e)
@@ -224,15 +257,22 @@ namespace SotNRandomizerLauncher
 
         private async void btnUpdateBizhawk_Click(object sender, EventArgs e)
         {
-            await LauncherClient.UpdateBizHawk();
-            pbBizhawk.Image = Properties.Resources.v_update;
-            btnUpdateBizhawk.Enabled = true;
-            btnUpdateBizhawk.Text = "Up to Date";
+            try
+            {
+                await LauncherClient.UpdateBizHawk();
+                pbBizhawk.Image = Properties.Resources.v_update;
+                btnUpdateBizhawk.Enabled = true;
+                btnUpdateBizhawk.Text = "Up to Date";
+            }catch(Exception ex)
+            {
+                MessageBox.Show($"Error reaching updating BizHawk: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(seedUrl);
+            if(seedUrl != "" && seedUrl != null) Process.Start(seedUrl);
         }
     }
 }

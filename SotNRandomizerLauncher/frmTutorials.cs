@@ -32,14 +32,30 @@ namespace SotNRandomizerLauncher
         {
             foreach (Label label in this.Controls.OfType<Label>())
             {
-                if (label is LinkLabel) continue;
+                if (label is LinkLabel || label.Tag != null) continue;
                 if(label != tutorialLabel)
                 {
-                    label.Hide();
+                    label.Hide();                    
                 }
                 else
                 {
                     label.Show();
+                }
+            }
+        }
+
+        void SetTutorialColor(Button btnLabel)
+        {
+            foreach (Button btn in this.Controls.OfType<Button>())
+            {
+                if (btn.Tag == null || btn.Tag.ToString() != "btn") continue;
+                if (btn != btnLabel)
+                {
+                    btn.BackColor = Color.Transparent;
+                }
+                else
+                {
+                    btn.BackColor = Color.IndianRed;
                 }
             }
         }
@@ -67,6 +83,24 @@ namespace SotNRandomizerLauncher
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void lblRandomizer_Click(object sender, EventArgs e)
+        {
+            ChangeTutorialTab(lblRandoTutorial);
+            SetTutorialColor(lblRandomizer);
+        }
+
+        private void lblLauncher_Click(object sender, EventArgs e)
+        {
+            ChangeTutorialTab(lblTutorialDescription);
+            SetTutorialColor(lblLauncher);
+        }
+
+        private void lblPresets_Click(object sender, EventArgs e)
+        {
+            ChangeTutorialTab(lblPresetsTutorial);
+            SetTutorialColor(lblPresets);
         }
     }
 }
