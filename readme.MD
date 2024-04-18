@@ -1,6 +1,6 @@
 # Symphony of the Night Randomizer Launcher
 
-Welcome! The Symphony of the Night Randomizer Launcher is a tool made to simplify your randomizer experience. This all-in-one tool provides you with everything you need to start playing the randomizer. No need to follow guides or anything, just install the Launcher, let it download the Emulator (BizHawk), the timer (LiveSplit), and the tools to get you playing.
+Welcome! The Symphony of the Night Randomizer Launcher is a tool made to simplify your randomizer experience. This all-in-one tool provides you with everything you need to start playing the randomizer. No need to follow guides or anything, just install the Launcher, let it download the Emulator (BizHawk), the timer (LiveSplit), and the tools to get you playing. [Download the latest version here, from GitHub releases!](https://github.com/LuciaRolon/SotNRandomizerLauncher/releases)
 
 ![](https://i.imgur.com/o8nsnqu.png)
 
