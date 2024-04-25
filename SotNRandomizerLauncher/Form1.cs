@@ -131,12 +131,19 @@ namespace SotNRandomizerLauncher
 
         private void btnPpfFile_Click(object sender, EventArgs e)
         {
-            ppfFile = LauncherClient.RequestFile("Select your Randomizer Preset file (.ppf)", "ppf");
-            if(ppfFile == "") return;
+            string ppfFileChosen = LauncherClient.RequestFile("Select your Randomizer Preset file (.ppf)", "ppf");
+            if(ppfFileChosen == "") return;
+            SetPPF(ppfFileChosen);            
+        }
+
+        void SetPPF(string ppfFile)
+        {
             string ppfFileName = Path.GetFileName(ppfFile).Split('.')[0];
+            this.ppfFile = ppfFile;
             lblSelectedSeed.Text = $"Seed Selected: {ppfFileName}";
-            btnRandomize.Enabled = true;
             btnPlay.Enabled = true;
+            RandomizeGame();
+            btnPlay.BackColor = Color.PaleGreen;
         }
 
         private void btnRandomize_Click(object sender, EventArgs e)
@@ -162,10 +169,7 @@ namespace SotNRandomizerLauncher
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
-        {
-            // If no PPF file is selected, play the last generated seed.
-            if(ppfFile != "" && ppfFile != null) RandomizeGame();
-
+        {       
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             string appPath = configs.AppSettings.Settings["BizHawkPath"].Value;
             Process process = new Process();
@@ -273,6 +277,55 @@ namespace SotNRandomizerLauncher
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if(seedUrl != "" && seedUrl != null) Process.Start(seedUrl);
+        }
+
+        private void frmMain_DragEnter(object sender, DragEventArgs e)
+        {
+            btnPpfFile.Text = "Drop your PPF file here!";
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Allow copying of the data
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+
+        private void frmMain_DragDrop(object sender, DragEventArgs e)
+        {
+            // Get the array of file paths from the dropped data
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            // Check if any files were dropped
+            if (files != null && files.Length > 0)
+            {
+                // Get the first file path (assuming only one file is dropped)
+                if (Path.GetExtension(files[0]) != ".ppf")
+                {
+                    MessageBox.Show("The selected file is not a Randomizer Seed File (.ppf). Please, choose the correct file.", "Wrong File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                string filePath = files[0];
+                SetPPF(filePath);
+            }
+            btnPpfFile.Text = "Select your Randomizer\r\nPreset file (.ppf)";
+        }
+
+        private void frmMain_DragLeave(object sender, EventArgs e)
+        {
+            btnPpfFile.Text = "Select your Randomizer\r\nPreset file (.ppf)";
+        }
+
+        private void btnPpfFile_DragDrop(object sender, DragEventArgs e)
+        {
+            
+        }
+
+        private void btnShow_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.Show("Show specific options to open LiveSplit and BizHawk manually.\nThis is intended for testing or troubleshooting purposes.", btnShow);
+        }
+
+        private void btnShow_Click(object sender, EventArgs e)
+        {
+            btnLaunchLiveSplit.Show();
+            btnLaunchBizhawk.Show();
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.grpNews = new System.Windows.Forms.GroupBox();
             this.lblWeekSeed = new System.Windows.Forms.LinkLabel();
@@ -39,7 +40,6 @@
             this.grpOptions = new System.Windows.Forms.GroupBox();
             this.btnLaunchBizhawk = new System.Windows.Forms.Button();
             this.btnLaunchLiveSplit = new System.Windows.Forms.Button();
-            this.btnRandomize = new System.Windows.Forms.Button();
             this.grpTools = new System.Windows.Forms.GroupBox();
             this.pbBizhawk = new System.Windows.Forms.PictureBox();
             this.pbLiveSplit = new System.Windows.Forms.PictureBox();
@@ -57,6 +57,8 @@
             this.lblSelectedSeed = new System.Windows.Forms.Label();
             this.btnPpfFile = new System.Windows.Forms.Button();
             this.lblPlayLastSeed = new System.Windows.Forms.Label();
+            this.btnShow = new System.Windows.Forms.Button();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -149,9 +151,9 @@
             // grpOptions
             // 
             this.grpOptions.BackColor = System.Drawing.Color.Transparent;
+            this.grpOptions.Controls.Add(this.btnShow);
             this.grpOptions.Controls.Add(this.btnLaunchBizhawk);
             this.grpOptions.Controls.Add(this.btnLaunchLiveSplit);
-            this.grpOptions.Controls.Add(this.btnRandomize);
             this.grpOptions.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpOptions.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.grpOptions.Location = new System.Drawing.Point(538, 138);
@@ -171,6 +173,7 @@
             this.btnLaunchBizhawk.TabIndex = 6;
             this.btnLaunchBizhawk.Text = "Launch Bizhawk";
             this.btnLaunchBizhawk.UseVisualStyleBackColor = true;
+            this.btnLaunchBizhawk.Visible = false;
             this.btnLaunchBizhawk.Click += new System.EventHandler(this.btnLaunchBizhawk_Click);
             // 
             // btnLaunchLiveSplit
@@ -183,20 +186,8 @@
             this.btnLaunchLiveSplit.TabIndex = 5;
             this.btnLaunchLiveSplit.Text = "Launch LiveSplit";
             this.btnLaunchLiveSplit.UseVisualStyleBackColor = true;
+            this.btnLaunchLiveSplit.Visible = false;
             this.btnLaunchLiveSplit.Click += new System.EventHandler(this.btnLaunchLiveSplit_Click);
-            // 
-            // btnRandomize
-            // 
-            this.btnRandomize.Enabled = false;
-            this.btnRandomize.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRandomize.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnRandomize.Location = new System.Drawing.Point(14, 20);
-            this.btnRandomize.Name = "btnRandomize";
-            this.btnRandomize.Size = new System.Drawing.Size(164, 29);
-            this.btnRandomize.TabIndex = 4;
-            this.btnRandomize.Text = "Randomize";
-            this.btnRandomize.UseVisualStyleBackColor = true;
-            this.btnRandomize.Click += new System.EventHandler(this.btnRandomize_Click);
             // 
             // grpTools
             // 
@@ -320,6 +311,7 @@
             // 
             // btnPlay
             // 
+            this.btnPlay.BackColor = System.Drawing.SystemColors.Control;
             this.btnPlay.Enabled = false;
             this.btnPlay.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPlay.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -328,7 +320,7 @@
             this.btnPlay.Size = new System.Drawing.Size(189, 95);
             this.btnPlay.TabIndex = 7;
             this.btnPlay.Text = "Play";
-            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.UseVisualStyleBackColor = false;
             this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // grpSeed
@@ -392,6 +384,7 @@
             this.btnPpfFile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnPpfFile.UseVisualStyleBackColor = false;
             this.btnPpfFile.Click += new System.EventHandler(this.btnPpfFile_Click);
+            this.btnPpfFile.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnPpfFile_DragDrop);
             // 
             // lblPlayLastSeed
             // 
@@ -404,8 +397,29 @@
             this.lblPlayLastSeed.TabIndex = 3;
             this.lblPlayLastSeed.Text = "Play Last Seed:\r\n-seedname-";
             // 
+            // btnShow
+            // 
+            this.btnShow.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShow.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnShow.Location = new System.Drawing.Point(14, 21);
+            this.btnShow.Name = "btnShow";
+            this.btnShow.Size = new System.Drawing.Size(164, 29);
+            this.btnShow.TabIndex = 7;
+            this.btnShow.Text = "Show Individual Options";
+            this.btnShow.UseVisualStyleBackColor = true;
+            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            this.btnShow.MouseHover += new System.EventHandler(this.btnShow_MouseHover);
+            // 
+            // toolTip
+            // 
+            this.toolTip.AutomaticDelay = 200;
+            this.toolTip.AutoPopDelay = 5000;
+            this.toolTip.InitialDelay = 200;
+            this.toolTip.ReshowDelay = 40;
+            // 
             // frmMain
             // 
+            this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
@@ -423,6 +437,9 @@
             this.Name = "frmMain";
             this.Text = "Symphony of the Night Randomizer Launcher";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.frmMain_DragEnter);
+            this.DragLeave += new System.EventHandler(this.frmMain_DragLeave);
             this.grpNews.ResumeLayout(false);
             this.grpNews.PerformLayout();
             this.grpOptions.ResumeLayout(false);
@@ -445,7 +462,6 @@
         private System.Windows.Forms.GroupBox grpOptions;
         private System.Windows.Forms.Button btnLaunchBizhawk;
         private System.Windows.Forms.Button btnLaunchLiveSplit;
-        private System.Windows.Forms.Button btnRandomize;
         private System.Windows.Forms.GroupBox grpTools;
         private System.Windows.Forms.PictureBox pbRandoTools;
         private System.Windows.Forms.Label lblBizhawk;
@@ -467,6 +483,8 @@
         private System.Windows.Forms.Label lblNextEvent;
         private System.Windows.Forms.Label lblPlayLastSeed;
         private System.Windows.Forms.LinkLabel lblWeekSeed;
+        private System.Windows.Forms.Button btnShow;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 
