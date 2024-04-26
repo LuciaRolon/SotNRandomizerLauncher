@@ -85,20 +85,23 @@ namespace SotNRandomizerLauncher
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             string track2Path = configs.AppSettings.Settings["Track2Path"].Value;            
             string cuePath = configs.AppSettings.Settings["CuePath"].Value;
-            File.Copy(track2Path, Path.Combine(randomPath, "Castlevania - Symphony of the Night (USA) (Track 2).bin"), true);
-            File.Copy(cuePath, Path.Combine(randomPath, "Castlevania - Symphony of the Night (USA).cue"), true);
+            string track2FileName = Path.GetFileName(track2Path);
+            string cueFileName = Path.GetFileName(cuePath);
+            File.Copy(track2Path, Path.Combine(randomPath, track2FileName), true);
+            File.Copy(cuePath, Path.Combine(randomPath, cueFileName), true);
 
             // Then we copy the vanilla track 1 and start randomization
             string track1Path = configs.AppSettings.Settings["Track1Path"].Value;
-            File.Copy(track1Path, Path.Combine(randomPath, "Castlevania - Symphony of the Night (USA) (Track 1).bin"), true);
+            string track1FileName = Path.GetFileName(track1Path);
+            File.Copy(track1Path, Path.Combine(randomPath, track1FileName), true);
 
             // Randomization Process
             progressBar.Value = 40;
             statusLabel.Text = "Applying PPF...";
-            ExecuteCommand($"\"applyppf3_vc.exe\" a \"files/randomized/Castlevania - Symphony of the Night (USA) (Track 1).bin\" \"{ppfFile}\"", "PPF Patching");
+            ExecuteCommand($"\"applyppf3_vc.exe\" a \"files/randomized/{track1FileName}\" \"{ppfFile}\"", "PPF Patching");
             progressBar.Value = 75;
             statusLabel.Text = "Executing final touch...";
-            ExecuteCommand($"\"error_recalc.exe\" \"files/randomized/Castlevania - Symphony of the Night (USA) (Track 1).bin\" \"{ppfFile}\"", "ECC Recalculation");
+            ExecuteCommand($"\"error_recalc.exe\" \"files/randomized/{track1FileName}\" \"{ppfFile}\"", "ECC Recalculation");
 
             progressBar.Value = 100;
             statusLabel.Text = "Game randomized.";
