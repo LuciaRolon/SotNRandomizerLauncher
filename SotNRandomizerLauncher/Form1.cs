@@ -91,6 +91,7 @@ namespace SotNRandomizerLauncher
                 btnUpdateRandoTools.Enabled = true;
                 btnUpdateRandoTools.Text = "Update";
             }
+            UpdateHandler.UpdateLauncher();
         }
 
         void NormalVisuals()

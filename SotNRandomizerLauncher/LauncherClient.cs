@@ -248,9 +248,13 @@ namespace SotNRandomizerLauncher
         private static bool ApplyRandoToolsSettings(string targetDirectory)
         {
             string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string bizHawkDirectory = Path.Combine(currentAppDirectory, "apps", "BizHawk");
+            string bizHawkDirectory = Path.Combine(currentAppDirectory, "apps", "BizHawk");            
 
             CopyDirectory(targetDirectory, bizHawkDirectory);
+
+            string basePresetsPath = Path.Combine(currentAppDirectory, "baseFiles", "Presets.zip");
+            string presetsPath = Path.Combine(bizHawkDirectory, "ExternalTools", "SotnRandoTools", "Presets");
+            ExtractZipWithOverwrite(basePresetsPath, presetsPath);
             return true;
         }
         #endregion
@@ -414,7 +418,7 @@ namespace SotNRandomizerLauncher
             File.WriteAllLines(filePath, lines);
         }
 
-        static void ExtractZipWithOverwrite(string zipFilePath, string extractPath)
+        public static void ExtractZipWithOverwrite(string zipFilePath, string extractPath)
         {
             // Ensure the target directory exists
             if (!Directory.Exists(extractPath))
@@ -488,6 +492,7 @@ namespace SotNRandomizerLauncher
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             configs.AppSettings.Settings.Add("InitialSetupCheck", "Done");
             configs.Save();
+            LauncherClient.SetAppConfig("LauncherVersion", UpdateHandler.GetCurrentVersion().ToString());
             DialogResult result = MessageBox.Show("It seems this is the first time you're using the Launcher. Do you want to check our Tutorials?", "Welcome to SotN Randomizer!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);            
             if(result == DialogResult.Yes)
             {
