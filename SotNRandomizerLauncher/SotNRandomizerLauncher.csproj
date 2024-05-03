@@ -163,6 +163,12 @@
     <None Include="baseFiles\LiveSplitLayout.lsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="baseFiles\nymafast.wbx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="baseFiles\nymashock.wbx.zst">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="baseFiles\Presets.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

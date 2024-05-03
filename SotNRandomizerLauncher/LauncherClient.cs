@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
+using System.Runtime.CompilerServices;
 
 namespace SotNRandomizerLauncher
 {
@@ -53,7 +54,8 @@ namespace SotNRandomizerLauncher
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             // Set properties of the OpenFileDialog
-            openFileDialog.InitialDirectory = @"C:\"; // Set initial directory
+            string latestPath = GetConfigValue("LastPathBrowsed");
+            openFileDialog.InitialDirectory = (latestPath == null) ? @"C:\" : latestPath; // Set initial directory
             openFileDialog.Title = $"Select your {fileRequested}"; // Set dialog title
             openFileDialog.Filter = $"{fileExtension.ToUpper()} files (*.{fileExtension})|*.{fileExtension}"; // Filter files
 
@@ -61,6 +63,7 @@ namespace SotNRandomizerLauncher
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 // Get the selected file path
+                SetLastBrowsed(openFileDialog.FileName);
                 return openFileDialog.FileName;                
             }
             else
@@ -68,7 +71,6 @@ namespace SotNRandomizerLauncher
                 return "";
             }            
         }
-
 
         public static bool RandomizeGame(string ppfFile, ProgressBar progressBar, Label statusLabel)
         {
@@ -185,6 +187,38 @@ namespace SotNRandomizerLauncher
             await Task.Run(() => UpdateRandoToolsApp(downloadForm));
         }
 
+        public static void SwapCores(bool toFastCore)
+        {
+            try
+            {
+                string bizHawkDirectory = GetConfigValue("BizHawkPath");
+                if (toFastCore)
+                {
+                    string oldCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx.zst");
+                    string newCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx");
+                    string newCoreTempFile = Path.Combine(bizHawkDirectory, "dll", "nymafast.wbx");
+                    File.Delete(oldCorePath);
+                    File.Copy(newCoreTempFile, newCorePath, true);
+                    SetAppConfig("CoreInstalled", "FastCore");
+                }
+                else
+                {
+                    string oldCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx");
+                    string newCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx.zst");
+                    string newCoreTempFile = Path.Combine(bizHawkDirectory, "dll", "nymashock.wbx.zst");
+                    File.Delete(oldCorePath);
+                    File.Copy(newCoreTempFile, newCorePath, true);
+                    SetAppConfig("CoreInstalled", "ClassicCore");
+                }
+                
+                MessageBox.Show("Core changed succesfully!", "Core Swap", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }catch(Exception ex)
+            {
+                MessageBox.Show($"Error swapping core: {ex.Message}", "Core Swap Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }
+
 
         #region ConfigOperations
         private static bool ApplyLiveSplitSettings(string targetDirectory)
@@ -210,6 +244,15 @@ namespace SotNRandomizerLauncher
             return true;
         }
 
+        public static void StoreCores(string currentAppDirectory, string targetDirectory)
+        {
+            string nymashockCorePath = Path.Combine(targetDirectory, "dll", "nymashock.wbx.zst");
+            string nymafastCorePath = Path.Combine(targetDirectory, "dll", "nymafast.wbx");
+            File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "nymashock.wbx.zst"), nymashockCorePath, true);
+            File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "nymafast.wbx"), nymafastCorePath, true);
+            SetAppConfig("CoreInstalled", "ClassicCore");
+        }
+
         private static bool ApplyBizHawkSettings(string targetDirectory)
         {
             // Apply base files and settings
@@ -224,6 +267,7 @@ namespace SotNRandomizerLauncher
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "Castlevania - Symphony of the Night (USA).SaveRAM"), saveRamFilePath, true);
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "config.ini"), cfgTargetPath, true);
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "PSX-Autosplitter.lua"), autosplitterTargetPath, true);
+            StoreCores(currentAppDirectory, targetDirectory);
             string randomPath = Path.Combine(currentAppDirectory, "files", "randomized", "Castlevania - Symphony of the Night (USA).cue");
             randomPath = randomPath.Replace(@"\", @"\\");
             autosplitterTargetPath = autosplitterTargetPath.Replace(@"\", @"\\");
@@ -578,6 +622,18 @@ namespace SotNRandomizerLauncher
                 }
             }
             return null;
+        }
+
+        private static void SetLastBrowsed(string path)
+        {
+            try
+            {
+                string pathBrowsed = Path.GetDirectoryName(path);
+                SetAppConfig("LastPathBrowsed", pathBrowsed);
+            }catch(Exception)
+            {
+                return;
+            }            
         }
         #endregion
     }

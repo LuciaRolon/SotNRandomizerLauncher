@@ -38,6 +38,7 @@
             this.btnTutorials = new System.Windows.Forms.Button();
             this.btnConfigure = new System.Windows.Forms.Button();
             this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.btnShow = new System.Windows.Forms.Button();
             this.btnLaunchBizhawk = new System.Windows.Forms.Button();
             this.btnLaunchLiveSplit = new System.Windows.Forms.Button();
             this.grpTools = new System.Windows.Forms.GroupBox();
@@ -57,7 +58,6 @@
             this.lblSelectedSeed = new System.Windows.Forms.Label();
             this.btnPpfFile = new System.Windows.Forms.Button();
             this.lblPlayLastSeed = new System.Windows.Forms.Label();
-            this.btnShow = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
@@ -144,7 +144,7 @@
             this.btnConfigure.Name = "btnConfigure";
             this.btnConfigure.Size = new System.Drawing.Size(164, 29);
             this.btnConfigure.TabIndex = 2;
-            this.btnConfigure.Text = "Configure";
+            this.btnConfigure.Text = "Settings";
             this.btnConfigure.UseVisualStyleBackColor = true;
             this.btnConfigure.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -162,6 +162,19 @@
             this.grpOptions.TabIndex = 3;
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Individual Options";
+            // 
+            // btnShow
+            // 
+            this.btnShow.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShow.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnShow.Location = new System.Drawing.Point(14, 21);
+            this.btnShow.Name = "btnShow";
+            this.btnShow.Size = new System.Drawing.Size(164, 29);
+            this.btnShow.TabIndex = 7;
+            this.btnShow.Text = "Show Individual Options";
+            this.btnShow.UseVisualStyleBackColor = true;
+            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            this.btnShow.MouseHover += new System.EventHandler(this.btnShow_MouseHover);
             // 
             // btnLaunchBizhawk
             // 
@@ -396,19 +409,6 @@
             this.lblPlayLastSeed.Size = new System.Drawing.Size(247, 37);
             this.lblPlayLastSeed.TabIndex = 3;
             this.lblPlayLastSeed.Text = "Play Last Seed:\r\n-seedname-";
-            // 
-            // btnShow
-            // 
-            this.btnShow.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShow.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnShow.Location = new System.Drawing.Point(14, 21);
-            this.btnShow.Name = "btnShow";
-            this.btnShow.Size = new System.Drawing.Size(164, 29);
-            this.btnShow.TabIndex = 7;
-            this.btnShow.Text = "Show Individual Options";
-            this.btnShow.UseVisualStyleBackColor = true;
-            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
-            this.btnShow.MouseHover += new System.EventHandler(this.btnShow_MouseHover);
             // 
             // toolTip
             // 

@@ -15,9 +15,10 @@ namespace SotNRandomizerLauncher
 {
     public partial class frmConfigure : Form
     {
-        Configuration configs;
+
         bool initialSetup = true;
         public bool importConfirmed = false;
+        bool classicCoreInstalled = true;
         public frmConfigure()
         {
             InitializeComponent();
@@ -35,8 +36,7 @@ namespace SotNRandomizerLauncher
             string filePath = LauncherClient.RequestFile("scph7003.bin", "bin");
             if (filePath == "") return;
             txtBiosPath.Text = filePath;
-            configs.AppSettings.Settings.Remove("BiosPath");
-            configs.AppSettings.Settings.Add("BiosPath", filePath);
+            LauncherClient.SetAppConfig("BiosPath", filePath);
             CheckFields();
         }
 
@@ -46,26 +46,48 @@ namespace SotNRandomizerLauncher
             {
                 btnContinue.Enabled = true;
             }
-            configs.Save();
+        }
+
+        private void ChangeCoreData()
+        {
+            if (LauncherClient.GetConfigValue("CoreInstalled") == "ClassicCore")
+            {
+                btnChangeCore.Text = "Change to Fast Core";
+                lblCurrentCore.Text = "Core Installed: Classic Core";
+                this.classicCoreInstalled = true;
+            }
+            else
+            {
+                btnChangeCore.Text = "Change to Classic Core";
+                lblCurrentCore.Text = "Core Installed: Fast Core";
+                this.classicCoreInstalled = false;
+            }
         }
 
         private void LoadFromConfig()
         {
-            configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             txtBiosPath.Text = GetConfigValue("BiosPath");
             txtCuePath.Text = GetConfigValue("CuePath");
             txtTrack1Path.Text = GetConfigValue("Track1Path");
             txtTrack2Path.Text =  GetConfigValue("Track2Path");
             initialSetup = LauncherClient.IsInitialSetup();
+            ChangeCoreData();
+            
             if (!initialSetup)
             {
                 cbImport.Hide();
+                grpEmulation.Show();
+                lblDescription.Hide();
+            }
+            else
+            {
+
             }
         }        
 
         private string GetConfigValue(string config)
         {
-            return LauncherClient.GetConfigValue(configs, config);       
+            return LauncherClient.GetConfigValue(config);       
         }
 
         private void btnUploadTrack1_Click(object sender, EventArgs e)
@@ -73,8 +95,7 @@ namespace SotNRandomizerLauncher
             string filePath = LauncherClient.RequestFile("Castlevania - Symphony of the Night (USA) (Track 1).bin", "bin");
             if(filePath == "") return;
             txtTrack1Path.Text = filePath;
-            configs.AppSettings.Settings.Remove("Track1Path");
-            configs.AppSettings.Settings.Add("Track1Path", filePath);
+            LauncherClient.SetAppConfig("Track1Path", filePath);
             CheckFields();
         }
 
@@ -83,8 +104,7 @@ namespace SotNRandomizerLauncher
             string filePath = LauncherClient.RequestFile("Castlevania - Symphony of the Night (USA) (Track 2).bin", "bin");
             if (filePath == "") return;
             txtTrack2Path.Text = filePath;
-            configs.AppSettings.Settings.Remove("Track2Path");
-            configs.AppSettings.Settings.Add("Track2Path", filePath);
+            LauncherClient.SetAppConfig("Track2Path", filePath);
             CheckFields();
         }
 
@@ -93,8 +113,7 @@ namespace SotNRandomizerLauncher
             string filePath = LauncherClient.RequestFile("Castlevania - Symphony of the Night (USA).cue", "cue");
             if (filePath == "") return;
             txtCuePath.Text = filePath;
-            configs.AppSettings.Settings.Remove("CuePath");
-            configs.AppSettings.Settings.Add("CuePath", filePath);
+            LauncherClient.SetAppConfig("CuePath", filePath);
             CheckFields();
         }
 
@@ -163,6 +182,18 @@ namespace SotNRandomizerLauncher
             await LauncherClient.DownloadBizHawk();
             await LauncherClient.DownloadRandoTools();
             MessageBox.Show("Setup Successful! You can now use the Randomizer Launcher.", "Setup Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnChangeCore_Click(object sender, EventArgs e)
+        {
+            // If the classic core is installed, swaps to Fast. Else, swaps to Classic.
+            LauncherClient.SwapCores(this.classicCoreInstalled);
+            ChangeCoreData();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

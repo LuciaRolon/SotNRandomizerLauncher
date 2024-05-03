@@ -25,10 +25,12 @@ namespace SotNRandomizerLauncher
             if (lastSeed != null)
             {
                 lblPlayLastSeed.Text = $"Play Last Seed: \n{lastSeed}";
+                btnPlay.Enabled = true;
             }
             else
             {
                 lblPlayLastSeed.Hide();
+                btnPlay.Enabled = false;
             }
             if (LauncherClient.GetConfigValue("ImportedUser") != null)
             {
@@ -99,10 +101,6 @@ namespace SotNRandomizerLauncher
             lblBizhawk.Text = $"BizHawk v{LauncherClient.GetConfigValue("BizHawkVersion")}";
             lblLivesplit.Text = $"LiveSplit v{LauncherClient.GetConfigValue("LiveSplitVersion")}";
             lblRandoTools.Text = $"SotN Rando Tools v{LauncherClient.GetConfigValue("RandoToolsVersion")}";
-            if (LauncherClient.GetConfigValue("LastSeed") != null)
-            {
-                btnPlay.Enabled = true;
-            }
         }
 
         void ImportedVisuals()

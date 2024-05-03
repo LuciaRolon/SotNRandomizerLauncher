@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfigure));
             this.txtBiosPath = new System.Windows.Forms.TextBox();
             this.lblBios = new System.Windows.Forms.Label();
@@ -46,6 +47,11 @@
             this.btnContinue = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.cbImport = new System.Windows.Forms.CheckBox();
+            this.grpEmulation = new System.Windows.Forms.GroupBox();
+            this.btnChangeCore = new System.Windows.Forms.Button();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.lblCurrentCore = new System.Windows.Forms.Label();
+            this.grpEmulation.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtBiosPath
@@ -226,6 +232,55 @@
             this.cbImport.Text = "I want to use my own install\r\n of Bizhawk and LiveSplit";
             this.cbImport.UseVisualStyleBackColor = false;
             // 
+            // grpEmulation
+            // 
+            this.grpEmulation.BackColor = System.Drawing.Color.Transparent;
+            this.grpEmulation.Controls.Add(this.lblCurrentCore);
+            this.grpEmulation.Controls.Add(this.btnChangeCore);
+            this.grpEmulation.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpEmulation.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.grpEmulation.Location = new System.Drawing.Point(44, 40);
+            this.grpEmulation.Name = "grpEmulation";
+            this.grpEmulation.Size = new System.Drawing.Size(189, 127);
+            this.grpEmulation.TabIndex = 18;
+            this.grpEmulation.TabStop = false;
+            this.grpEmulation.Text = "Emulation Settings";
+            this.grpEmulation.Visible = false;
+            // 
+            // btnChangeCore
+            // 
+            this.btnChangeCore.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChangeCore.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnChangeCore.Location = new System.Drawing.Point(14, 34);
+            this.btnChangeCore.Name = "btnChangeCore";
+            this.btnChangeCore.Size = new System.Drawing.Size(164, 29);
+            this.btnChangeCore.TabIndex = 7;
+            this.btnChangeCore.Text = "Change to Fast Core";
+            this.toolTip.SetToolTip(this.btnChangeCore, "Changing to the Fast Core will improve performance and allow you to play the \r\nne" +
+        "west presets, but will make it impossible to run other games with the emulator");
+            this.btnChangeCore.UseVisualStyleBackColor = true;
+            this.btnChangeCore.Click += new System.EventHandler(this.btnChangeCore_Click);
+            // 
+            // toolTip
+            // 
+            this.toolTip.AutomaticDelay = 200;
+            this.toolTip.AutoPopDelay = 5000;
+            this.toolTip.InitialDelay = 200;
+            this.toolTip.ReshowDelay = 40;
+            // 
+            // lblCurrentCore
+            // 
+            this.lblCurrentCore.AutoSize = true;
+            this.lblCurrentCore.BackColor = System.Drawing.Color.Transparent;
+            this.lblCurrentCore.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentCore.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblCurrentCore.Location = new System.Drawing.Point(11, 18);
+            this.lblCurrentCore.Name = "lblCurrentCore";
+            this.lblCurrentCore.Size = new System.Drawing.Size(145, 13);
+            this.lblCurrentCore.TabIndex = 19;
+            this.lblCurrentCore.Text = "Core Installed: Classic Core";
+            this.lblCurrentCore.Click += new System.EventHandler(this.label5_Click);
+            // 
             // frmConfigure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -233,6 +288,7 @@
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
             this.ClientSize = new System.Drawing.Size(595, 481);
             this.ControlBox = false;
+            this.Controls.Add(this.grpEmulation);
             this.Controls.Add(this.cbImport);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnContinue);
@@ -254,6 +310,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmConfigure";
             this.Text = "Symphony of the Night Randomizer Launcher - Setup";
+            this.grpEmulation.ResumeLayout(false);
+            this.grpEmulation.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,5 +336,9 @@
         private System.Windows.Forms.Button btnContinue;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.CheckBox cbImport;
+        private System.Windows.Forms.GroupBox grpEmulation;
+        private System.Windows.Forms.Button btnChangeCore;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Label lblCurrentCore;
     }
 }

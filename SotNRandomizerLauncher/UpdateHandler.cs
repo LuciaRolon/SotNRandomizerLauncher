@@ -12,7 +12,7 @@ namespace SotNRandomizerLauncher
     {
         public static int GetCurrentVersion()
         {
-            return 1; // Must be updated with every release
+            return 2; // Must be updated with every release
         }
 
         private static int GetInstalledVersion()
@@ -52,11 +52,15 @@ namespace SotNRandomizerLauncher
                 case 1:
                     Version1();
                     break;
+                case 2:
+                    Version2();
+                    break;
             }
         }
 
         static void Version1()
         {
+            // Installs the Preset Files
             if (LauncherClient.GetConfigValue("ImportedUser") != null)
             {
                 DialogResult result = MessageBox.Show("This update includes a few changes to RandoTools presets. Do you want to install them? Yes to Install, No to ignore this update.", "Imported User Update Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -68,6 +72,14 @@ namespace SotNRandomizerLauncher
             string basePresetsPath = Path.Combine(currentAppDirectory, "baseFiles", "Presets.zip");
             string presetsPath = Path.Combine(bizHawkDirectory, "ExternalTools", "SotnRandoTools", "Presets");
             LauncherClient.ExtractZipWithOverwrite(basePresetsPath, presetsPath);
+        }
+
+        static void Version2()
+        {
+            // Sets up the files for the Fast Core
+            string bizHawkDirectory = LauncherClient.GetConfigValue("BizHawkPath");
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            LauncherClient.StoreCores(currentAppDirectory, bizHawkDirectory);
         }
     }
 }
