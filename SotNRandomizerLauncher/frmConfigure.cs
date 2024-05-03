@@ -170,10 +170,18 @@ namespace SotNRandomizerLauncher
             }            
         }
 
+        void StoreCores()
+        {
+            string bizHawkDirectory = LauncherClient.GetConfigValue("BizHawkPath");
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            LauncherClient.StoreCores(currentAppDirectory, bizHawkDirectory);
+        }
+
         void ImportProcess()
         {
             frmImport frmImport = new frmImport(this);
             frmImport.ShowDialog();
+            StoreCores();
         }
 
         async Task NewUserProcess()
@@ -181,6 +189,7 @@ namespace SotNRandomizerLauncher
             await LauncherClient.DownloadLiveSplit();
             await LauncherClient.DownloadBizHawk();
             await LauncherClient.DownloadRandoTools();
+            StoreCores();
             MessageBox.Show("Setup Successful! You can now use the Randomizer Launcher.", "Setup Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

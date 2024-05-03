@@ -266,8 +266,7 @@ namespace SotNRandomizerLauncher
             string autosplitterTargetPath = Path.Combine(targetDirectory, "PSX-Autosplitter.lua");
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "Castlevania - Symphony of the Night (USA).SaveRAM"), saveRamFilePath, true);
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "config.ini"), cfgTargetPath, true);
-            File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "PSX-Autosplitter.lua"), autosplitterTargetPath, true);
-            StoreCores(currentAppDirectory, targetDirectory);
+            File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "PSX-Autosplitter.lua"), autosplitterTargetPath, true);            
             string randomPath = Path.Combine(currentAppDirectory, "files", "randomized", "Castlevania - Symphony of the Night (USA).cue");
             randomPath = randomPath.Replace(@"\", @"\\");
             autosplitterTargetPath = autosplitterTargetPath.Replace(@"\", @"\\");
