@@ -17,10 +17,24 @@ using System.Runtime.CompilerServices;
 
 namespace SotNRandomizerLauncher
 {
+    internal struct DownloadData
+    {       
+
+        public string downloadUrl;
+        public string releaseVersion;
+
+        public DownloadData(string url, string version)
+        {
+            downloadUrl = url;
+            releaseVersion = version;
+        }
+    }
+
     internal static class LauncherClient
     {
         public static string GetAPIUrl()
         {
+
             return "http://35.208.162.255:8080";
         }
         public static void RequestAndStoreFile(string fileRequested, string fileExtension, string folder)
@@ -346,8 +360,9 @@ namespace SotNRandomizerLauncher
         {
             downloadForm.UpdateDownload(0, $"Fetching latest {appName} version...");
             // Get the download URL of the latest LiveSplit release
-            string downloadUrl = FetchLatest(project, expectedFile, appName);
-
+            DownloadData downloadData = FetchLatest(project, expectedFile, appName);
+            string downloadUrl = downloadData.downloadUrl;
+            string releaseVersion = downloadData.releaseVersion;
 
             // Download LiveSplit
             downloadForm.UpdateDownload(5, $"Downloading {appName}...");
@@ -364,6 +379,7 @@ namespace SotNRandomizerLauncher
             File.Delete(Path.Combine(currentAppDirectory, $"{appName.ToLower()}_latest.zip"));
 
             downloadForm.UpdateDownload(100, "Download Complete!");
+            LauncherClient.SetAppConfig($"{appName}Version", releaseVersion);
             return targetDirectory;
         }
 
@@ -382,13 +398,14 @@ namespace SotNRandomizerLauncher
             downloadForm.UpdateDownload(100, "Download Complete!");
         }
 
-        private static string FetchLatest(string project, string expectedFile, string appName)
+        private static DownloadData FetchLatest(string project, string expectedFile, string appName)
         {
             // Bizhawk: TASEmulators/BizHawk
             // LiveSplit: LiveSplit/LiveSplit
             // RandoTools: TalicZealot/SotnRandoTools
             string apiUrl = $"{GetAPIUrl()}/latest/{project}";
             string downloadUrl = "";
+            string releaseVersion = "";
 
             using (HttpClient client = new HttpClient())
             {
@@ -399,8 +416,7 @@ namespace SotNRandomizerLauncher
                     // Parse jsonString to get the latest release information
                     // For simplicity, let's assume it's JSON and deserialize it
                     dynamic release = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
-                    string releaseVersion = release.name;
-                    LauncherClient.SetAppConfig($"{appName}Version", releaseVersion);
+                    releaseVersion = release.name;                    
                     
                     foreach(var asset in release.assets)
                     {
@@ -413,7 +429,7 @@ namespace SotNRandomizerLauncher
                     }
                 }
             }
-            return downloadUrl;
+            return new DownloadData(downloadUrl, releaseVersion);
         }
 
         public static string GetLatestVersion(string project)
@@ -483,6 +499,11 @@ namespace SotNRandomizerLauncher
                     }
                     else
                     {
+                        string entryDirectory = Path.GetDirectoryName(entryPath);
+                        if (!Directory.Exists(entryDirectory))
+                        {
+                            Directory.CreateDirectory(entryDirectory);
+                        }
                         // Delete the existing file if it exists
                         if (File.Exists(entryPath))
                         {
@@ -490,7 +511,7 @@ namespace SotNRandomizerLauncher
                         }
 
                         // Extract the entry
-                        entry.ExtractToFile(entryPath);
+                        entry.ExtractToFile(entryPath, true);
                     }
                 }
             }

@@ -18,6 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
+        string launcherVersion = "v0.2.5";
         public frmMain()
         {
             InitializeComponent();
@@ -92,6 +93,14 @@ namespace SotNRandomizerLauncher
                 pbRandoTools.Image = Properties.Resources.x_update;
                 btnUpdateRandoTools.Enabled = true;
                 btnUpdateRandoTools.Text = "Update";
+            }
+            if(LauncherClient.GetLatestVersion("LuciaRolon/SotNRandomizerLauncher") != launcherVersion)
+            {
+                DialogResult result = MessageBox.Show("A new Launcher version is available for download on GitHub. Want to download the latest update?", "Launcher Version Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(result == DialogResult.Yes)
+                {
+                    Process.Start("https://github.com/LuciaRolon/SotNRandomizerLauncher/releases/latest");
+                }
             }
             UpdateHandler.UpdateLauncher();
         }
@@ -169,6 +178,11 @@ namespace SotNRandomizerLauncher
 
         private void btnPlay_Click(object sender, EventArgs e)
         {       
+            if(LauncherClient.GetConfigValue("CoreInstalled") == "FastCore")
+            {
+                DialogResult result = MessageBox.Show("You're about to start a run using the Fast Core. Proceed?", "Fast Core Installed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No) return;
+            }
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             string appPath = configs.AppSettings.Settings["BizHawkPath"].Value;
             Process process = new Process();
