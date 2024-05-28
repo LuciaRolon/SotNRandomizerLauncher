@@ -184,13 +184,7 @@ namespace SotNRandomizerLauncher
                 if (result == DialogResult.No) return;
             }
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            string appPath = configs.AppSettings.Settings["BizHawkPath"].Value;
-            Process process = new Process();
-            process.StartInfo.FileName = "cmd.exe"; // Specify the command interpreter
-            process.StartInfo.Arguments = $"/c cd {appPath} && start /b EmuHawk.exe"; // Could probably use a batch file ins
-            process.StartInfo.CreateNoWindow = true;
-            process.Start(); // Start the BizHawk process
-            process.Close();
+            Process.Start(Path.Combine(configs.AppSettings.Settings["BizHawkPath"].Value, "EmuHawk.exe"));
             // Wait before running LiveSplit
             Thread.Sleep(10000);
             Process.Start(Path.Combine(configs.AppSettings.Settings["LiveSplitPath"].Value, "LiveSplit.exe")); // Start the LiveSplit process
@@ -219,13 +213,7 @@ namespace SotNRandomizerLauncher
         private void btnLaunchBizhawk_Click(object sender, EventArgs e)
         {
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            string appPath = configs.AppSettings.Settings["BizHawkPath"].Value;
-            Process process = new Process();
-            process.StartInfo.FileName = "cmd.exe"; // Specify the command interpreter
-            process.StartInfo.Arguments = $"/c cd {appPath} && EmuHawk.exe"; // Pass the command as an argument
-            process.StartInfo.CreateNoWindow = true;
-            process.Start(); // Start the BizHawk process
-            process.Close();
+            Process.Start(Path.Combine(configs.AppSettings.Settings["BizHawkPath"].Value, "EmuHawk.exe"));
         }
 
         private async void btnUpdateRandoTools_Click(object sender, EventArgs e)
