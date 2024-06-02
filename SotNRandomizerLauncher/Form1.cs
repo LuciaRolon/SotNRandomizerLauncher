@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.2.5";
+        string launcherVersion = "v0.3.1";
         public frmMain()
         {
             InitializeComponent();
@@ -125,6 +125,15 @@ namespace SotNRandomizerLauncher
             btnUpdateRandoTools.Text = "Updates disabled.";
         }
 
+        public void UpdateRandomizeStatus(int progress, string status)
+        {
+            this.Invoke(new Action(() =>
+            {
+                pgbRandomizing.Value = progress;
+                lblStatus.Text = status;
+            }));            
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             frmConfigure configForm = new frmConfigure();
@@ -149,9 +158,7 @@ namespace SotNRandomizerLauncher
             string ppfFileName = Path.GetFileName(ppfFile).Split('.')[0];
             this.ppfFile = ppfFile;
             lblSelectedSeed.Text = $"Seed Selected: {ppfFileName}";
-            btnPlay.Enabled = true;
-            RandomizeGame();
-            btnPlay.BackColor = Color.PaleGreen;
+            RandomizeGame();            
         }
 
         private void btnRandomize_Click(object sender, EventArgs e)
@@ -159,15 +166,18 @@ namespace SotNRandomizerLauncher
             RandomizeGame();
         }
 
-        void RandomizeGame()
+        async void RandomizeGame()
         {
             try
             {
-                lblStatus.Text = "Randomizing Game...";
-                LauncherClient.RandomizeGame(ppfFile, pgbRandomizing, lblStatus);
-                string ppfFileName = Path.GetFileName(ppfFile).Split('.')[0];
-                LauncherClient.SetAppConfig("LastSeed", ppfFileName);
+                btnPlay.Enabled = false;
                 lblPlayLastSeed.Hide();
+                lblStatus.Text = "Randomizing Game...";
+                await LauncherClient.AsyncRandomizeGame(ppfFile, this);
+                string ppfFileName = Path.GetFileName(ppfFile).Split('.')[0];
+                LauncherClient.SetAppConfig("LastSeed", ppfFileName);                
+                btnPlay.Enabled = true;
+                btnPlay.BackColor = Color.PaleGreen;
             }
             catch (Exception ex)
             {
@@ -176,30 +186,45 @@ namespace SotNRandomizerLauncher
             }
         }
 
-        private void btnPlay_Click(object sender, EventArgs e)
-        {       
-            if(LauncherClient.GetConfigValue("CoreInstalled") == "FastCore")
+        private void LaunchBizhawk()
+        {            
+            string appPath = LauncherClient.GetConfigValue("BizHawkPath");
+            Process process = new Process();
+            process.StartInfo.FileName = Path.Combine(appPath, "EmuHawk.exe");
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.WorkingDirectory = appPath;
+            process.Start(); // Start the BizHawk process
+        }
+
+        private async Task LaunchLiveSplitWithWait()
+        {
+            // Wait before running LiveSplit to prevent overlapping issues with BizHawk
+            await Task.Delay(10000);
+            LaunchLiveSplit();
+            btnPlay.Enabled = true;
+        }
+
+        private void LaunchLiveSplit()
+        {
+            string liveSplitPath = Path.Combine(LauncherClient.GetConfigValue("LiveSplitPath"), "LiveSplit.exe");
+            Process.Start(liveSplitPath); // Start the LiveSplit process
+        }
+
+        private async void btnPlay_Click(object sender, EventArgs e)
+        {
+            if (LauncherClient.GetConfigValue("CoreInstalled") == "FastCore")
             {
                 DialogResult result = MessageBox.Show("You're about to start a run using the Fast Core. Proceed?", "Fast Core Installed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.No) return;
             }
-            Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            string appPath = configs.AppSettings.Settings["BizHawkPath"].Value;
-            Process process = new Process();
-            process.StartInfo.FileName = "cmd.exe"; // Specify the command interpreter
-            process.StartInfo.Arguments = $"/c cd {appPath} && start /b EmuHawk.exe"; // Could probably use a batch file ins
-            process.StartInfo.CreateNoWindow = true;
-            process.Start(); // Start the BizHawk process
-            process.Close();
-            // Wait before running LiveSplit
-            Thread.Sleep(10000);
-            Process.Start(Path.Combine(configs.AppSettings.Settings["LiveSplitPath"].Value, "LiveSplit.exe")); // Start the LiveSplit process
+            btnPlay.Enabled = false;
+            LaunchBizhawk();            
+            await LaunchLiveSplitWithWait();
         }
 
         private void btnLaunchLiveSplit_Click(object sender, EventArgs e)
         {
-            Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            Process.Start(Path.Combine(configs.AppSettings.Settings["LiveSplitPath"].Value, "LiveSplit.exe")); // Start the LiveSplit process
+            LaunchLiveSplit();
         }
 
         private async void btnUpdateLiveSplit_Click(object sender, EventArgs e)
@@ -218,14 +243,7 @@ namespace SotNRandomizerLauncher
 
         private void btnLaunchBizhawk_Click(object sender, EventArgs e)
         {
-            Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            string appPath = configs.AppSettings.Settings["BizHawkPath"].Value;
-            Process process = new Process();
-            process.StartInfo.FileName = "cmd.exe"; // Specify the command interpreter
-            process.StartInfo.Arguments = $"/c cd {appPath} && EmuHawk.exe"; // Pass the command as an argument
-            process.StartInfo.CreateNoWindow = true;
-            process.Start(); // Start the BizHawk process
-            process.Close();
+            LaunchBizhawk();
         }
 
         private async void btnUpdateRandoTools_Click(object sender, EventArgs e)
@@ -339,6 +357,42 @@ namespace SotNRandomizerLauncher
         {
             btnLaunchLiveSplit.Show();
             btnLaunchBizhawk.Show();
+        }
+
+        private async void btnRandomizer_Click(object sender, EventArgs e)
+        {            
+            bool randomizerInstalled = await CheckForRandomizerUpdates();
+            if (!randomizerInstalled) return;
+            frmRandomizer randoForm = new frmRandomizer();
+            randoForm.ShowDialog();
+        }
+
+        async Task<bool> CheckForRandomizerUpdates()
+        {
+            bool randomizerInstalled = LauncherClient.GetConfigValue("RandomizerVersion") != null;
+            try
+            {                
+                bool updateRequired = false;
+                if (!randomizerInstalled)
+                {
+                    DialogResult result = MessageBox.Show("Before we need to install the Randomizer tools. Do you wish to download them?", "Download Randomizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.No) return false;
+                    updateRequired = true;
+                }else if(LauncherClient.GetLatestVersion("LuciaRolon/CompiledRandomizer") != LauncherClient.GetConfigValue("RandomizerVersion"))
+                {
+                    DialogResult result = MessageBox.Show("There is an update available for the Randomizer. Download it?", "Update Randomizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.No) return true;
+                    updateRequired = true;
+                }
+                if(updateRequired) await LauncherClient.DownloadRandomizer();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string error = (randomizerInstalled) ? "updating" : "installing";
+                MessageBox.Show($"Error {error} the Randomizer: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return randomizerInstalled;
         }
     }
 }

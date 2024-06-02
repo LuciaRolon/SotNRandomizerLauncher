@@ -12,7 +12,7 @@ namespace SotNRandomizerLauncher
     {
         public static int GetCurrentVersion()
         {
-            return 2; // Must be updated with every release
+            return 4; // Must be updated with every release
         }
 
         private static int GetInstalledVersion()
@@ -49,8 +49,8 @@ namespace SotNRandomizerLauncher
         {
             switch (version)
             {
-                case 1:
-                    Version1();
+                case 4:
+                    Version4();
                     break;
                 case 2:
                     Version2();
@@ -58,7 +58,7 @@ namespace SotNRandomizerLauncher
             }
         }
 
-        static void Version1()
+        static void Version4()
         {
             // Installs the Preset Files
             if (LauncherClient.GetConfigValue("ImportedUser") != null)

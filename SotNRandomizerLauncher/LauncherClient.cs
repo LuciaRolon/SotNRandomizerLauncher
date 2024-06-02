@@ -86,18 +86,48 @@ namespace SotNRandomizerLauncher
             }            
         }
 
-        public static bool RandomizeGame(string ppfFile, ProgressBar progressBar, Label statusLabel)
+        public static string InitiateStoreFile(string fileRequested, string suggestedFileName, string fileExtension)
         {
-            progressBar.Value = 10;
-            statusLabel.Text = "Creating directory...";
+            // Create an instance of OpenFileDialog
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            // Set properties of the OpenFileDialog
+            string latestPath = GetConfigValue("LastPathBrowsed");
+            saveFileDialog.InitialDirectory = (latestPath == null) ? @"C:\" : latestPath; // Set initial directory
+            saveFileDialog.Title = $"Select your {fileRequested}"; // Set dialog title
+            saveFileDialog.DefaultExt = fileExtension;
+            saveFileDialog.AddExtension = true;
+            saveFileDialog.FileName = suggestedFileName;
+            saveFileDialog.Filter = $"{fileExtension.ToUpper()} files (*.{fileExtension})|*.{fileExtension}"; // Filter files
+
+            // Show the dialog and check if the user selected a file
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Get the selected file path
+                SetLastBrowsed(saveFileDialog.FileName);
+                return saveFileDialog.FileName;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public static async Task AsyncRandomizeGame(string ppfFile, frmMain frmMain)
+        {
+            await Task.Run(() => RandomizeGame(ppfFile, frmMain));
+        }
+
+        public static bool RandomizeGame(string ppfFile, frmMain frmMain)
+        {
+            frmMain.UpdateRandomizeStatus(10, "Creating directory...");
             string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string randomPath = Path.Combine(currentAppDirectory, "files", "randomized");
             Directory.CreateDirectory(randomPath);
-            
+
 
             // First we need to copy the vanilla files, starting from Track 2 & CUE since they're static
-            progressBar.Value = 20;
-            statusLabel.Text = "Copying vanilla files to directory...";
+            frmMain.UpdateRandomizeStatus(20, "Copying vanilla files to directory...");
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             string track2Path = configs.AppSettings.Settings["Track2Path"].Value;            
             string cuePath = configs.AppSettings.Settings["CuePath"].Value;
@@ -112,15 +142,12 @@ namespace SotNRandomizerLauncher
             File.Copy(track1Path, Path.Combine(randomPath, track1FileName), true);
 
             // Randomization Process
-            progressBar.Value = 40;
-            statusLabel.Text = "Applying PPF...";
+            frmMain.UpdateRandomizeStatus(40, "Applying PPF...");
             ExecuteCommand($"\"applyppf3_vc.exe\" a \"files/randomized/{track1FileName}\" \"{ppfFile}\"", "PPF Patching");
-            progressBar.Value = 75;
-            statusLabel.Text = "Executing final touch...";
+            frmMain.UpdateRandomizeStatus(75, "Executing final touch...");
             ExecuteCommand($"\"error_recalc.exe\" \"files/randomized/{track1FileName}\" \"{ppfFile}\"", "ECC Recalculation");
 
-            progressBar.Value = 100;
-            statusLabel.Text = "Game randomized.";
+            frmMain.UpdateRandomizeStatus(100, "Game randomized.");
             return true;
         }
 
@@ -200,6 +227,15 @@ namespace SotNRandomizerLauncher
 
             await Task.Run(() => UpdateRandoToolsApp(downloadForm));
         }
+
+        public async static Task DownloadRandomizer()
+        {
+            frmDownload downloadForm = new frmDownload();
+            downloadForm.Show();
+
+            await Task.Run(() => DownloadRandomizer(downloadForm));
+        }
+
 
         public static void SwapCores(bool toFastCore)
         {
@@ -356,6 +392,14 @@ namespace SotNRandomizerLauncher
             BaseDownloadApp(downloadForm, "RandoTools", "TalicZealot/SotnRandoTools", "Update", ApplyRandoToolsSettings);
         }
 
+        private static void DownloadRandomizer(object obj)
+        {
+            frmDownload downloadForm = (frmDownload)obj;
+            string targetDirectory = BaseUpdateApp(downloadForm, "Randomizer", "LuciaRolon/CompiledRandomizer", "Randomizer");
+            LauncherClient.SetAppConfig($"RandomizerPath", targetDirectory);
+        }
+
+
         private static string BaseUpdateApp(frmDownload downloadForm, string appName, string project, string expectedFile)
         {
             downloadForm.UpdateDownload(0, $"Fetching latest {appName} version...");
@@ -390,10 +434,7 @@ namespace SotNRandomizerLauncher
             downloadForm.UpdateDownload(80, "Applying base Settings...");
             // Then apply base settings
             configOperation(targetDirectory);
-            Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configs.AppSettings.Settings.Remove($"{appName}Path");
-            configs.AppSettings.Settings.Add($"{appName}Path", targetDirectory);
-            configs.Save();
+            LauncherClient.SetAppConfig($"{appName}Path", targetDirectory);
 
             downloadForm.UpdateDownload(100, "Download Complete!");
         }

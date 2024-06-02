@@ -59,6 +59,7 @@
             this.btnPpfFile = new System.Windows.Forms.Button();
             this.lblPlayLastSeed = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnRandomizer = new System.Windows.Forms.Button();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -99,12 +100,11 @@
             // 
             // lblEventSubtext
             // 
-            this.lblEventSubtext.AutoSize = true;
             this.lblEventSubtext.Location = new System.Drawing.Point(107, 39);
             this.lblEventSubtext.Name = "lblEventSubtext";
-            this.lblEventSubtext.Size = new System.Drawing.Size(130, 13);
+            this.lblEventSubtext.Size = new System.Drawing.Size(331, 28);
             this.lblEventSubtext.TabIndex = 2;
-            this.lblEventSubtext.Text = "Event info not available";
+            this.lblEventSubtext.Text = "Event info not available\r\n";
             // 
             // label2
             // 
@@ -417,6 +417,17 @@
             this.toolTip.InitialDelay = 200;
             this.toolTip.ReshowDelay = 40;
             // 
+            // btnRandomizer
+            // 
+            this.btnRandomizer.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRandomizer.Location = new System.Drawing.Point(552, 50);
+            this.btnRandomizer.Name = "btnRandomizer";
+            this.btnRandomizer.Size = new System.Drawing.Size(164, 29);
+            this.btnRandomizer.TabIndex = 8;
+            this.btnRandomizer.Text = "Randomizer";
+            this.btnRandomizer.UseVisualStyleBackColor = true;
+            this.btnRandomizer.Click += new System.EventHandler(this.btnRandomizer_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -424,6 +435,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
             this.ClientSize = new System.Drawing.Size(739, 461);
+            this.Controls.Add(this.btnRandomizer);
             this.Controls.Add(this.lblPlayLastSeed);
             this.Controls.Add(this.grpSeed);
             this.Controls.Add(this.btnPlay);
@@ -485,6 +497,7 @@
         private System.Windows.Forms.LinkLabel lblWeekSeed;
         private System.Windows.Forms.Button btnShow;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Button btnRandomizer;
     }
 }
 
