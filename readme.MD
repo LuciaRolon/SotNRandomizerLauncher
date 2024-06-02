@@ -9,6 +9,7 @@ Welcome! The Symphony of the Night Randomizer Launcher is a tool made to simplif
 - **Automatic Updates**: Let the launcher handle Rando Tools, LiveSplit and BizHawk for you. As soon as a new update for these tools is available, the Launcher will allow you to update them.
 - **PPF Patcher**: Just choose your seed file (PPF), press Play and you're playing the randomizer. No configuration required!
 - **Default Settings**: No need to setup the Autosplitter or the emulator. Everything comes configured. You don't even have to select the ROM!
+- **Randomizer**: Generate your own seeds from any of the presets that have been developed by our community. Generate your PPF, patch it into the game, and play!
 - **News Feed**: Keep up with the latest community news, like the Next Event and the current Seed of the Week. Wanna know more about the community? [Join us at the Long Library Discord!](https://discord.gg/7c22uzVgFE "Join us at the Long Library Discord!")
 
 ## Requirements
