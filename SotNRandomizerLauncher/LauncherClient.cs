@@ -236,6 +236,14 @@ namespace SotNRandomizerLauncher
             await Task.Run(() => DownloadRandomizer(downloadForm));
         }
 
+        public async static Task DownloadPresets()
+        {
+            frmDownload downloadForm = new frmDownload();
+            downloadForm.Show();
+
+            await Task.Run(() => DownloadPresets(downloadForm));
+        }
+
 
         public static void SwapCores(bool toFastCore)
         {
@@ -344,13 +352,45 @@ namespace SotNRandomizerLauncher
             string bizHawkDirectory = Path.Combine(currentAppDirectory, "apps", "BizHawk");            
 
             CopyDirectory(targetDirectory, bizHawkDirectory);
+            return true;
+        }
 
-            string basePresetsPath = Path.Combine(currentAppDirectory, "baseFiles", "Presets.zip");
+        private static bool ApplyPresets(string targetDirectory)
+        {
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string bizHawkDirectory = Path.Combine(currentAppDirectory, "apps", "BizHawk");
             string presetsPath = Path.Combine(bizHawkDirectory, "ExternalTools", "SotnRandoTools", "Presets");
-            ExtractZipWithOverwrite(basePresetsPath, presetsPath);
+            CopyDirectory(targetDirectory, presetsPath);
             return true;
         }
         #endregion
+
+        public static void CheckForPresetUpdates()
+        {
+            // Checks for the latest preset updates, with the option for imported users to ignore the update until next release.
+            string latestPresetsVersion = LauncherClient.GetLatestVersion("LuciaRolon/CompiledRandomizer");
+            bool importedUser = LauncherClient.GetConfigValue("ImportedUser") != null;
+            if (importedUser && LauncherClient.GetConfigValue("PresetsIgnoredVersion") == latestPresetsVersion) return;
+
+            if (latestPresetsVersion != LauncherClient.GetConfigValue("PresetsVersion"))
+            {
+                if (importedUser)
+                {
+                    DialogResult resultPres = MessageBox.Show("There's an update available for RandoTools presets. Do you want to install them? Press No to ignore until next release.", "Imported User Update Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (resultPres == DialogResult.No)
+                    {
+                        LauncherClient.SetAppConfig("PresetsIgnoredVersion", latestPresetsVersion);
+                        return;
+                    }
+                }
+                RunPresetUpdates();
+            }
+        }
+
+        async static void RunPresetUpdates()
+        {
+            await LauncherClient.DownloadPresets();
+        }
 
 
         #region DownloadWorkers
@@ -397,6 +437,12 @@ namespace SotNRandomizerLauncher
             frmDownload downloadForm = (frmDownload)obj;
             string targetDirectory = BaseUpdateApp(downloadForm, "Randomizer", "LuciaRolon/CompiledRandomizer", "Randomizer");
             LauncherClient.SetAppConfig($"RandomizerPath", targetDirectory);
+        }
+
+        private static void DownloadPresets(object obj)
+        {
+            frmDownload downloadForm = (frmDownload)obj;
+            BaseDownloadApp(downloadForm, "Presets", "LuciaRolon/CompiledRandomizer", "Presets", ApplyPresets);
         }
 
 
@@ -592,12 +638,19 @@ namespace SotNRandomizerLauncher
             return configs.AppSettings.Settings["InitialSetupCheck"] == null;
         }
 
-        public static void InitialSetupDone()
+        public async static Task InitialSetupDone()
         {
-            Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configs.AppSettings.Settings.Add("InitialSetupCheck", "Done");
-            configs.Save();
+            // Install the Preset Files
+            DialogResult resultPres = DialogResult.Yes;
+            if (LauncherClient.GetConfigValue("ImportedUser") != null)
+            {
+                resultPres = MessageBox.Show("This installation includes a few optional updates to RandoTools presets. Do you want to install them?", "Imported User Update Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            }
+            if (resultPres == DialogResult.Yes) await DownloadPresets();
+
+            LauncherClient.SetAppConfig("InitialSetupCheck", "Done");
             LauncherClient.SetAppConfig("LauncherVersion", UpdateHandler.GetCurrentVersion().ToString());
+            MessageBox.Show("Setup Successful! You can now use the Randomizer Launcher.", "Setup Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             DialogResult result = MessageBox.Show("It seems this is the first time you're using the Launcher. Do you want to check our Tutorials?", "Welcome to SotN Randomizer!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);            
             if(result == DialogResult.Yes)
             {

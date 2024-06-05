@@ -109,6 +109,7 @@
             this.cbPreset.Name = "cbPreset";
             this.cbPreset.Size = new System.Drawing.Size(305, 21);
             this.cbPreset.TabIndex = 5;
+            this.cbPreset.SelectedIndexChanged += new System.EventHandler(this.cbPreset_SelectedIndexChanged);
             this.cbPreset.SelectedValueChanged += new System.EventHandler(this.cbPreset_SelectedValueChanged);
             // 
             // lblNextEvent

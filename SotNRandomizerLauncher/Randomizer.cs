@@ -97,9 +97,19 @@ namespace SotNRandomizerLauncher
                 {
                     string[] outputLines = output.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                     string equipment = "";
-                    for (int i = 2; i < outputLines.Length; i++)
+                    bool foundStartingEquipment = false;
+                    for (int i = 0; i < outputLines.Length; i++)
                     {
-                        equipment += $"{outputLines[i]}\n";
+                        // This reads the CLI from the point where it starts listing the equipment
+                        if (outputLines[i].ToLower().Contains("starting equipment".ToLower()))  
+                        {
+                            foundStartingEquipment = true;
+                        }
+
+                        if (foundStartingEquipment)
+                        {
+                            equipment += $"{outputLines[i]}\n";
+                        }
                     }
                     updateEquipment(equipment);
                 }

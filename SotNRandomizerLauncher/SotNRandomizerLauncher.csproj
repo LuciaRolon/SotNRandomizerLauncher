@@ -180,9 +180,6 @@
     <None Include="baseFiles\nymashock.wbx.zst">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="baseFiles\Presets.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="baseFiles\PSX-Autosplitter.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

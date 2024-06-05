@@ -47,7 +47,7 @@ namespace SotNRandomizerLauncher
                     arguments += $"r:x:{RelicExtension.ToLower()}";
                 }
             }
-            arguments += $" -o {this.PpfFilePath}";
+            arguments += $" -o \"{this.PpfFilePath}\"";
             if (this.ShowEquipment)
             {
                 arguments += " -vv ";

@@ -49,29 +49,10 @@ namespace SotNRandomizerLauncher
         {
             switch (version)
             {
-                case 4:
-                    Version4();
-                    break;
                 case 2:
                     Version2();
                     break;
             }
-        }
-
-        static void Version4()
-        {
-            // Installs the Preset Files
-            if (LauncherClient.GetConfigValue("ImportedUser") != null)
-            {
-                DialogResult result = MessageBox.Show("This update includes a few changes to RandoTools presets. Do you want to install them? Yes to Install, No to ignore this update.", "Imported User Update Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.No) return;
-            }
-
-            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string bizHawkDirectory = LauncherClient.GetConfigValue("BizHawkPath");
-            string basePresetsPath = Path.Combine(currentAppDirectory, "baseFiles", "Presets.zip");
-            string presetsPath = Path.Combine(bizHawkDirectory, "ExternalTools", "SotnRandoTools", "Presets");
-            LauncherClient.ExtractZipWithOverwrite(basePresetsPath, presetsPath);
         }
 
         static void Version2()

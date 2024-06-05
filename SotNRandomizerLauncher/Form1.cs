@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.3.1";
+        string launcherVersion = "v0.3.2";
         public frmMain()
         {
             InitializeComponent();
@@ -33,25 +33,28 @@ namespace SotNRandomizerLauncher
                 lblPlayLastSeed.Hide();
                 btnPlay.Enabled = false;
             }
-            if (LauncherClient.GetConfigValue("ImportedUser") != null)
+            bool importedUser = LauncherClient.GetConfigValue("ImportedUser") != null;
+            if (importedUser)
             {
                 ImportedVisuals();
             }
             else
             {
-                NormalVisuals();
-                if (!LauncherClient.IsInitialSetup())
+                NormalVisuals();                           
+            }
+
+            if (!LauncherClient.IsInitialSetup())
+            {
+                try
                 {
-                    try
-                    {
-                        CheckForUpdates();
-                    }catch(Exception ex)
-                    {
-                        MessageBox.Show($"Error reaching latest version: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    
-                }                
+                    if(!importedUser) CheckForUpdates();
+                    LauncherClient.CheckForPresetUpdates();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error reaching latest version: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             LoadEvents();
         }
@@ -87,14 +90,14 @@ namespace SotNRandomizerLauncher
                 pbLiveSplit.Image = Properties.Resources.x_update;
                 btnUpdateLiveSplit.Enabled = true;
                 btnUpdateLiveSplit.Text = "Update";
-            }
+            }            
             if (LauncherClient.GetLatestVersion("TalicZealot/SotnRandoTools") != LauncherClient.GetConfigValue("RandoToolsVersion"))
             {
                 pbRandoTools.Image = Properties.Resources.x_update;
                 btnUpdateRandoTools.Enabled = true;
                 btnUpdateRandoTools.Text = "Update";
             }
-            if(LauncherClient.GetLatestVersion("LuciaRolon/SotNRandomizerLauncher") != launcherVersion)
+            if (LauncherClient.GetLatestVersion("LuciaRolon/SotNRandomizerLauncher") != launcherVersion)
             {
                 DialogResult result = MessageBox.Show("A new Launcher version is available for download on GitHub. Want to download the latest update?", "Launcher Version Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if(result == DialogResult.Yes)
@@ -104,6 +107,7 @@ namespace SotNRandomizerLauncher
             }
             UpdateHandler.UpdateLauncher();
         }
+        
 
         void NormalVisuals()
         {
