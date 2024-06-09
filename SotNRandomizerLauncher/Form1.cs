@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.3.2";
+        string launcherVersion = "v0.3.3";
         public frmMain()
         {
             InitializeComponent();

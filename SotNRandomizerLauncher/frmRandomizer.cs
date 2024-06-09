@@ -90,6 +90,12 @@ namespace SotNRandomizerLauncher
 
         RandomizerOptions GetRandomizerOptions()
         {
+            MapColor mapColor = MapColor.Default;
+            if (cbMapColor.Checked)
+            {
+                mapColor = (MapColor)Enum.Parse(typeof(MapColor), cbColor.Text);
+            }
+
             return new RandomizerOptions
             {
                 TournamentMode = cbTournamentMode.Checked,
@@ -97,9 +103,13 @@ namespace SotNRandomizerLauncher
                 ShowEquipment = cbShowEquipment.Checked,
                 AntiFreezeMode = cbAntiFreeze.Checked,
                 MagicMaxMode = cbMagicMax.Checked,
+                ColorRando = cbColorRando.Checked,
+                MyPurseMode = cbMyPurse.Checked,
+                MapColor = mapColor,
+                Complexity = (cbCustomComplexity.Checked) ? int.Parse(cbComplexity.Text) : 0,
                 Seed = txtSeed.Text,
                 Preset = cbPreset.Text,
-                RelicExtension = (cbRelicExtension.Checked) ? cbExtension.Text : ""
+                RelicExtension = (cbRelicExtension.Checked) ? cbExtension.Text : "",
             };
         }
 
@@ -135,7 +145,8 @@ namespace SotNRandomizerLauncher
 
         private void cbRelicExtension_CheckedChanged(object sender, EventArgs e)
         {
-            cbExtension.Enabled = cbRelicExtension.Checked;
+            cbExtension.SelectedIndex = -1;
+            cbExtension.Enabled = cbRelicExtension.Checked;            
         }
 
         private void cbExtension_EnabledChanged(object sender, EventArgs e)
@@ -149,10 +160,47 @@ namespace SotNRandomizerLauncher
         private void cbPreset_SelectedIndexChanged(object sender, EventArgs e)
         {
             // These presets are ONLY available through TinManBot
-            if(cbPreset.Text == "bountyhunter" || cbPreset.Text == "chaos-lite")
+            if(cbPreset.Text == "bountyhunter" || cbPreset.Text == "chaos-lite" || cbPreset.Text == "hitman" || cbPreset.Text == "bountyhunter-tc")
             {
                 MessageBox.Show("This preset is only available through the TinManBot in the Long Library Discord. Join us from the link in the Tutorials tab!", "Locked Preset", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 cbPreset.SelectedIndex = -1;
+            }
+        }
+
+        private void cbComplexity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cbComplexity.Text == "9" || cbComplexity.Text == "10")
+            {
+                MessageBox.Show("Careful! These values may break a seed or make it impossible to complete.", "High Complexity", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+
+        private void cbMapColor_CheckedChanged(object sender, EventArgs e)
+        {
+            cbColor.SelectedIndex = -1;
+            cbColor.Enabled = cbMapColor.Checked;            
+        }
+
+        private void cbCustomComplexity_CheckedChanged(object sender, EventArgs e)
+        {
+            cbComplexity.SelectedIndex = -1;
+            cbComplexity.Enabled = cbCustomComplexity.Checked;            
+        }
+
+        private void cbColor_EnabledChanged(object sender, EventArgs e)
+        {
+            if (cbColor.Enabled)
+            {
+                cbColor.SelectedIndex = 0;
+            }
+        }
+
+        private void cbComplexity_EnabledChanged(object sender, EventArgs e)
+        {
+            if (cbExtension.Enabled)
+            {
+                cbExtension.SelectedIndex = 0;
             }
         }
     }
