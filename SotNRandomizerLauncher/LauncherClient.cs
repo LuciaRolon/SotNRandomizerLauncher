@@ -349,7 +349,14 @@ namespace SotNRandomizerLauncher
         private static bool ApplyRandoToolsSettings(string targetDirectory)
         {
             string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string bizHawkDirectory = Path.Combine(currentAppDirectory, "apps", "BizHawk");            
+            string bizHawkDirectory = Path.Combine(currentAppDirectory, "apps", "BizHawk");
+            if (GetConfigValue("RandoToolsPath") != null) // If this is true, then it is an update.
+            {
+                bizHawkDirectory = Path.Combine(bizHawkDirectory, "ExternalTools");
+                // Now we should delete the old "ExternalTools" folder from the source directory.
+                string externalPath = Path.Combine(targetDirectory, "ExternalTools");
+                if (Directory.Exists(externalPath)) Directory.Delete(externalPath, true);
+            }
 
             CopyDirectory(targetDirectory, bizHawkDirectory);
             return true;
@@ -435,7 +442,7 @@ namespace SotNRandomizerLauncher
         private static void DownloadRandomizer(object obj)
         {
             frmDownload downloadForm = (frmDownload)obj;
-            string targetDirectory = BaseUpdateApp(downloadForm, "Randomizer", "LuciaRolon/CompiledRandomizer", "Randomizer");
+            string targetDirectory = BaseUpdateApp(downloadForm, "Randomizer", "LuciaRolon/CompiledRandomizer", "Randomizer", true);
             LauncherClient.SetAppConfig($"RandomizerPath", targetDirectory);
         }
 
@@ -452,6 +459,7 @@ namespace SotNRandomizerLauncher
             // Get the download URL of the latest LiveSplit release
             DownloadData downloadData = FetchLatest(project, expectedFile, appName);
             string downloadUrl = downloadData.downloadUrl;
+            Console.WriteLine(downloadUrl);
             string releaseVersion = downloadData.releaseVersion;
 
             // Download LiveSplit
@@ -463,6 +471,38 @@ namespace SotNRandomizerLauncher
             downloadForm.UpdateDownload(60, $"Installing {appName}...");
             string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string targetDirectory = Path.Combine(currentAppDirectory, "apps", appName);
+            Directory.CreateDirectory(targetDirectory);
+            ExtractZipWithOverwrite(Path.Combine(currentAppDirectory, $"{appName.ToLower()}_latest.zip"), targetDirectory);
+            //ZipFile.ExtractToDirectory(Path.Combine(currentAppDirectory, $"{appName.ToLower()}_latest.zip"), targetDirectory);
+            File.Delete(Path.Combine(currentAppDirectory, $"{appName.ToLower()}_latest.zip"));
+
+            downloadForm.UpdateDownload(100, "Download Complete!");
+            LauncherClient.SetAppConfig($"{appName}Version", releaseVersion);
+            return targetDirectory;
+        }
+
+        private static string BaseUpdateApp(frmDownload downloadForm, string appName, string project, string expectedFile, bool cleanDownload)
+        {
+            downloadForm.UpdateDownload(0, $"Fetching latest {appName} version...");
+            // Get the download URL of the latest LiveSplit release
+            DownloadData downloadData = FetchLatest(project, expectedFile, appName);
+            string downloadUrl = downloadData.downloadUrl;
+            Console.WriteLine(downloadUrl);
+            string releaseVersion = downloadData.releaseVersion;
+
+            // Download LiveSplit
+            downloadForm.UpdateDownload(5, $"Downloading {appName}...");
+            WebClient downloadClient = new WebClient();
+            downloadClient.DownloadFile(new Uri(downloadUrl), $"{appName.ToLower()}_latest.zip");
+
+            // Extract the app into the corresponding folder
+            downloadForm.UpdateDownload(60, $"Installing {appName}...");
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string targetDirectory = Path.Combine(currentAppDirectory, "apps", appName);
+            if (cleanDownload && Directory.Exists(targetDirectory))
+            {
+                Directory.Delete(targetDirectory, true);
+            }
             Directory.CreateDirectory(targetDirectory);
             ExtractZipWithOverwrite(Path.Combine(currentAppDirectory, $"{appName.ToLower()}_latest.zip"), targetDirectory);
             //ZipFile.ExtractToDirectory(Path.Combine(currentAppDirectory, $"{appName.ToLower()}_latest.zip"), targetDirectory);
@@ -611,7 +651,6 @@ namespace SotNRandomizerLauncher
             {
                 Directory.CreateDirectory(targetDir);
             }
-
             // Get the subdirectories of the source directory
             string[] subDirectories = Directory.GetDirectories(sourceDir);
 

@@ -32,6 +32,7 @@ namespace SotNRandomizerLauncher
         public string Seed { get; set; }
         public MapColor MapColor { get; set; }
         public int Complexity { get; set; }
+        public bool BHSeed { get; set; }
 
 
         public string GenerateArguments()
@@ -53,7 +54,16 @@ namespace SotNRandomizerLauncher
                 if (this.VanillaMusic) arguments += "~m";                
                 if (this.RelicExtension != "") arguments += $"r:x:{RelicExtension.ToLower()}";                
             }
-            arguments += $" -o \"{this.PpfFilePath}\"";
+            if (this.BHSeed)
+            {
+                string track1Path = LauncherClient.GetConfigValue("Track1Path");
+                arguments += $" --in-bin \"{track1Path}\" -o .\\bhseed.bin";
+            }
+            else
+            {
+                arguments += $" -o \"{this.PpfFilePath}\"";
+            }
+            
             if (this.ShowEquipment) arguments += " -vv ";
             
             return arguments;

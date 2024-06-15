@@ -121,11 +121,10 @@
     <value>            How to use the Symphony of the Night Randomizer Launcher
 
 Once the Launcher is done installing, it is very simple to use.
-1- Obtain a PPF File. The PPF file defines the Random Seed, which means it contains all the data to modify the game according to the random preset and seed that you selected. You can obtain a PPF file from sotn.io or using /generate with the TinManBot in The Long Library Discord.
+1- Obtain a PPF File. The PPF file defines the Random Seed, which means it contains all the data to modify the game according to the random preset and seed that you selected. You can generate a PPF file from the Launcher's Randomizer.
 2- Press on "Select Randomizer Preset File (.ppf)". This will open a prompt where you have to select your PPF file.
 3- Press Play! This will create a new Randomized ROM, then open both LiveSplit (for tracking your time) and BizHawk, the emulator with all settings ready to play.
-If you want LiveSplit to track your time automatically, you have to enable the Autosplitter. You can do it by going to BizHawk then pressing Tools &gt; Lua Console. If you see a message stating "Connected to LiveSplit", it's all set up!
-
+Make sure to open the tracker before starting the run and having the "Enable Autosplitter" option in the tracker enabled. To open the tracker go to Tools &gt; External Tools &gt; Randomizer Tools. Then press the Bat icon, and Launch Tracker.
 Last Seed: If you have not selected a new .ppf file, pressing Play will play the latest generated seed, allowing you to continue from where you left.
 
 Individual Options:
@@ -150,7 +149,7 @@ If you have any other questions, you can always ask in the #randomizer channel w
   </data>
   <data name="lblPresetsTutorial.Text" xml:space="preserve">
     <value>As mentioned in the Randomizer Tutorial, Presets define the rules to be changed. Each of the presets can be identified by comparing any of the below factors:
--Relic Locations: Classic, Guarded, Spread, or Equipment. This will identify where the relics should be found throughout the castles.
+-Relic Locations:  This will identify where the relics should be found throughout the castles.
 -Minimum Complexity: Will tell you how many layers of progression are in logic to acquire  the last piece of Vlad.
 -Goals: Almost never changes, and is far more complicated to explain, but one of these items is the final layer of complexity.
 -Item Stats / Sprites: Normal or Randomized. If they are randomized, most of the items will have random stats and sprites.

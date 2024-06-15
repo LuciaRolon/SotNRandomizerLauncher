@@ -110,7 +110,14 @@ namespace SotNRandomizerLauncher
                 Seed = txtSeed.Text,
                 Preset = cbPreset.Text,
                 RelicExtension = (cbRelicExtension.Checked) ? cbExtension.Text : "",
+                BHSeed = IsBHSeed(cbPreset.Text)
             };
+        }
+
+        bool IsBHSeed(string preset)
+        {
+            string[] bhSeeds = { "bountyhunter", "bountyhuntertc", "hitman", "chaos-lite"};
+            return bhSeeds.Contains(preset);
         }
 
         private void cbPreset_SelectedValueChanged(object sender, EventArgs e)
@@ -159,12 +166,7 @@ namespace SotNRandomizerLauncher
 
         private void cbPreset_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // These presets are ONLY available through TinManBot
-            if(cbPreset.Text == "bountyhunter" || cbPreset.Text == "chaos-lite" || cbPreset.Text == "hitman" || cbPreset.Text == "bountyhunter-tc")
-            {
-                MessageBox.Show("This preset is only available through the TinManBot in the Long Library Discord. Join us from the link in the Tutorials tab!", "Locked Preset", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cbPreset.SelectedIndex = -1;
-            }
+            
         }
 
         private void cbComplexity_SelectedIndexChanged(object sender, EventArgs e)

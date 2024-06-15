@@ -184,13 +184,13 @@
             this.ClientSize = new System.Drawing.Size(647, 504);
             this.Controls.Add(this.btnLongLibraryDiscord);
             this.Controls.Add(this.lblSymphonyRando);
-            this.Controls.Add(this.lblRandoTutorial);
             this.Controls.Add(this.btnBack);
-            this.Controls.Add(this.lblTutorialDescription);
             this.Controls.Add(this.lblPresetsTutorial);
             this.Controls.Add(this.lblRandomizer);
             this.Controls.Add(this.lblLauncher);
             this.Controls.Add(this.lblPresets);
+            this.Controls.Add(this.lblRandoTutorial);
+            this.Controls.Add(this.lblTutorialDescription);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

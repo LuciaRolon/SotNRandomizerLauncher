@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SotNRandomizerLauncher
 {
@@ -90,7 +92,10 @@ namespace SotNRandomizerLauncher
                 process.WaitForExit();
                 cts.Cancel();  // Cancel the progress update loop
                 progressBarUpdate(80);
-
+                if (options.BHSeed)
+                {
+                    RandomizeBHSeed(options);
+                }
 
                 updateSeed($"Seed: {options.Seed}");
                 if (options.ShowEquipment)
@@ -117,9 +122,54 @@ namespace SotNRandomizerLauncher
                 {
                     updateEquipment("Starting Equipment: Equipment hidden.");
                 }
+                if(error == "" || error == null)
+                {
+                    MessageBox.Show("Seed generated successfully!", "Randomization Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("There was an error during randomization. Please, try again.", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }  
             }
             progressBarUpdate(100);
+            
         }        
+
+        static void RandomizeBHSeed(RandomizerOptions options)
+        {
+            // First, we get the SotN_PSX.org file required by the BH tool
+            string randoFolder = Path.Combine(LauncherClient.GetConfigValue("RandomizerPath"), "Randomizer");
+            string psxOrg = Path.Combine(randoFolder, "SotN_PSX.org");
+            File.Copy(LauncherClient.GetConfigValue("Track1Path"), psxOrg, true);
+            // Generate the BH Tool arguments.
+            string bhBinFile = Path.Combine(randoFolder, "bhseed.bin");  // See RandomizerOptions.GenerateArguments
+            string input = "-input";
+            if (options.Preset == "bountyhuntertc") input = "-tconf";
+            if (options.Preset == "hitman") input = "-hitmn";
+            string arguments = $"{input} \"{bhBinFile}\"";
+            // Call the BH tool
+            string bhToolPath = Path.Combine(randoFolder, "BountyHunter.exe");
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = bhToolPath,
+                Arguments = arguments,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WorkingDirectory = randoFolder
+            };
+            using (Process process = new Process { StartInfo = startInfo })
+            {
+                process.Start();        
+                process.WaitForExit();                
+            }
+            // Now that the PPF is generated, copy it to the target path
+            string bhSeedFile = Path.Combine(randoFolder, "bhseed.PPF");
+            File.Copy(bhSeedFile, options.PpfFilePath, true);
+            // Cleanup the temporary files
+            File.Delete(psxOrg);
+            File.Delete(bhBinFile);
+            File.Delete(bhSeedFile);
+        }
 
         private static async Task UpdateProgressBar(Action<int> progressBarUpdate, int startValue, int endValue, CancellationToken cancellationToken)
         {

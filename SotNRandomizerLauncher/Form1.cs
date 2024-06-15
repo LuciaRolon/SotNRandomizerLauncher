@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.3.3";
+        string launcherVersion = "v0.3.5.2";
         public frmMain()
         {
             InitializeComponent();
@@ -79,11 +79,12 @@ namespace SotNRandomizerLauncher
 
         void CheckForUpdates()
         {
-            if(LauncherClient.GetLatestVersion("TASEmulators/BizHawk") != LauncherClient.GetConfigValue("BizHawkVersion"))
+            UpdateHandler.UpdateLauncher();
+            if (LauncherClient.GetLatestVersion("TASEmulators/BizHawk") != LauncherClient.GetConfigValue("BizHawkVersion"))
             {
                 pbBizhawk.Image = Properties.Resources.x_update;
                 btnUpdateBizhawk.Enabled = true;
-                btnUpdateBizhawk.Text = "Update";
+                btnUpdateBizhawk.Text = "Update";                
             }
             if (LauncherClient.GetLatestVersion("LiveSplit/LiveSplit") != LauncherClient.GetConfigValue("LiveSplitVersion"))
             {
@@ -104,8 +105,7 @@ namespace SotNRandomizerLauncher
                 {
                     Process.Start("https://github.com/LuciaRolon/SotNRandomizerLauncher/releases/latest");
                 }
-            }
-            UpdateHandler.UpdateLauncher();
+            }            
         }
         
 

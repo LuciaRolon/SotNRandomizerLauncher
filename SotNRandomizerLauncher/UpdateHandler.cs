@@ -12,7 +12,7 @@ namespace SotNRandomizerLauncher
     {
         public static int GetCurrentVersion()
         {
-            return 4; // Must be updated with every release
+            return 6; // Must be updated with every release
         }
 
         private static int GetInstalledVersion()
@@ -49,18 +49,28 @@ namespace SotNRandomizerLauncher
         {
             switch (version)
             {
-                case 2:
-                    Version2();
+                case 5:
+                    Version5();
+                    break;
+                case 6:
+                    Version6();
                     break;
             }
         }
 
-        static void Version2()
+        static void Version6()
         {
             // Sets up the files for the Fast Core
             string bizHawkDirectory = LauncherClient.GetConfigValue("BizHawkPath");
             string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
             LauncherClient.StoreCores(currentAppDirectory, bizHawkDirectory);
+            LauncherClient.SwapCores(false);
+            MessageBox.Show("This update has reset your core back to Classic Core. If you want to use the Fast Core, swap it again in the Settings.", "Update Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        static void Version5()
+        {
+            LauncherClient.SetAppConfig("RandoToolsVersion", "1.6.9");
         }
     }
 }
