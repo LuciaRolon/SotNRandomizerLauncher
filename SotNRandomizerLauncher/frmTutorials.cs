@@ -30,6 +30,7 @@ namespace SotNRandomizerLauncher
 
         void ChangeTutorialTab(Label tutorialLabel)
         {
+            HideAllPictures();
             foreach (Label label in this.Controls.OfType<Label>())
             {
                 if (label is LinkLabel || label.Tag != null) continue;
@@ -40,6 +41,39 @@ namespace SotNRandomizerLauncher
                 else
                 {
                     label.Show();
+                }
+            }
+        }
+
+        void HideAllLabels()
+        {
+            foreach (Label label in this.Controls.OfType<Label>())
+            {
+                if (label is LinkLabel || label.Tag != null) continue;
+                label.Hide();
+            }
+        }
+
+        void HideAllPictures()
+        {
+            foreach (PictureBox pbox in this.Controls.OfType<PictureBox>())
+            {
+                pbox.Hide();
+            }
+        }
+
+        void ChangeTutorialTabToPicture(PictureBox tutorialBox)
+        {
+            HideAllLabels();
+            foreach (PictureBox pbox in this.Controls.OfType<PictureBox>())
+            {
+                if (pbox != tutorialBox)
+                {
+                    pbox.Hide();
+                }
+                else
+                {
+                    pbox.Show();
                 }
             }
         }
@@ -101,6 +135,17 @@ namespace SotNRandomizerLauncher
         {
             ChangeTutorialTab(lblPresetsTutorial);
             SetTutorialColor(lblPresets);
+        }
+
+        private void btnAreaRandoTutorial_Click(object sender, EventArgs e)
+        {
+            ChangeTutorialTabToPicture(pbAreaRandoTutorial);
+            SetTutorialColor(btnAreaRandoTutorial);
+        }
+
+        public void OpenAreaRandoTutorial()
+        {
+            btnAreaRandoTutorial.PerformClick();
         }
     }
 }

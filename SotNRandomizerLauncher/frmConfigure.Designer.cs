@@ -48,10 +48,17 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.cbImport = new System.Windows.Forms.CheckBox();
             this.grpEmulation = new System.Windows.Forms.GroupBox();
+            this.lblCurrentCore = new System.Windows.Forms.Label();
             this.btnChangeCore = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.lblCurrentCore = new System.Windows.Forms.Label();
+            this.cbAreaRando = new System.Windows.Forms.CheckBox();
+            this.cbMapTracker = new System.Windows.Forms.CheckBox();
+            this.grpLauncherSettings = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnSharePPF = new System.Windows.Forms.Button();
+            this.cbLiveSplit = new System.Windows.Forms.CheckBox();
             this.grpEmulation.SuspendLayout();
+            this.grpLauncherSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtBiosPath
@@ -247,6 +254,19 @@
             this.grpEmulation.Text = "Emulation Settings";
             this.grpEmulation.Visible = false;
             // 
+            // lblCurrentCore
+            // 
+            this.lblCurrentCore.AutoSize = true;
+            this.lblCurrentCore.BackColor = System.Drawing.Color.Transparent;
+            this.lblCurrentCore.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentCore.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblCurrentCore.Location = new System.Drawing.Point(11, 18);
+            this.lblCurrentCore.Name = "lblCurrentCore";
+            this.lblCurrentCore.Size = new System.Drawing.Size(145, 13);
+            this.lblCurrentCore.TabIndex = 19;
+            this.lblCurrentCore.Text = "Core Installed: Classic Core";
+            this.lblCurrentCore.Click += new System.EventHandler(this.label5_Click);
+            // 
             // btnChangeCore
             // 
             this.btnChangeCore.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -268,18 +288,86 @@
             this.toolTip.InitialDelay = 200;
             this.toolTip.ReshowDelay = 40;
             // 
-            // lblCurrentCore
+            // cbAreaRando
             // 
-            this.lblCurrentCore.AutoSize = true;
-            this.lblCurrentCore.BackColor = System.Drawing.Color.Transparent;
-            this.lblCurrentCore.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrentCore.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblCurrentCore.Location = new System.Drawing.Point(11, 18);
-            this.lblCurrentCore.Name = "lblCurrentCore";
-            this.lblCurrentCore.Size = new System.Drawing.Size(145, 13);
-            this.lblCurrentCore.TabIndex = 19;
-            this.lblCurrentCore.Text = "Core Installed: Classic Core";
-            this.lblCurrentCore.Click += new System.EventHandler(this.label5_Click);
+            this.cbAreaRando.AutoSize = true;
+            this.cbAreaRando.Location = new System.Drawing.Point(8, 72);
+            this.cbAreaRando.Name = "cbAreaRando";
+            this.cbAreaRando.Size = new System.Drawing.Size(153, 17);
+            this.cbAreaRando.TabIndex = 1;
+            this.cbAreaRando.Text = "Enable Area Randomizer";
+            this.toolTip.SetToolTip(this.cbAreaRando, "Enables Area Randomization, which changes the game so red doors teleport you to a" +
+        "nother random red door.\r\nWARNING: This is only recommended for advanced players." +
+        "");
+            this.cbAreaRando.UseVisualStyleBackColor = true;
+            this.cbAreaRando.CheckedChanged += new System.EventHandler(this.cbAreaRando_CheckedChanged);
+            // 
+            // cbMapTracker
+            // 
+            this.cbMapTracker.AutoSize = true;
+            this.cbMapTracker.Location = new System.Drawing.Point(8, 95);
+            this.cbMapTracker.Name = "cbMapTracker";
+            this.cbMapTracker.Size = new System.Drawing.Size(162, 17);
+            this.cbMapTracker.TabIndex = 2;
+            this.cbMapTracker.Text = "Open Map Tracker on Play";
+            this.toolTip.SetToolTip(this.cbMapTracker, "Enables the Map Tracker for Area Randomizer Seeds");
+            this.cbMapTracker.UseVisualStyleBackColor = true;
+            this.cbMapTracker.CheckedChanged += new System.EventHandler(this.cbMapTracker_CheckedChanged);
+            // 
+            // grpLauncherSettings
+            // 
+            this.grpLauncherSettings.BackColor = System.Drawing.Color.Transparent;
+            this.grpLauncherSettings.Controls.Add(this.button1);
+            this.grpLauncherSettings.Controls.Add(this.btnSharePPF);
+            this.grpLauncherSettings.Controls.Add(this.cbMapTracker);
+            this.grpLauncherSettings.Controls.Add(this.cbAreaRando);
+            this.grpLauncherSettings.Controls.Add(this.cbLiveSplit);
+            this.grpLauncherSettings.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpLauncherSettings.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.grpLauncherSettings.Location = new System.Drawing.Point(239, 40);
+            this.grpLauncherSettings.Name = "grpLauncherSettings";
+            this.grpLauncherSettings.Size = new System.Drawing.Size(318, 127);
+            this.grpLauncherSettings.TabIndex = 20;
+            this.grpLauncherSettings.TabStop = false;
+            this.grpLauncherSettings.Text = "Launcher Settings";
+            this.grpLauncherSettings.Visible = false;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button1.Location = new System.Drawing.Point(167, 16);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(145, 47);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "Open Randomized ROM Folder";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnSharePPF
+            // 
+            this.btnSharePPF.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSharePPF.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnSharePPF.Location = new System.Drawing.Point(167, 72);
+            this.btnSharePPF.Name = "btnSharePPF";
+            this.btnSharePPF.Size = new System.Drawing.Size(145, 40);
+            this.btnSharePPF.TabIndex = 20;
+            this.btnSharePPF.Text = "Share Area Rando PPF";
+            this.btnSharePPF.UseVisualStyleBackColor = true;
+            this.btnSharePPF.Click += new System.EventHandler(this.btnSharePPF_Click);
+            // 
+            // cbLiveSplit
+            // 
+            this.cbLiveSplit.AutoSize = true;
+            this.cbLiveSplit.Checked = true;
+            this.cbLiveSplit.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbLiveSplit.Location = new System.Drawing.Point(8, 21);
+            this.cbLiveSplit.Name = "cbLiveSplit";
+            this.cbLiveSplit.Size = new System.Drawing.Size(143, 17);
+            this.cbLiveSplit.TabIndex = 0;
+            this.cbLiveSplit.Text = "Open LiveSplit on Play";
+            this.cbLiveSplit.UseVisualStyleBackColor = true;
+            this.cbLiveSplit.CheckedChanged += new System.EventHandler(this.cbLiveSplit_CheckedChanged);
             // 
             // frmConfigure
             // 
@@ -288,6 +376,7 @@
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
             this.ClientSize = new System.Drawing.Size(595, 481);
             this.ControlBox = false;
+            this.Controls.Add(this.grpLauncherSettings);
             this.Controls.Add(this.grpEmulation);
             this.Controls.Add(this.cbImport);
             this.Controls.Add(this.btnExit);
@@ -312,6 +401,8 @@
             this.Text = "Symphony of the Night Randomizer Launcher - Setup";
             this.grpEmulation.ResumeLayout(false);
             this.grpEmulation.PerformLayout();
+            this.grpLauncherSettings.ResumeLayout(false);
+            this.grpLauncherSettings.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -340,5 +431,11 @@
         private System.Windows.Forms.Button btnChangeCore;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Label lblCurrentCore;
+        private System.Windows.Forms.GroupBox grpLauncherSettings;
+        private System.Windows.Forms.Button btnSharePPF;
+        private System.Windows.Forms.CheckBox cbMapTracker;
+        private System.Windows.Forms.CheckBox cbAreaRando;
+        private System.Windows.Forms.CheckBox cbLiveSplit;
+        private System.Windows.Forms.Button button1;
     }
 }

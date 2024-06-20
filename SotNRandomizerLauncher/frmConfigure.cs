@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime;
 
 namespace SotNRandomizerLauncher
 {
@@ -78,6 +79,8 @@ namespace SotNRandomizerLauncher
                 cbImport.Hide();
                 grpEmulation.Show();
                 lblDescription.Hide();
+                grpLauncherSettings.Show();
+                LoadOptions();
             }
             else
             {
@@ -202,6 +205,80 @@ namespace SotNRandomizerLauncher
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        void LoadOptions()
+        {
+            cbLiveSplit.Checked = LauncherClient.GetConfigValue("OpenLiveSplit") == "Yes" || LauncherClient.GetConfigValue("OpenLiveSplit") == null;  // This is the default setting
+            bool areaRandoEnabled = LauncherClient.GetConfigValue("AreaRandoEnabled") == "Yes";
+            cbAreaRando.Checked = areaRandoEnabled;
+            cbMapTracker.Checked = LauncherClient.GetConfigValue("MapTrackerEnabled") == "Yes";
+            btnSharePPF.Enabled = LauncherClient.GetConfigValue("LastAreaRandoSeed") != null;
+        }
+
+        private void cbLiveSplit_CheckedChanged(object sender, EventArgs e)
+        {
+            string liveSplitChecked = "Yes";
+            if (!cbLiveSplit.Checked) liveSplitChecked = "No";
+            LauncherClient.SetAppConfig("OpenLiveSplit", liveSplitChecked);
+        }
+
+        private void cbAreaRando_CheckedChanged(object sender, EventArgs e)
+        {
+            if(LauncherClient.GetConfigValue("AreaRandoEnabled") == null) // This means this is the first time starting the area rando
+            {
+                if (!cbAreaRando.Checked) return;
+                if (!LauncherClient.InstallAreaRando())
+                {
+                    cbAreaRando.Checked = false;
+                    return;
+                }
+                DialogResult result = MessageBox.Show("This is your first time using the Area Randomizer. Do you want to check the Area Randomizer tool tutorial?", "Area Rando Tutorial", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(result == DialogResult.Yes)
+                {
+                    frmTutorials frmTutorial = new frmTutorials();
+                    frmTutorial.ShowDialog();
+                }
+            }
+            string areaRandoChecked = "Yes";
+            if (!cbAreaRando.Checked) areaRandoChecked = "No";
+            LauncherClient.SetAppConfig("AreaRandoEnabled", areaRandoChecked); 
+        }
+
+        private void cbMapTracker_CheckedChanged(object sender, EventArgs e)
+        {
+            if (LauncherClient.GetConfigValue("MapTrackerEnabled") == null) // This means this is the first time starting the map tracker
+            {
+                LauncherClient.InstallMapTracker();
+            }
+            string mapTrackerChecked = "Yes";
+            if (!cbMapTracker.Checked) mapTrackerChecked = "No";
+            LauncherClient.SetAppConfig("MapTrackerEnabled", mapTrackerChecked);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string randomizedRomPath = Path.Combine(currentAppDirectory, "files", "randomized");
+            if (!Directory.Exists(randomizedRomPath))
+            {
+                MessageBox.Show("No randomized ROM found. Start by generating a PPF and patching it from the main menu!", "No randomized ROM", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Process.Start(randomizedRomPath);
+        }
+
+        private void btnSharePPF_Click(object sender, EventArgs e)
+        {
+            string seedName = LauncherClient.GetConfigValue("LastAreaRandoSeed");
+            string suggestedFileName = $"{seedName}-AR.ppf";
+            string targetPath = LauncherClient.InitiateStoreFile("PPF Path", suggestedFileName, "ppf");
+            // The PPF file is generated in the same folder as the randomized BIN, with the same name as track 1 but .ppf
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string randomizedRomPath = Path.Combine(currentAppDirectory, "files", "randomized");
+            string track1FileName = $"{Path.GetFileNameWithoutExtension(LauncherClient.GetConfigValue("Track1Path"))}.ppf";
+            string sourcePpf = Path.Combine(randomizedRomPath, track1FileName);
+            File.Copy(sourcePpf, targetPath);
         }
     }
 }

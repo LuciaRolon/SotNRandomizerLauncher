@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.3.5.2";
+        string launcherVersion = "v0.4.1";
         public frmMain()
         {
             InitializeComponent();
@@ -57,6 +57,7 @@ namespace SotNRandomizerLauncher
                 }
             }
             LoadEvents();
+            
         }
 
         void LoadEvents()
@@ -152,13 +153,18 @@ namespace SotNRandomizerLauncher
 
         private void btnPpfFile_Click(object sender, EventArgs e)
         {
-            string ppfFileChosen = LauncherClient.RequestFile("Select your Randomizer Preset file (.ppf)", "ppf");
+            string ppfFileChosen = LauncherClient.RequestFile("Select your Randomizer Seed file (.ppf)", "ppf");
             if(ppfFileChosen == "") return;
             SetPPF(ppfFileChosen);            
         }
 
         void SetPPF(string ppfFile)
         {
+            if (LauncherClient.GetConfigValue("AreaRandoEnabled") == "Yes")
+            {
+                DialogResult result = MessageBox.Show("The Area Randomizer is enabled. This will open the AR tool after patching the game. Proceed?", "Area Randomizer Enabled", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No) return;
+            }
             string ppfFileName = Path.GetFileName(ppfFile).Split('.')[0];
             this.ppfFile = ppfFile;
             lblSelectedSeed.Text = $"Seed Selected: {ppfFileName}";
@@ -182,12 +188,37 @@ namespace SotNRandomizerLauncher
                 LauncherClient.SetAppConfig("LastSeed", ppfFileName);                
                 btnPlay.Enabled = true;
                 btnPlay.BackColor = Color.PaleGreen;
+                if (LauncherClient.GetConfigValue("AreaRandoEnabled") == "Yes") {
+                    OpenAreaRandoTool();
+                    LauncherClient.SetAppConfig("LastAreaRandoSeed", ppfFileName);
+                }
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error randomizing: {ex.Message}", "Error during Randomization", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        void OpenAreaRandoTool()
+        {
+            string appPath = LauncherClient.GetConfigValue("AreaRandoPath");
+            Process process = new Process();
+            process.StartInfo.FileName = Path.Combine(appPath, "SOTN_AR.exe");
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.WorkingDirectory = appPath;
+            process.Start(); // Start the Area Rando Tool process
+        }
+
+        void OpenMapTrackerTool()
+        {
+            string appPath = LauncherClient.GetConfigValue("MapTrackerPath");
+            Process process = new Process();
+            process.StartInfo.FileName = Path.Combine(appPath, "SOTN_AR_MAPPER.exe");
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.WorkingDirectory = appPath;
+            process.Start(); // Start the Area Rando Map Tracker process
         }
 
         private void LaunchBizhawk()
@@ -204,7 +235,7 @@ namespace SotNRandomizerLauncher
         {
             // Wait before running LiveSplit to prevent overlapping issues with BizHawk
             await Task.Delay(10000);
-            LaunchLiveSplit();
+            if (LauncherClient.GetConfigValue("OpenLiveSplit") != "No") LaunchLiveSplit();
             btnPlay.Enabled = true;
         }
 
@@ -222,8 +253,9 @@ namespace SotNRandomizerLauncher
                 if (result == DialogResult.No) return;
             }
             btnPlay.Enabled = false;
-            LaunchBizhawk();            
+            LaunchBizhawk();         
             await LaunchLiveSplitWithWait();
+            if (LauncherClient.GetConfigValue("MapTrackerEnabled") == "Yes") OpenMapTrackerTool();
         }
 
         private void btnLaunchLiveSplit_Click(object sender, EventArgs e)
@@ -272,6 +304,7 @@ namespace SotNRandomizerLauncher
             {
                 frmConfigure configForm = new frmConfigure();
                 configForm.ShowDialog();
+                ActivateAfterDelay(500);
             }    
             if (LauncherClient.GetConfigValue("ImportedUser") != null)
             {
@@ -281,6 +314,19 @@ namespace SotNRandomizerLauncher
             {
                 NormalVisuals();
             }
+        }
+
+        void ActivateAfterDelay(int miliseconds)
+        {
+            // Use a timer to ensure the focus operation happens after the dialog closes completely
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = miliseconds; // 100 milliseconds delay
+            timer.Tick += (s, args) =>
+            {
+                timer.Stop();
+                this.Activate();
+            };
+            timer.Start();
         }
 
         private void btnTutorials_Click(object sender, EventArgs e)
@@ -379,7 +425,7 @@ namespace SotNRandomizerLauncher
                 bool updateRequired = false;
                 if (!randomizerInstalled)
                 {
-                    DialogResult result = MessageBox.Show("Before we need to install the Randomizer tools. Do you wish to download them?", "Download Randomizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show("Before we need to install the Randomizer. Do you wish to download it?", "Download Randomizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.No) return false;
                     updateRequired = true;
                 }else if(LauncherClient.GetLatestVersion("LuciaRolon/CompiledRandomizer") != LauncherClient.GetConfigValue("RandomizerVersion"))

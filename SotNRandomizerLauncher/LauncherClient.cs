@@ -113,6 +113,30 @@ namespace SotNRandomizerLauncher
             }
         }
 
+        public static bool InstallAreaRando()
+        {
+            DialogResult result = MessageBox.Show("Enabling this option will install the Area Randomizer. This will be around 600MB. Install?", "Install Area Randomizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No) return false;
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            // Extract the Area Rando Tool
+            string areaRandoPath = Path.Combine(currentAppDirectory, "apps", "AreaRando");
+            ExtractZipWithOverwrite(Path.Combine(currentAppDirectory, "baseFiles", "AreaRando.zip"), areaRandoPath);
+            LauncherClient.SetAppConfig("AreaRandoPath", areaRandoPath);            
+            // Copy the BIN as a .org to the Area Rando tool path for PPF generation
+            File.Copy(LauncherClient.GetConfigValue("Track1Path"), Path.Combine(areaRandoPath, "SotN_PSX.org"), true);
+            MessageBox.Show("Area Randomizer installed successfully!", "Installation Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return true;
+        }
+
+        public static void InstallMapTracker()
+        {
+            // Extract the Map Tracker Tool
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string mapTrackerPath = Path.Combine(currentAppDirectory, "apps", "AreaRandoMapTracker");
+            ExtractZipWithOverwrite(Path.Combine(currentAppDirectory, "baseFiles", "AreaRandoTracker.zip"), mapTrackerPath);
+            LauncherClient.SetAppConfig("MapTrackerPath", mapTrackerPath);
+        }
+
         public static async Task AsyncRandomizeGame(string ppfFile, frmMain frmMain)
         {
             await Task.Run(() => RandomizeGame(ppfFile, frmMain));
@@ -324,8 +348,9 @@ namespace SotNRandomizerLauncher
             string autosplitterTargetPath = Path.Combine(targetDirectory, "PSX-Autosplitter.lua");
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "Castlevania - Symphony of the Night (USA).SaveRAM"), saveRamFilePath, true);
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "config.ini"), cfgTargetPath, true);
-            File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "PSX-Autosplitter.lua"), autosplitterTargetPath, true);            
-            string randomPath = Path.Combine(currentAppDirectory, "files", "randomized", "Castlevania - Symphony of the Night (USA).cue");
+            File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "PSX-Autosplitter.lua"), autosplitterTargetPath, true);
+            string cuePath = GetConfigValue("CuePath");
+            string randomPath = Path.Combine(currentAppDirectory, "files", "randomized", Path.GetFileName(cuePath));
             randomPath = randomPath.Replace(@"\", @"\\");
             autosplitterTargetPath = autosplitterTargetPath.Replace(@"\", @"\\");
             ModifyConfigFile(
@@ -341,7 +366,7 @@ namespace SotNRandomizerLauncher
             // Install BIOS
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             string biosPath = configs.AppSettings.Settings["BiosPath"].Value;
-            File.Copy(biosPath, Path.Combine(targetDirectory, "Firmware", "scph7003.bin"), true);
+            File.Copy(biosPath, Path.Combine(targetDirectory, "Firmware", Path.GetFileName(biosPath)), true);
 
             return true;
         }

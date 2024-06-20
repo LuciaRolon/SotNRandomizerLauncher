@@ -393,7 +393,7 @@
             this.btnPpfFile.Name = "btnPpfFile";
             this.btnPpfFile.Size = new System.Drawing.Size(210, 49);
             this.btnPpfFile.TabIndex = 0;
-            this.btnPpfFile.Text = "Select your Randomizer\r\nPreset file (.ppf)";
+            this.btnPpfFile.Text = "Select your Randomizer\r\nSeed file (.ppf)";
             this.btnPpfFile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnPpfFile.UseVisualStyleBackColor = false;
             this.btnPpfFile.Click += new System.EventHandler(this.btnPpfFile_Click);

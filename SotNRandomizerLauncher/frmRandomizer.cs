@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,7 @@ namespace SotNRandomizerLauncher
     public partial class frmRandomizer : Form
     {
         int secondsGenerating = 0;
+        private Dictionary<string, PresetInfo> presetDictionary;
         public frmRandomizer()
         {
             InitializeComponent();
@@ -23,18 +25,20 @@ namespace SotNRandomizerLauncher
         }
 
         void GetPresets()
-        {
-            string randoFolder = Path.Combine(LauncherClient.GetConfigValue("RandomizerPath"), "Randomizer");
-            string presetsFolder = Path.Combine(randoFolder, "build", "presets");
-            string[] files = Directory.GetFiles(presetsFolder);
+        {           
             cbPreset.Items.Clear();
-            // Extract file names without extensions
-            for (int i = 0; i < files.Length; i++)
-            {
-                string presetName = Path.GetFileNameWithoutExtension(files[i]);
-                if (presetName.ToLower() == "index") continue;
-                cbPreset.Items.Add(presetName);
-            }            
+            string jsonFilePath = Path.Combine(LauncherClient.GetConfigValue("RandomizerPath"), "Randomizer", "preset-data.json");
+            string jsonString = File.ReadAllText(jsonFilePath);
+            var presets = JsonConvert.DeserializeObject<List<PresetInfo>>(jsonString);
+
+            // Store presets in a dictionary for quick lookup
+            presetDictionary = presets.ToDictionary(p => p.Name, p => p);
+            // Sort presets by Name
+            presets.Sort((preset1, preset2) => string.Compare(preset1.Name, preset2.Name));
+
+            // Populate ComboBox with names
+            cbPreset.DataSource = presets;
+            cbPreset.DisplayMember = "Name";        
         }
 
         private void txtSeed_MouseClick(object sender, MouseEventArgs e)
@@ -108,9 +112,9 @@ namespace SotNRandomizerLauncher
                 MapColor = mapColor,
                 Complexity = (cbCustomComplexity.Checked) ? int.Parse(cbComplexity.Text) : 0,
                 Seed = txtSeed.Text,
-                Preset = cbPreset.Text,
+                Preset = presetDictionary[cbPreset.Text].Id,
                 RelicExtension = (cbRelicExtension.Checked) ? cbExtension.Text : "",
-                BHSeed = IsBHSeed(cbPreset.Text)
+                BHSeed = IsBHSeed(presetDictionary[cbPreset.Text].Id)
             };
         }
 
@@ -123,6 +127,16 @@ namespace SotNRandomizerLauncher
         private void cbPreset_SelectedValueChanged(object sender, EventArgs e)
         {
             btnGeneratePPF.Enabled = true;
+            try
+            {
+                string description = presetDictionary[cbPreset.Text].Description;
+                string author = presetDictionary[cbPreset.Text].Author;
+                toolTip.SetToolTip(lblDescription, $"{description}\nAuthor: {author}");
+            }
+            catch (Exception)
+            {
+                toolTip.SetToolTip(lblDescription, "No preset selected");
+            }            
         }
 
         private void frmRandomizer_Load(object sender, EventArgs e)
