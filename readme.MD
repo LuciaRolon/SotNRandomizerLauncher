@@ -43,3 +43,16 @@ You can upload your issue or question through [GitHub Issues](https://github.com
 - Does the Launcher include the game?
 
 No. Distributing the game is not allowed. Please, don't ask for it through issues or the Long Library Discord. You can probably find it online. The Launcher will tell you what is needed to play during setup.
+
+## External Tools Used in this Project
+- [BizHawk](https://github.com/TASEmulators/BizHawk) - Emulator used to run the game.
+- [LiveSplit](https://github.com/LiveSplit/LiveSplit) - Time tracker to measure your best times.
+- [SotN-Randomizer](https://github.com/eldri7ch2/SotN-Randomizer-Adv). Compiled with [nexe](https://github.com/nexe/nexe) at the [CompiledRandomizer](https://github.com/LuciaRolon/CompiledRandomizer) project. - Used to generate seeds in the Randomizer section.
+- [Area Randomizer Tool](https://github.com/MottZilla/Sotn_AR) - Allows you to randomize red doors.
+- [Area Randomizer Map Tracker](https://github.com/MottZilla/SOTN_AR_MAPPER) - Allows you to have a map helper to track Area Rando doors.
+- [Bounty Hunter Tool](https://github.com/MottZilla/BountyHunterTool) - Used to generate the cards for Bounty Hunter seeds.
+- [SotN Rando Tools](https://github.com/TalicZealot/SotnRandoTools) - Adds a tracker for your current randomizer progress in-game, along with other features.
+- [ppfdev/applyppf3_vc.exe](https://github.com/meunierd/ppf) - Applies the PPF patch to a BIN file.
+- [error_recalc](https://www.romhacking.net/utilities/1264/) - Executes the ECC/EDC recalculation to prevent errors.
+- [NymaFast Core](https://github.com/MottZilla/SOTN_NymaFastCore) - Adds more memory and faster load times to the emulator.
+- [Inno Setup](https://jrsoftware.org/isinfo.php) - Used to build the Installer
