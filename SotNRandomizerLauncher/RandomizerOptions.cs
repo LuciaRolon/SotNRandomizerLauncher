@@ -33,6 +33,8 @@ namespace SotNRandomizerLauncher
         public MapColor MapColor { get; set; }
         public int Complexity { get; set; }
         public bool BHSeed { get; set; }
+        public bool AreaRando { get; set; }
+        public AreaRandoOptions AreaRandoOptions { get; set; }
 
 
         public string GenerateArguments()

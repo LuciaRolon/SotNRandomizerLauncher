@@ -185,6 +185,7 @@ namespace SotNRandomizerLauncher
             frmImport frmImport = new frmImport(this);
             frmImport.ShowDialog();
             StoreCores();
+            LauncherClient.InstallAreaRando();
         }
 
         async Task NewUserProcess()
@@ -192,13 +193,14 @@ namespace SotNRandomizerLauncher
             await LauncherClient.DownloadLiveSplit();
             await LauncherClient.DownloadBizHawk();
             await LauncherClient.DownloadRandoTools();
-            StoreCores();            
+            StoreCores();
+            LauncherClient.InstallAreaRando();
         }
 
         private void btnChangeCore_Click(object sender, EventArgs e)
         {
             // If the classic core is installed, swaps to Fast. Else, swaps to Classic.
-            LauncherClient.SwapCores(this.classicCoreInstalled);
+            LauncherClient.SwapCores(this.classicCoreInstalled, cbCompatibilityFastCore.Checked);
             ChangeCoreData();
         }
 
@@ -211,9 +213,7 @@ namespace SotNRandomizerLauncher
         {
             cbLiveSplit.Checked = LauncherClient.GetConfigValue("OpenLiveSplit") == "Yes" || LauncherClient.GetConfigValue("OpenLiveSplit") == null;  // This is the default setting
             bool areaRandoEnabled = LauncherClient.GetConfigValue("AreaRandoEnabled") == "Yes";
-            cbAreaRando.Checked = areaRandoEnabled;
             cbMapTracker.Checked = LauncherClient.GetConfigValue("MapTrackerEnabled") == "Yes";
-            btnSharePPF.Enabled = LauncherClient.GetConfigValue("LastAreaRandoSeed") != null;
         }
 
         private void cbLiveSplit_CheckedChanged(object sender, EventArgs e)
@@ -225,24 +225,7 @@ namespace SotNRandomizerLauncher
 
         private void cbAreaRando_CheckedChanged(object sender, EventArgs e)
         {
-            if(LauncherClient.GetConfigValue("AreaRandoEnabled") == null) // This means this is the first time starting the area rando
-            {
-                if (!cbAreaRando.Checked) return;
-                if (!LauncherClient.InstallAreaRando())
-                {
-                    cbAreaRando.Checked = false;
-                    return;
-                }
-                DialogResult result = MessageBox.Show("This is your first time using the Area Randomizer. Do you want to check the Area Randomizer tool tutorial?", "Area Rando Tutorial", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if(result == DialogResult.Yes)
-                {
-                    frmTutorials frmTutorial = new frmTutorials();
-                    frmTutorial.ShowDialog();
-                }
-            }
-            string areaRandoChecked = "Yes";
-            if (!cbAreaRando.Checked) areaRandoChecked = "No";
-            LauncherClient.SetAppConfig("AreaRandoEnabled", areaRandoChecked); 
+            
         }
 
         private void cbMapTracker_CheckedChanged(object sender, EventArgs e)

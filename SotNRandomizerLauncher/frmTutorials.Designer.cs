@@ -38,9 +38,6 @@
             this.lblRandomizer = new System.Windows.Forms.Button();
             this.lblLauncher = new System.Windows.Forms.Button();
             this.lblPresets = new System.Windows.Forms.Button();
-            this.btnAreaRandoTutorial = new System.Windows.Forms.Button();
-            this.pbAreaRandoTutorial = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAreaRandoTutorial)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTutorialDescription
@@ -178,38 +175,6 @@
             this.lblPresets.UseVisualStyleBackColor = false;
             this.lblPresets.Click += new System.EventHandler(this.lblPresets_Click);
             // 
-            // btnAreaRandoTutorial
-            // 
-            this.btnAreaRandoTutorial.BackColor = System.Drawing.Color.Transparent;
-            this.btnAreaRandoTutorial.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnAreaRandoTutorial.FlatAppearance.BorderSize = 0;
-            this.btnAreaRandoTutorial.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Brown;
-            this.btnAreaRandoTutorial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
-            this.btnAreaRandoTutorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAreaRandoTutorial.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAreaRandoTutorial.ForeColor = System.Drawing.Color.Transparent;
-            this.btnAreaRandoTutorial.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnAreaRandoTutorial.Location = new System.Drawing.Point(12, 167);
-            this.btnAreaRandoTutorial.Name = "btnAreaRandoTutorial";
-            this.btnAreaRandoTutorial.Size = new System.Drawing.Size(149, 32);
-            this.btnAreaRandoTutorial.TabIndex = 12;
-            this.btnAreaRandoTutorial.Tag = "btn";
-            this.btnAreaRandoTutorial.Text = "Area Rando Tutorial";
-            this.btnAreaRandoTutorial.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.btnAreaRandoTutorial.UseVisualStyleBackColor = false;
-            this.btnAreaRandoTutorial.Click += new System.EventHandler(this.btnAreaRandoTutorial_Click);
-            // 
-            // pbAreaRandoTutorial
-            // 
-            this.pbAreaRandoTutorial.Image = global::SotNRandomizerLauncher.Properties.Resources.Area_Rando_Guide;
-            this.pbAreaRandoTutorial.Location = new System.Drawing.Point(167, 23);
-            this.pbAreaRandoTutorial.Name = "pbAreaRandoTutorial";
-            this.pbAreaRandoTutorial.Size = new System.Drawing.Size(461, 455);
-            this.pbAreaRandoTutorial.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbAreaRandoTutorial.TabIndex = 13;
-            this.pbAreaRandoTutorial.TabStop = false;
-            this.pbAreaRandoTutorial.Visible = false;
-            // 
             // frmTutorials
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -217,8 +182,6 @@
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(647, 504);
-            this.Controls.Add(this.pbAreaRandoTutorial);
-            this.Controls.Add(this.btnAreaRandoTutorial);
             this.Controls.Add(this.btnLongLibraryDiscord);
             this.Controls.Add(this.lblSymphonyRando);
             this.Controls.Add(this.btnBack);
@@ -234,7 +197,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmTutorials";
             this.Text = "Symphony of the Night Randomizer Launcher - Tutorials";
-            ((System.ComponentModel.ISupportInitialize)(this.pbAreaRandoTutorial)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,7 +213,5 @@
         private System.Windows.Forms.Button lblRandomizer;
         private System.Windows.Forms.Button lblLauncher;
         private System.Windows.Forms.Button lblPresets;
-        private System.Windows.Forms.Button btnAreaRandoTutorial;
-        private System.Windows.Forms.PictureBox pbAreaRandoTutorial;
     }
 }

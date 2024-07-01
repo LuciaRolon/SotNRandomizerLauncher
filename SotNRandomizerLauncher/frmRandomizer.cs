@@ -18,6 +18,7 @@ namespace SotNRandomizerLauncher
     {
         int secondsGenerating = 0;
         private Dictionary<string, PresetInfo> presetDictionary;
+        AreaRandoOptions randoOptions;
         public frmRandomizer()
         {
             InitializeComponent();
@@ -99,6 +100,11 @@ namespace SotNRandomizerLauncher
             {
                 mapColor = (MapColor)Enum.Parse(typeof(MapColor), cbColor.Text);
             }
+            if (cbAreaRandomizer.Checked && randoOptions == null)
+            {
+                randoOptions = new AreaRandoOptions();
+            }
+            
 
             return new RandomizerOptions
             {
@@ -114,7 +120,9 @@ namespace SotNRandomizerLauncher
                 Seed = txtSeed.Text,
                 Preset = presetDictionary[cbPreset.Text].Id,
                 RelicExtension = (cbRelicExtension.Checked) ? cbExtension.Text : "",
-                BHSeed = IsBHSeed(presetDictionary[cbPreset.Text].Id)
+                BHSeed = IsBHSeed(presetDictionary[cbPreset.Text].Id),
+                AreaRandoOptions = randoOptions,
+                AreaRando = cbAreaRandomizer.Checked
             };
         }
 
@@ -218,6 +226,18 @@ namespace SotNRandomizerLauncher
             {
                 cbExtension.SelectedIndex = 0;
             }
+        }
+
+        private void btnAROptions_Click(object sender, EventArgs e)
+        {
+            frmAreaRandoOptions randoOptions = new frmAreaRandoOptions();
+            randoOptions.FormClosing += (s, args) => { this.randoOptions = randoOptions.areaRando; };  // This makes it so I can import the generated settings.
+            randoOptions.ShowDialog();
+        }
+
+        private void cbAreaRandomizer_CheckedChanged(object sender, EventArgs e)
+        {
+            btnAROptions.Enabled = cbAreaRandomizer.Checked;
         }
     }
 }

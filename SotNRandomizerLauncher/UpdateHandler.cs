@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +13,7 @@ namespace SotNRandomizerLauncher
     {
         public static int GetCurrentVersion()
         {
-            return 6; // Must be updated with every release
+            return 8; // Must be updated with every release
         }
 
         private static int GetInstalledVersion()
@@ -55,6 +56,12 @@ namespace SotNRandomizerLauncher
                 case 6:
                     Version6();
                     break;
+                case 7:
+                    Version7();
+                    break;
+                case 8:
+                    Version8();
+                    break;
             }
         }
 
@@ -64,13 +71,26 @@ namespace SotNRandomizerLauncher
             string bizHawkDirectory = LauncherClient.GetConfigValue("BizHawkPath");
             string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
             LauncherClient.StoreCores(currentAppDirectory, bizHawkDirectory);
-            LauncherClient.SwapCores(false);
+            LauncherClient.SwapCores(false, false);
             MessageBox.Show("This update has reset your core back to Classic Core. If you want to use the Fast Core, swap it again in the Settings.", "Update Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         static void Version5()
         {
             LauncherClient.SetAppConfig("RandoToolsVersion", "1.6.9");
+        }
+
+        static void Version7()
+        {
+            LauncherClient.InstallAreaRando();
+            string bizHawkDirectory = LauncherClient.GetConfigValue("BizHawkPath");
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            LauncherClient.StoreCompatCore(currentAppDirectory, bizHawkDirectory);
+        }
+
+        static void Version8()
+        {
+            LauncherClient.InstallAreaRando();
         }
     }
 }

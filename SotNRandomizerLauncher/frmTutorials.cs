@@ -139,13 +139,12 @@ namespace SotNRandomizerLauncher
 
         private void btnAreaRandoTutorial_Click(object sender, EventArgs e)
         {
-            ChangeTutorialTabToPicture(pbAreaRandoTutorial);
-            SetTutorialColor(btnAreaRandoTutorial);
+            
         }
 
         public void OpenAreaRandoTutorial()
         {
-            btnAreaRandoTutorial.PerformClick();
+            
         }
     }
 }

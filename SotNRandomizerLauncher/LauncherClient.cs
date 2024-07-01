@@ -114,17 +114,12 @@ namespace SotNRandomizerLauncher
         }
 
         public static bool InstallAreaRando()
-        {
-            DialogResult result = MessageBox.Show("Enabling this option will install the Area Randomizer. This will be around 600MB. Install?", "Install Area Randomizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.No) return false;
+        {        
             string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
             // Extract the Area Rando Tool
             string areaRandoPath = Path.Combine(currentAppDirectory, "apps", "AreaRando");
             ExtractZipWithOverwrite(Path.Combine(currentAppDirectory, "baseFiles", "AreaRando.zip"), areaRandoPath);
             LauncherClient.SetAppConfig("AreaRandoPath", areaRandoPath);            
-            // Copy the BIN as a .org to the Area Rando tool path for PPF generation
-            File.Copy(LauncherClient.GetConfigValue("Track1Path"), Path.Combine(areaRandoPath, "SotN_PSX.org"), true);
-            MessageBox.Show("Area Randomizer installed successfully!", "Installation Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return true;
         }
 
@@ -173,6 +168,16 @@ namespace SotNRandomizerLauncher
 
             frmMain.UpdateRandomizeStatus(100, "Game randomized.");
             return true;
+        }
+
+        public static void PatchBinCopy(string ppfFile, string baseBinPath)
+        {
+            string track1Path = GetConfigValue("Track1Path");
+            File.Copy(track1Path, baseBinPath, true);
+
+            // Randomization Process
+            ExecuteCommand($"\"applyppf3_vc.exe\" a \"{baseBinPath}\" \"{ppfFile}\"", "PPF Patching");
+            ExecuteCommand($"\"error_recalc.exe\" \"{baseBinPath}\" \"{ppfFile}\"", "ECC Recalculation");
         }
 
         private static void ExecuteCommand(string command, string context)
@@ -269,16 +274,18 @@ namespace SotNRandomizerLauncher
         }
 
 
-        public static void SwapCores(bool toFastCore)
+        public static void SwapCores(bool toFastCore, bool compatibilityCore)
         {
             try
             {
                 string bizHawkDirectory = GetConfigValue("BizHawkPath");
                 if (toFastCore)
                 {
+                    string fastCoreName = "nymafast.wbx";
+                    if (compatibilityCore) fastCoreName = "nymafast-comp.wbx";
                     string oldCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx.zst");
                     string newCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx");
-                    string newCoreTempFile = Path.Combine(bizHawkDirectory, "dll", "nymafast.wbx");
+                    string newCoreTempFile = Path.Combine(bizHawkDirectory, "dll", fastCoreName);
                     File.Delete(oldCorePath);
                     File.Copy(newCoreTempFile, newCorePath, true);
                     SetAppConfig("CoreInstalled", "FastCore");
@@ -333,6 +340,12 @@ namespace SotNRandomizerLauncher
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "nymashock.wbx.zst"), nymashockCorePath, true);
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "nymafast.wbx"), nymafastCorePath, true);
             SetAppConfig("CoreInstalled", "ClassicCore");
+        }
+
+        public static void StoreCompatCore(string currentAppDirectory, string targetDirectory)
+        {
+            string nymafastCorePath = Path.Combine(targetDirectory, "dll", "nymafast-comp.wbx");
+            File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "nymafast-comp.wbx"), nymafastCorePath, true);
         }
 
         private static bool ApplyBizHawkSettings(string targetDirectory)

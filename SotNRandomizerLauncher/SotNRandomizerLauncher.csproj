@@ -88,11 +88,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaRandoOptions.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAreaRandoOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAreaRandoOptions.Designer.cs">
+      <DependentUpon>frmAreaRandoOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="frmConfigure.cs">
       <SubType>Form</SubType>
@@ -125,6 +132,7 @@
       <DependentUpon>frmTutorials.cs</DependentUpon>
     </Compile>
     <Compile Include="LauncherClient.cs" />
+    <Compile Include="PresetInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Randomizer.cs" />
@@ -133,6 +141,9 @@
     <Compile Include="UpdateHandler.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAreaRandoOptions.resx">
+      <DependentUpon>frmAreaRandoOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmConfigure.resx">
       <DependentUpon>frmConfigure.cs</DependentUpon>
@@ -162,6 +173,12 @@
     <None Include="apply_ppf.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="baseFiles\AreaRando.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="baseFiles\AreaRandoTracker.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="baseFiles\Castlevania - Symphony of the Night %28USA%29.SaveRAM">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -184,6 +201,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="baseFiles\settings.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="baseFiles\nymafast-comp.wbx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -234,6 +254,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="favicon.ico" />
+    <None Include="Resources\Area Rando Guide.png" />
+    <Content Include="Resources\question.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">

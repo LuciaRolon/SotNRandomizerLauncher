@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.4.1";
+        string launcherVersion = "v0.4.2.1";
         public frmMain()
         {
             InitializeComponent();
@@ -48,7 +48,9 @@ namespace SotNRandomizerLauncher
                 try
                 {
                     if(!importedUser) CheckForUpdates();
+                    UpdateHandler.UpdateLauncher();
                     LauncherClient.CheckForPresetUpdates();
+                    CheckForLauncherUpdates();
                 }
                 catch (Exception ex)
                 {
@@ -56,8 +58,19 @@ namespace SotNRandomizerLauncher
                     return;
                 }
             }
-            LoadEvents();
-            
+            LoadEvents();            
+        }
+
+        void CheckForLauncherUpdates()
+        {
+            if (LauncherClient.GetLatestVersion("LuciaRolon/SotNRandomizerLauncher") != launcherVersion)
+            {
+                DialogResult result = MessageBox.Show("A new Launcher version is available for download on GitHub. Want to download the latest update?", "Launcher Version Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    Process.Start("https://github.com/LuciaRolon/SotNRandomizerLauncher/releases/latest");
+                }
+            }
         }
 
         void LoadEvents()
@@ -79,8 +92,7 @@ namespace SotNRandomizerLauncher
         }
 
         void CheckForUpdates()
-        {
-            UpdateHandler.UpdateLauncher();
+        {            
             if (LauncherClient.GetLatestVersion("TASEmulators/BizHawk") != LauncherClient.GetConfigValue("BizHawkVersion"))
             {
                 pbBizhawk.Image = Properties.Resources.x_update;
@@ -98,15 +110,7 @@ namespace SotNRandomizerLauncher
                 pbRandoTools.Image = Properties.Resources.x_update;
                 btnUpdateRandoTools.Enabled = true;
                 btnUpdateRandoTools.Text = "Update";
-            }
-            if (LauncherClient.GetLatestVersion("LuciaRolon/SotNRandomizerLauncher") != launcherVersion)
-            {
-                DialogResult result = MessageBox.Show("A new Launcher version is available for download on GitHub. Want to download the latest update?", "Launcher Version Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if(result == DialogResult.Yes)
-                {
-                    Process.Start("https://github.com/LuciaRolon/SotNRandomizerLauncher/releases/latest");
-                }
-            }            
+            }                     
         }
         
 
@@ -269,9 +273,11 @@ namespace SotNRandomizerLauncher
             {
                 await LauncherClient.UpdateLiveSplit();
                 pbLiveSplit.Image = Properties.Resources.v_update;
-                btnUpdateLiveSplit.Enabled = true;
+                btnUpdateLiveSplit.Enabled = false;
                 btnUpdateLiveSplit.Text = "Up to Date";
-            }catch (Exception ex)
+                lblLivesplit.Text = $"LiveSplit v{LauncherClient.GetConfigValue("LiveSplitVersion")}";
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show($"Error reaching updating LiveSplit: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }            
@@ -288,8 +294,9 @@ namespace SotNRandomizerLauncher
             {
                 await LauncherClient.UpdateRandoTools();
                 pbRandoTools.Image = Properties.Resources.v_update;
-                btnUpdateRandoTools.Enabled = true;
+                btnUpdateRandoTools.Enabled = false;
                 btnUpdateRandoTools.Text = "Up to Date";
+                lblRandoTools.Text = $"SotN Rando Tools v{LauncherClient.GetConfigValue("RandoToolsVersion")}";
             }
             catch (Exception ex)
             {
@@ -346,9 +353,11 @@ namespace SotNRandomizerLauncher
             {
                 await LauncherClient.UpdateBizHawk();
                 pbBizhawk.Image = Properties.Resources.v_update;
-                btnUpdateBizhawk.Enabled = true;
+                btnUpdateBizhawk.Enabled = false;
                 btnUpdateBizhawk.Text = "Up to Date";
-            }catch(Exception ex)
+                lblBizhawk.Text = $"Bizhawk v{LauncherClient.GetConfigValue("BizHawkVersion")}";
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show($"Error reaching updating BizHawk: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

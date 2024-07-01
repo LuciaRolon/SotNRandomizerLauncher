@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace SotNRandomizerLauncher
             {
                 suggestedFileName = $"{options.Preset}-{options.Seed}";
             }
+            if (options.AreaRando) suggestedFileName += "-AR";
 
 
             options.PpfFilePath = LauncherClient.InitiateStoreFile("Seed Preset File", suggestedFileName, "ppf");
@@ -92,11 +94,10 @@ namespace SotNRandomizerLauncher
                 process.WaitForExit();
                 cts.Cancel();  // Cancel the progress update loop
                 progressBarUpdate(80);
-                if (options.BHSeed)
-                {
-                    RandomizeBHSeed(options);
-                }
+                if (options.BHSeed) RandomizeBHSeed(options);
 
+                // Area randomization should always be the last step of randomization
+                if (options.AreaRando) RunAreaRandomization(options);
                 updateSeed($"Seed: {options.Seed}");
                 if (options.ShowEquipment)
                 {
@@ -169,6 +170,40 @@ namespace SotNRandomizerLauncher
             File.Delete(psxOrg);
             File.Delete(bhBinFile);
             File.Delete(bhSeedFile);
+        }
+
+        static void RunAreaRandomization(RandomizerOptions options)
+        {
+            // First, we need a copy of the track 1 bin patched with the generated PPF
+            string areaRandoPath = LauncherClient.GetConfigValue("AreaRandoPath");
+            string newBinPath = Path.Combine(areaRandoPath, "arearando.bin");
+            LauncherClient.PatchBinCopy(options.PpfFilePath, newBinPath);
+            // Similarly to BH Tool, we need a SotN_PSX.org file for PPF generation in the AreaRando folder
+            string psxOrg = Path.Combine(areaRandoPath, "SotN_PSX.org");
+            File.Copy(LauncherClient.GetConfigValue("Track1Path"), psxOrg, true);
+            // After the game is patched, we can use the patched version to apply Area Randomization to it.
+            string arguments = options.AreaRandoOptions.GenerateArguments(newBinPath);
+            string areaRandoToolPath = Path.Combine(areaRandoPath, "SOTN_AR.exe");
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = areaRandoToolPath,
+                Arguments = arguments,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WorkingDirectory = areaRandoPath
+            };
+            using (Process process = new Process { StartInfo = startInfo })
+            {
+                process.Start();
+                process.WaitForExit();
+            }
+            // Now that the PPF is generated, copy it to the target path
+            string areaRandoSeedFile = Path.Combine(areaRandoPath, "arearando.PPF");
+            File.Copy(areaRandoSeedFile, options.PpfFilePath, true);
+            // Cleanup the temporary files
+            File.Delete(psxOrg);
+            File.Delete(areaRandoSeedFile);
+            File.Delete(newBinPath);
         }
 
         private static async Task UpdateProgressBar(Action<int> progressBarUpdate, int startValue, int endValue, CancellationToken cancellationToken)
