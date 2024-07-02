@@ -30,7 +30,7 @@ namespace SotNRandomizerLauncher
         }
     }
 
-    internal static class LauncherClient
+    static class LauncherClient
     {
         public static string GetAPIUrl()
         {

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SotNRandomizerLauncher", "SotNRandomizerLauncher\SotNRandomizerLauncher.csproj", "{ED5DE258-D249-4CE0-893B-F83C6E74AFBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LauncherUpdater", "LauncherUpdater\LauncherUpdater.csproj", "{67D4E4ED-A924-4DE7-BBFA-4452EB9528FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{ED5DE258-D249-4CE0-893B-F83C6E74AFBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED5DE258-D249-4CE0-893B-F83C6E74AFBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED5DE258-D249-4CE0-893B-F83C6E74AFBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67D4E4ED-A924-4DE7-BBFA-4452EB9528FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67D4E4ED-A924-4DE7-BBFA-4452EB9528FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67D4E4ED-A924-4DE7-BBFA-4452EB9528FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67D4E4ED-A924-4DE7-BBFA-4452EB9528FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

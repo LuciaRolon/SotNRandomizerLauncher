@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.4.2.1";
+        string launcherVersion = "v0.4.3";
         public frmMain()
         {
             InitializeComponent();
@@ -49,8 +49,7 @@ namespace SotNRandomizerLauncher
                 {
                     if(!importedUser) CheckForUpdates();
                     UpdateHandler.UpdateLauncher();
-                    LauncherClient.CheckForPresetUpdates();
-                    CheckForLauncherUpdates();
+                    LauncherClient.CheckForPresetUpdates();                    
                 }
                 catch (Exception ex)
                 {
@@ -65,12 +64,20 @@ namespace SotNRandomizerLauncher
         {
             if (LauncherClient.GetLatestVersion("LuciaRolon/SotNRandomizerLauncher") != launcherVersion)
             {
-                DialogResult result = MessageBox.Show("A new Launcher version is available for download on GitHub. Want to download the latest update?", "Launcher Version Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("A new Launcher version is available for download. Want to download the latest update?", "Launcher Version Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    Process.Start("https://github.com/LuciaRolon/SotNRandomizerLauncher/releases/latest");
+                    OpenAutoUpdater();
                 }
             }
+        }
+
+        public static void OpenAutoUpdater()
+        {
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string launcherPath = Path.Combine(currentAppDirectory, "LauncherUpdater.exe");
+            Process.Start(launcherPath);
+            Application.Exit();
         }
 
         void LoadEvents()
@@ -452,6 +459,11 @@ namespace SotNRandomizerLauncher
                 MessageBox.Show($"Error {error} the Randomizer: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return randomizerInstalled;
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            CheckForLauncherUpdates();
         }
     }
 }

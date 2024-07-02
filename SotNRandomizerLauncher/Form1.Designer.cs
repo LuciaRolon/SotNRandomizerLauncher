@@ -449,6 +449,7 @@
             this.Name = "frmMain";
             this.Text = "Symphony of the Night Randomizer Launcher";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.frmMain_DragEnter);
             this.DragLeave += new System.EventHandler(this.frmMain_DragLeave);
