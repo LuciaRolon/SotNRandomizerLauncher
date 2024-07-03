@@ -148,7 +148,7 @@ namespace SotNRandomizerLauncher
                 {
                     await LauncherClient.InitialSetupDone();
                     this.Close();
-                }                
+                }
             }
             else
             {
@@ -184,8 +184,11 @@ namespace SotNRandomizerLauncher
         {
             frmImport frmImport = new frmImport(this);
             frmImport.ShowDialog();
-            StoreCores();
-            LauncherClient.InstallAreaRando();
+            if (this.importConfirmed)
+            {                
+                StoreCores();
+                LauncherClient.InstallAreaRando();                
+            }            
         }
 
         async Task NewUserProcess()
