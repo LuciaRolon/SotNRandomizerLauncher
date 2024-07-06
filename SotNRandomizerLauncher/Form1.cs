@@ -465,5 +465,11 @@ namespace SotNRandomizerLauncher
         {
             CheckForLauncherUpdates();
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            frmProfile profile = new frmProfile();
+            profile.Show();
+        }
     }
 }

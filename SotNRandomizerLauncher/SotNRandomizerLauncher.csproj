@@ -89,6 +89,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AreaRandoOptions.cs" />
+    <Compile Include="CntrlLeaderboards.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CntrlLeaderboards.Designer.cs">
+      <DependentUpon>CntrlLeaderboards.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +125,12 @@
     <Compile Include="frmImport.Designer.cs">
       <DependentUpon>frmImport.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProfile.Designer.cs">
+      <DependentUpon>frmProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmRandomizer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +151,9 @@
     <Compile Include="RandomizerException.cs" />
     <Compile Include="RandomizerOptions.cs" />
     <Compile Include="UpdateHandler.cs" />
+    <EmbeddedResource Include="CntrlLeaderboards.resx">
+      <DependentUpon>CntrlLeaderboards.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -153,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmImport.resx">
       <DependentUpon>frmImport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProfile.resx">
+      <DependentUpon>frmProfile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRandomizer.resx">
       <DependentUpon>frmRandomizer.cs</DependentUpon>
