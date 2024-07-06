@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -19,6 +20,8 @@ namespace SotNRandomizerLauncher
         int secondsGenerating = 0;
         private Dictionary<string, PresetInfo> presetDictionary;
         AreaRandoOptions randoOptions;
+        bool isRandomizing = false;
+        CancellationTokenSource cts;  // Cancellation token to cancel randomization
         public frmRandomizer()
         {
             InitializeComponent();
@@ -59,6 +62,7 @@ namespace SotNRandomizerLauncher
 
         void UpdateProgressBar(int progress)
         {
+            if (this.cts.IsCancellationRequested) return;
             this.Invoke(new Action(() =>
             {
                 pgbRandomizingProgress.Value = progress;
@@ -67,6 +71,7 @@ namespace SotNRandomizerLauncher
 
         void UpdateSeed(string seed)
         {
+            if (this.cts.IsCancellationRequested) return;
             this.Invoke(new Action(() =>
             {
                 lblSeed.Text = seed;
@@ -75,6 +80,7 @@ namespace SotNRandomizerLauncher
 
         void UpdateEquipment(string equipment)
         {
+            if(this.cts.IsCancellationRequested) return;
             this.Invoke(new Action(() =>
             {
                 lblStartingEquipment.Text = equipment;
@@ -87,8 +93,11 @@ namespace SotNRandomizerLauncher
             secondsGenerating = 0;
             randomizerTimer.Start();
             lblTimeGenerating.Show();
-            btnGeneratePPF.Enabled = false;            
-            await Randomizer.StartRandomization(UpdateProgressBar, UpdateSeed, UpdateEquipment, GetRandomizerOptions());
+            btnGeneratePPF.Enabled = false;
+            isRandomizing = true;
+            cts = new CancellationTokenSource();
+            await Randomizer.StartRandomization(UpdateProgressBar, UpdateSeed, UpdateEquipment, GetRandomizerOptions(), cts.Token);
+            isRandomizing = false;
             randomizerTimer.Stop();
             btnGeneratePPF.Enabled = true;
         }        
@@ -154,6 +163,13 @@ namespace SotNRandomizerLauncher
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (this.isRandomizing)
+            {
+                DialogResult result = MessageBox.Show("There's a Randomization in progress. Cancelling it could cause unexpected behaviour. Only do this if the Randomization is stuck. Proceed with the cancellation?", "Cancel Randomization", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No) return;
+                cts.Cancel();
+                this.isRandomizing = false;                
+            }            
             this.Close();
         }
 

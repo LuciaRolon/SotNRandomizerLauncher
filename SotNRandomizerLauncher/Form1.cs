@@ -19,6 +19,7 @@ namespace SotNRandomizerLauncher
         string ppfFile;
         string seedUrl;
         string launcherVersion = "v0.4.3";
+        bool isOfflineMode = false;
         public frmMain()
         {
             InitializeComponent();
@@ -45,10 +46,13 @@ namespace SotNRandomizerLauncher
 
             if (!LauncherClient.IsInitialSetup())
             {
+                isOfflineMode = !LauncherClient.HasInternetConnection();
+                if(isOfflineMode) lblOfflineMode.Show();
                 try
                 {
-                    if(!importedUser) CheckForUpdates();
                     UpdateHandler.UpdateLauncher();
+                    if (this.isOfflineMode) return;
+                    if (!importedUser) CheckForUpdates();                    
                     LauncherClient.CheckForPresetUpdates();                    
                 }
                 catch (Exception ex)
@@ -428,7 +432,14 @@ namespace SotNRandomizerLauncher
         private async void btnRandomizer_Click(object sender, EventArgs e)
         {            
             bool randomizerInstalled = await CheckForRandomizerUpdates();
-            if (!randomizerInstalled) return;
+            if (!randomizerInstalled)
+            {
+                if (this.isOfflineMode)
+                {
+                    MessageBox.Show("The Randomizer is not installed and you're in Offline Mode. Please, restart the Launcher and download the Randomizer when you have connection and try again.", "Randomizer not Installed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return;
+            }
             frmRandomizer randoForm = new frmRandomizer();
             randoForm.ShowDialog();
         }
@@ -436,6 +447,7 @@ namespace SotNRandomizerLauncher
         async Task<bool> CheckForRandomizerUpdates()
         {
             bool randomizerInstalled = LauncherClient.GetConfigValue("RandomizerVersion") != null;
+            if (this.isOfflineMode) return randomizerInstalled;
             try
             {                
                 bool updateRequired = false;
@@ -463,6 +475,7 @@ namespace SotNRandomizerLauncher
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            if (this.isOfflineMode) return;
             CheckForLauncherUpdates();
         }
     }

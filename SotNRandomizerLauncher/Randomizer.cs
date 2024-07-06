@@ -18,7 +18,8 @@ namespace SotNRandomizerLauncher
                 Action<int> progressBarUpdate,
                 Action<string> updateSeed,
                 Action<string> updateEquipment,
-                RandomizerOptions options
+                RandomizerOptions options,
+                CancellationToken randomizerCancellation
             )
         {
             string suggestedFileName = "";
@@ -35,7 +36,8 @@ namespace SotNRandomizerLauncher
 
 
             options.PpfFilePath = LauncherClient.InitiateStoreFile("Seed Preset File", suggestedFileName, "ppf");
-            await Task.Run(() => RandomizeSeed(progressBarUpdate, updateSeed, updateEquipment, options));
+            if (options.PpfFilePath == "") return; 
+            await Task.Run(() => RandomizeSeedAsync(progressBarUpdate, updateSeed, updateEquipment, options, randomizerCancellation));
         }
 
         public static string GenerateSeedName(string preset)
@@ -76,6 +78,7 @@ namespace SotNRandomizerLauncher
                 CreateNoWindow = true,
                 WorkingDirectory = randoFolder
             };
+
 
             using (Process process = new Process { StartInfo = startInfo })
             {
@@ -132,78 +135,234 @@ namespace SotNRandomizerLauncher
                     MessageBox.Show("There was an error during randomization. Please, try again.", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }  
             }
-            progressBarUpdate(100);
-            
-        }        
+            progressBarUpdate(100);            
+        }
 
-        static void RandomizeBHSeed(RandomizerOptions options)
+        public static async Task RandomizeSeedAsync(
+            Action<int> progressBarUpdate,
+            Action<string> updateSeed,
+            Action<string> updateEquipment,
+            RandomizerOptions options,
+            CancellationToken randomizerCancellation)
         {
-            // First, we get the SotN_PSX.org file required by the BH tool
+            progressBarUpdate(10);
+            string args = options.GenerateArguments();
+            progressBarUpdate(20);
             string randoFolder = Path.Combine(LauncherClient.GetConfigValue("RandomizerPath"), "Randomizer");
-            string psxOrg = Path.Combine(randoFolder, "SotN_PSX.org");
-            File.Copy(LauncherClient.GetConfigValue("Track1Path"), psxOrg, true);
-            // Generate the BH Tool arguments.
-            string bhBinFile = Path.Combine(randoFolder, "bhseed.bin");  // See RandomizerOptions.GenerateArguments
-            string input = "-input";
-            if (options.Preset == "bountyhuntertc") input = "-tconf";
-            if (options.Preset == "hitman") input = "-hitmn";
-            string arguments = $"{input} \"{bhBinFile}\"";
-            // Call the BH tool
-            string bhToolPath = Path.Combine(randoFolder, "BountyHunter.exe");
+            string randoPath = Path.Combine(randoFolder, "randomizer.exe");
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
-                FileName = bhToolPath,
-                Arguments = arguments,
+                FileName = randoPath,
+                Arguments = args,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 WorkingDirectory = randoFolder
             };
+            
+            progressBarUpdate(30);
+            // Create a cancellation token source to signal the progress update loop to stop
+            // This will make the progress bar slowly raise until it finishes generating
+            CancellationTokenSource cts = new CancellationTokenSource();
+            Task progressTask = UpdateProgressBar(progressBarUpdate, 30, 80, cts.Token);
+            string output = "";
+            string error = "";
+            try
+            {
+                Dictionary<string, string> result = await RunProcessAsync(startInfo, randomizerCancellation);
+                output = result["output"];
+                error = result["error"];
+                cts.Cancel();  // Cancel the progress update loop
+                progressBarUpdate(80);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+            if (randomizerCancellation.IsCancellationRequested) return;
+            if (options.BHSeed) RandomizeBHSeed(options);
+
+            // Area randomization should always be the last step of randomization
+            if (randomizerCancellation.IsCancellationRequested) return;
+            if (options.AreaRando) RunAreaRandomization(options);
+            updateSeed($"Seed: {options.Seed}");
+            if (options.ShowEquipment)
+            {
+                string[] outputLines = output.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                string equipment = "";
+                bool foundStartingEquipment = false;
+                for (int i = 0; i < outputLines.Length; i++)
+                {
+                    // This reads the CLI from the point where it starts listing the equipment
+                    if (outputLines[i].ToLower().Contains("starting equipment".ToLower()))
+                    {
+                        foundStartingEquipment = true;
+                    }
+
+                    if (foundStartingEquipment)
+                    {
+                        equipment += $"{outputLines[i]}\n";
+                    }
+                }
+                updateEquipment(equipment);
+            }
+            else
+            {
+                updateEquipment("Starting Equipment: Equipment hidden.");
+            }
+
+            if (string.IsNullOrEmpty(error))
+            {
+                MessageBox.Show("Seed generated successfully!", "Randomization Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("There was an error during randomization. Please try again.", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            progressBarUpdate(100);
+        }
+
+        static async Task<Dictionary<string, string>> RunProcessAsync(ProcessStartInfo startInfo, CancellationToken cancellationToken)
+        {
             using (Process process = new Process { StartInfo = startInfo })
             {
-                process.Start();        
-                process.WaitForExit();                
+                process.Start();
+
+                // Read the output asynchronously and handle cancellation
+                var outputTask = process.StandardOutput.ReadToEndAsync();
+                var errorTask = process.StandardError.ReadToEndAsync();
+
+                // Create a TaskCompletionSource to signal process completion
+                TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+                process.Exited += (s, e) => tcs.TrySetResult(null);
+                process.EnableRaisingEvents = true;
+
+                using (cancellationToken.Register(() => tcs.TrySetCanceled()))
+                {
+                    try
+                    {
+                        await Task.WhenAny(tcs.Task, Task.Delay(Timeout.Infinite, cancellationToken));
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            try
+                            {
+                                process.Kill();
+                            }
+                            catch (InvalidOperationException) { } // Process already exited
+                            throw new OperationCanceledException(cancellationToken);
+                        }
+                        await tcs.Task; // Ensure process has exited
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        if (!process.HasExited)
+                        {
+                            try
+                            {
+                                process.Kill();
+                            }
+                            catch (InvalidOperationException) { } // Process already exited
+                        }
+                        throw new OperationCanceledException(cancellationToken);
+                    }
+                }
+
+                string output = await outputTask;
+                string error = await errorTask;
+                Dictionary<string, string> resultDict = new Dictionary<string, string>();
+                resultDict.Add("output", output);
+                resultDict.Add("error", error);
+                return resultDict;
             }
-            // Now that the PPF is generated, copy it to the target path
+        }
+
+        static void RandomizeBHSeed(RandomizerOptions options)
+        {
+            string randoFolder = Path.Combine(LauncherClient.GetConfigValue("RandomizerPath"), "Randomizer");
+            string psxOrg = Path.Combine(randoFolder, "SotN_PSX.org");
+            string bhBinFile = Path.Combine(randoFolder, "bhseed.bin");  // See RandomizerOptions.GenerateArguments
             string bhSeedFile = Path.Combine(randoFolder, "bhseed.PPF");
-            File.Copy(bhSeedFile, options.PpfFilePath, true);
-            // Cleanup the temporary files
-            File.Delete(psxOrg);
-            File.Delete(bhBinFile);
-            File.Delete(bhSeedFile);
+            try
+            {
+                // First, we get the SotN_PSX.org file required by the BH tool              
+                File.Copy(LauncherClient.GetConfigValue("Track1Path"), psxOrg, true);
+                // Generate the BH Tool arguments.                
+                string input = "-input";
+                if (options.Preset == "bountyhuntertc") input = "-tconf";
+                if (options.Preset == "hitman") input = "-hitmn";
+                string arguments = $"{input} \"{bhBinFile}\"";
+                // Call the BH tool
+                string bhToolPath = Path.Combine(randoFolder, "BountyHunter.exe");
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = bhToolPath,
+                    Arguments = arguments,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WorkingDirectory = randoFolder
+                };
+                using (Process process = new Process { StartInfo = startInfo })
+                {
+                    process.Start();
+                    process.WaitForExit();
+                }
+                // Now that the PPF is generated, copy it to the target path                
+                File.Copy(bhSeedFile, options.PpfFilePath, true);
+            }
+            finally
+            {
+                // Cleanup the temporary files
+                DeleteIfExists(psxOrg);
+                DeleteIfExists(bhBinFile);
+                DeleteIfExists(bhSeedFile);
+            }         
+            
+        }
+
+        static void DeleteIfExists(string path)
+        {
+            if (File.Exists(path)) File.Delete(path);
         }
 
         static void RunAreaRandomization(RandomizerOptions options)
         {
-            // First, we need a copy of the track 1 bin patched with the generated PPF
             string areaRandoPath = LauncherClient.GetConfigValue("AreaRandoPath");
-            string newBinPath = Path.Combine(areaRandoPath, "arearando.bin");
-            LauncherClient.PatchBinCopy(options.PpfFilePath, newBinPath);
-            // Similarly to BH Tool, we need a SotN_PSX.org file for PPF generation in the AreaRando folder
             string psxOrg = Path.Combine(areaRandoPath, "SotN_PSX.org");
-            File.Copy(LauncherClient.GetConfigValue("Track1Path"), psxOrg, true);
-            // After the game is patched, we can use the patched version to apply Area Randomization to it.
-            string arguments = options.AreaRandoOptions.GenerateArguments(newBinPath);
-            string areaRandoToolPath = Path.Combine(areaRandoPath, "SOTN_AR.exe");
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = areaRandoToolPath,
-                Arguments = arguments,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = areaRandoPath
-            };
-            using (Process process = new Process { StartInfo = startInfo })
-            {
-                process.Start();
-                process.WaitForExit();
-            }
-            // Now that the PPF is generated, copy it to the target path
             string areaRandoSeedFile = Path.Combine(areaRandoPath, "arearando.PPF");
-            File.Copy(areaRandoSeedFile, options.PpfFilePath, true);
-            // Cleanup the temporary files
-            File.Delete(psxOrg);
-            File.Delete(areaRandoSeedFile);
-            File.Delete(newBinPath);
+            string newBinPath = Path.Combine(areaRandoPath, "arearando.bin");
+            try
+            {
+                // First, we need a copy of the track 1 bin patched with the generated PPF  
+                LauncherClient.PatchBinCopy(options.PpfFilePath, newBinPath);
+                // Similarly to BH Tool, we need a SotN_PSX.org file for PPF generation in the AreaRando folder                
+                File.Copy(LauncherClient.GetConfigValue("Track1Path"), psxOrg, true);
+                // After the game is patched, we can use the patched version to apply Area Randomization to it.
+                string arguments = options.AreaRandoOptions.GenerateArguments(newBinPath);
+                string areaRandoToolPath = Path.Combine(areaRandoPath, "SOTN_AR.exe");
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = areaRandoToolPath,
+                    Arguments = arguments,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WorkingDirectory = areaRandoPath
+                };
+                using (Process process = new Process { StartInfo = startInfo })
+                {
+                    process.Start();
+                    process.WaitForExit();
+                }
+                // Now that the PPF is generated, copy it to the target path                
+                File.Copy(areaRandoSeedFile, options.PpfFilePath, true);
+            }
+            finally
+            {
+                // Cleanup the temporary files
+                DeleteIfExists(psxOrg);
+                DeleteIfExists(areaRandoSeedFile);
+                DeleteIfExists(newBinPath);
+            }                        
         }
 
         private static async Task UpdateProgressBar(Action<int> progressBarUpdate, int startValue, int endValue, CancellationToken cancellationToken)
@@ -219,5 +378,7 @@ namespace SotNRandomizerLauncher
                 progressBarUpdate(currentValue);
             }
         }
+
+        
     }
 }

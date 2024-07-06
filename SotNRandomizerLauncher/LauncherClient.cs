@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
 using System.Runtime.CompilerServices;
+using System.Net.NetworkInformation;
 
 namespace SotNRandomizerLauncher
 {
@@ -36,6 +37,22 @@ namespace SotNRandomizerLauncher
         {
 
             return "http://35.208.162.255:8080";
+        }
+
+        public static bool HasInternetConnection()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage response = client.GetAsync(GetAPIUrl()).Result;
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
         public static void RequestAndStoreFile(string fileRequested, string fileExtension, string folder)
         {
@@ -412,6 +429,7 @@ namespace SotNRandomizerLauncher
 
         public static void CheckForPresetUpdates()
         {
+            
             // Checks for the latest preset updates, with the option for imported users to ignore the update until next release.
             string latestPresetsVersion = LauncherClient.GetLatestVersion("LuciaRolon/CompiledRandomizer");
             bool importedUser = LauncherClient.GetConfigValue("ImportedUser") != null;

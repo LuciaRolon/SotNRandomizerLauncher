@@ -60,6 +60,7 @@
             this.lblPlayLastSeed = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnRandomizer = new System.Windows.Forms.Button();
+            this.lblOfflineMode = new System.Windows.Forms.Label();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -428,6 +429,21 @@
             this.btnRandomizer.UseVisualStyleBackColor = true;
             this.btnRandomizer.Click += new System.EventHandler(this.btnRandomizer_Click);
             // 
+            // lblOfflineMode
+            // 
+            this.lblOfflineMode.AutoSize = true;
+            this.lblOfflineMode.BackColor = System.Drawing.Color.Transparent;
+            this.lblOfflineMode.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOfflineMode.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblOfflineMode.Location = new System.Drawing.Point(662, 1);
+            this.lblOfflineMode.Name = "lblOfflineMode";
+            this.lblOfflineMode.Size = new System.Drawing.Size(76, 13);
+            this.lblOfflineMode.TabIndex = 9;
+            this.lblOfflineMode.Text = "Offline Mode";
+            this.toolTip.SetToolTip(this.lblOfflineMode, "You have no internet connection. Restart the Launcher when you have connection to" +
+        " reload the Launcher.");
+            this.lblOfflineMode.Visible = false;
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -435,6 +451,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
             this.ClientSize = new System.Drawing.Size(739, 461);
+            this.Controls.Add(this.lblOfflineMode);
             this.Controls.Add(this.btnRandomizer);
             this.Controls.Add(this.lblPlayLastSeed);
             this.Controls.Add(this.grpSeed);
@@ -464,6 +481,7 @@
             this.grpSeed.ResumeLayout(false);
             this.grpSeed.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -499,6 +517,7 @@
         private System.Windows.Forms.Button btnShow;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Button btnRandomizer;
+        private System.Windows.Forms.Label lblOfflineMode;
     }
 }
 
