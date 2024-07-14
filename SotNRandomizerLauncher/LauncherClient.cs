@@ -356,6 +356,7 @@ namespace SotNRandomizerLauncher
             string nymafastCorePath = Path.Combine(targetDirectory, "dll", "nymafast.wbx");
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "nymashock.wbx.zst"), nymashockCorePath, true);
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "nymafast.wbx"), nymafastCorePath, true);
+            StoreCompatCore(currentAppDirectory, targetDirectory);
             SetAppConfig("CoreInstalled", "ClassicCore");
         }
 

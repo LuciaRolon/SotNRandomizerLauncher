@@ -18,12 +18,13 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.4.3";
+        string launcherVersion = "v0.4.3.1";
         bool isOfflineMode = false;
         public frmMain()
         {
             InitializeComponent();
             string lastSeed = LauncherClient.GetConfigValue("LastSeed");
+            lblVersion.Text = launcherVersion;
             if (lastSeed != null)
             {
                 lblPlayLastSeed.Text = $"Play Last Seed: \n{lastSeed}";
@@ -52,8 +53,7 @@ namespace SotNRandomizerLauncher
                 {
                     UpdateHandler.UpdateLauncher();
                     if (this.isOfflineMode) return;
-                    if (!importedUser) CheckForUpdates();                    
-                    LauncherClient.CheckForPresetUpdates();                    
+                    if (!importedUser) CheckForUpdates();                               
                 }
                 catch (Exception ex)
                 {
@@ -61,7 +61,8 @@ namespace SotNRandomizerLauncher
                     return;
                 }
             }
-            LoadEvents();            
+            LoadEvents();
+            LauncherClient.CheckForPresetUpdates();
         }
 
         void CheckForLauncherUpdates()
@@ -271,6 +272,7 @@ namespace SotNRandomizerLauncher
             LaunchBizhawk();         
             await LaunchLiveSplitWithWait();
             if (LauncherClient.GetConfigValue("MapTrackerEnabled") == "Yes") OpenMapTrackerTool();
+            
         }
 
         private void btnLaunchLiveSplit_Click(object sender, EventArgs e)
@@ -477,6 +479,11 @@ namespace SotNRandomizerLauncher
         {
             if (this.isOfflineMode) return;
             CheckForLauncherUpdates();
+        }
+
+        private void lblVersion_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

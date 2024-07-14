@@ -59,8 +59,9 @@
             this.btnPpfFile = new System.Windows.Forms.Button();
             this.lblPlayLastSeed = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.btnRandomizer = new System.Windows.Forms.Button();
             this.lblOfflineMode = new System.Windows.Forms.Label();
+            this.btnRandomizer = new System.Windows.Forms.Button();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -418,17 +419,6 @@
             this.toolTip.InitialDelay = 200;
             this.toolTip.ReshowDelay = 40;
             // 
-            // btnRandomizer
-            // 
-            this.btnRandomizer.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRandomizer.Location = new System.Drawing.Point(552, 50);
-            this.btnRandomizer.Name = "btnRandomizer";
-            this.btnRandomizer.Size = new System.Drawing.Size(164, 29);
-            this.btnRandomizer.TabIndex = 8;
-            this.btnRandomizer.Text = "Randomizer";
-            this.btnRandomizer.UseVisualStyleBackColor = true;
-            this.btnRandomizer.Click += new System.EventHandler(this.btnRandomizer_Click);
-            // 
             // lblOfflineMode
             // 
             this.lblOfflineMode.AutoSize = true;
@@ -444,6 +434,30 @@
         " reload the Launcher.");
             this.lblOfflineMode.Visible = false;
             // 
+            // btnRandomizer
+            // 
+            this.btnRandomizer.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRandomizer.Location = new System.Drawing.Point(552, 50);
+            this.btnRandomizer.Name = "btnRandomizer";
+            this.btnRandomizer.Size = new System.Drawing.Size(164, 29);
+            this.btnRandomizer.TabIndex = 8;
+            this.btnRandomizer.Text = "Randomizer";
+            this.btnRandomizer.UseVisualStyleBackColor = true;
+            this.btnRandomizer.Click += new System.EventHandler(this.btnRandomizer_Click);
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.BackColor = System.Drawing.Color.Transparent;
+            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblVersion.Location = new System.Drawing.Point(1, 446);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(28, 12);
+            this.lblVersion.TabIndex = 10;
+            this.lblVersion.Text = "v0.4.4";
+            this.lblVersion.Click += new System.EventHandler(this.lblVersion_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -451,6 +465,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
             this.ClientSize = new System.Drawing.Size(739, 461);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblOfflineMode);
             this.Controls.Add(this.btnRandomizer);
             this.Controls.Add(this.lblPlayLastSeed);
@@ -518,6 +533,7 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Button btnRandomizer;
         private System.Windows.Forms.Label lblOfflineMode;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 

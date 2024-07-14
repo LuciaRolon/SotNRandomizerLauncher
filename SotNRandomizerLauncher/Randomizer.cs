@@ -25,13 +25,9 @@ namespace SotNRandomizerLauncher
             string suggestedFileName = "";
             if (options.Seed == "" || options.Seed == "(Optional)")
             {
-                options.Seed = GenerateSeedName(options.Preset);
-                suggestedFileName = options.Seed;
+                options.Seed = GenerateSeedName();                
             }
-            else
-            {
-                suggestedFileName = $"{options.Preset}-{options.Seed}";
-            }
+            suggestedFileName = $"{options.Preset}-{options.Seed}";
             if (options.AreaRando) suggestedFileName += "-AR";
 
 
@@ -40,20 +36,42 @@ namespace SotNRandomizerLauncher
             await Task.Run(() => RandomizeSeedAsync(progressBarUpdate, updateSeed, updateEquipment, options, randomizerCancellation));
         }
 
-        public static string GenerateSeedName(string preset)
+        public static string GenerateSeedName()
         {
-            Random random = new Random();
-            char[] digits = new char[13];
+            List<string> adjectives;
+            List<string> nouns;
 
-            // Generate each digit and store in the char array
-            for (int i = 0; i < 13; i++)
+            int month = DateTime.Now.Month;            
+
+            switch (month)
             {
-                digits[i] = (char)('0' + random.Next(0, 10));
+                case 10:
+                    adjectives = Constants.adjectivesHalloween;
+                    nouns = Constants.nounsHalloween; 
+                    break;
+                case 12:
+                    adjectives = Constants.adjectivesHolidays;
+                    nouns = Constants.nounsNormal;
+                    break;
+                default:
+                    adjectives = Constants.adjectivesNormal;
+                    nouns = Constants.nounsNormal;
+                    break;
+               
+            }
+            
+
+            Random random = new Random();
+            string adjective = adjectives[random.Next(adjectives.Count)];
+            string noun = nouns[random.Next(nouns.Count)];
+            int number = random.Next(1000);
+
+            if (number % 100 == 69)
+            {
+                return adjective + noun + "69Nice";
             }
 
-            // Convert the char array to a string
-            string seedNumber = new string(digits);
-            return $"{preset}-{seedNumber}";
+            return adjective + noun + number.ToString();
         }
 
         public static void RandomizeSeed(
