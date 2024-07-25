@@ -13,7 +13,7 @@ namespace SotNRandomizerLauncher
     {
         public static int GetCurrentVersion()
         {
-            return 8; // Must be updated with every release
+            return 9; // Must be updated with every release
         }
 
         private static int GetInstalledVersion()
@@ -62,6 +62,9 @@ namespace SotNRandomizerLauncher
                 case 8:
                     Version8();
                     break;
+                case 9:
+                    Version9();
+                    break;
             }
         }
 
@@ -91,6 +94,11 @@ namespace SotNRandomizerLauncher
         static void Version8()
         {
             LauncherClient.InstallAreaRando();
+        }
+
+        static void Version9()
+        {
+            LauncherClient.InstallMapTracker();
         }
     }
 }

@@ -18,8 +18,10 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.4.3.1";
+        string launcherVersion = "v0.4.4";
         bool isOfflineMode = false;
+        Process liveSplitProcess = null;
+        List<string> replayFiles;
         public frmMain()
         {
             InitializeComponent();
@@ -62,18 +64,23 @@ namespace SotNRandomizerLauncher
                 }
             }
             LoadEvents();
-            LauncherClient.CheckForPresetUpdates();
         }
 
         void CheckForLauncherUpdates()
         {
-            if (LauncherClient.GetLatestVersion("LuciaRolon/SotNRandomizerLauncher") != launcherVersion)
+            VersionData versionData = LauncherClient.GetLatestVersion("LuciaRolon/SotNRandomizerLauncher", true);
+            if (versionData.version == "") return;
+            if (versionData.version != launcherVersion)
             {
                 DialogResult result = MessageBox.Show("A new Launcher version is available for download. Want to download the latest update?", "Launcher Version Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     OpenAutoUpdater();
                 }
+            }
+            else
+            {
+                toolTip.SetToolTip(lblVersion, versionData.changelog);
             }
         }
 
@@ -240,11 +247,63 @@ namespace SotNRandomizerLauncher
         private void LaunchBizhawk()
         {            
             string appPath = LauncherClient.GetConfigValue("BizHawkPath");
+            GetReplaysInBizhawk(true);  // This will store all the current replays in a list to later check if a new replay was found.
             Process process = new Process();
             process.StartInfo.FileName = Path.Combine(appPath, "EmuHawk.exe");
             process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.WorkingDirectory = appPath;
+            process.StartInfo.WorkingDirectory = appPath;            
+            process.Exited += new EventHandler(BizHawk_Exited);
+            process.EnableRaisingEvents = true;
             process.Start(); // Start the BizHawk process
+        }
+
+        private List<string> GetReplaysInBizhawk(bool setReplays)
+        {
+            string bizHawkPath = LauncherClient.GetConfigValue("BizHawkPath");
+            string replaysFolder = Path.Combine(bizHawkPath, "ExternalTools", "SotnRandoTools", "Replays");
+            string[] replays = Directory.GetFiles(replaysFolder);
+            List<string> foundReplays = new List<string>();
+            foreach(string file in replays)
+            {
+                foundReplays.Add(file);
+            }
+            if (setReplays) this.replayFiles = foundReplays;
+            return foundReplays;
+        }
+
+        private void CheckForNewReplays()
+        {
+            List<string> replays = GetReplaysInBizhawk(false);
+            foreach(string replay in replays)
+            {
+                if (!this.replayFiles.Contains(replay))
+                {
+                    DialogResult result = MessageBox.Show("We found a new replay after your run! Would you like to save it?", "New Replay Detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        string seed = (ppfFile != null) ? Path.GetFileNameWithoutExtension(ppfFile) : LauncherClient.GetConfigValue("LastSeed");
+                        int randomNumber = new Random().Next(0, 99);
+                        string suggestedName = $"REPLAY-{seed}-{randomNumber}.sotnr";
+                        string storePath = LauncherClient.InitiateStoreFile("Indicate where we'll store your replay file.", suggestedName, "sotnr");
+                        File.Copy(replay, storePath);
+                    }
+                }
+            }
+        }
+
+        private void BizHawk_Exited(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((Action)(() =>
+                {
+                    CheckForNewReplays();
+                }));
+            }
+            else
+            {
+                CheckForNewReplays();
+            }                      
         }
 
         private async Task LaunchLiveSplitWithWait()
@@ -257,8 +316,9 @@ namespace SotNRandomizerLauncher
 
         private void LaunchLiveSplit()
         {
+            if (liveSplitProcess != null && !liveSplitProcess.HasExited) return;  // This will prevent multiple LiveSplits from running.
             string liveSplitPath = Path.Combine(LauncherClient.GetConfigValue("LiveSplitPath"), "LiveSplit.exe");
-            Process.Start(liveSplitPath); // Start the LiveSplit process
+            liveSplitProcess = Process.Start(liveSplitPath); // Start the LiveSplit process
         }
 
         private async void btnPlay_Click(object sender, EventArgs e)
@@ -268,11 +328,20 @@ namespace SotNRandomizerLauncher
                 DialogResult result = MessageBox.Show("You're about to start a run using the Fast Core. Proceed?", "Fast Core Installed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.No) return;
             }
+            if (ppfFile != null && Path.GetFileNameWithoutExtension(ppfFile).Length > 3 && LauncherClient.GetConfigValue("MapTrackerEnabled") != "Yes")
+            {
+                string ppfFileName = Path.GetFileNameWithoutExtension(ppfFile);
+                if (ppfFileName.Substring(ppfFileName.Length - 3) == "-AR")
+                {
+                    DialogResult result = MessageBox.Show("This seems to be an Area Randomizer seed. Would you like to open the Map Tracker?", "Area Randomizer Detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes) OpenMapTrackerTool();
+                }
+            }
             btnPlay.Enabled = false;
             LaunchBizhawk();         
             await LaunchLiveSplitWithWait();
             if (LauncherClient.GetConfigValue("MapTrackerEnabled") == "Yes") OpenMapTrackerTool();
-            
+
         }
 
         private void btnLaunchLiveSplit_Click(object sender, EventArgs e)
@@ -325,7 +394,8 @@ namespace SotNRandomizerLauncher
                 frmConfigure configForm = new frmConfigure();
                 configForm.ShowDialog();
                 ActivateAfterDelay(500);
-            }    
+            }
+            LauncherClient.CheckForPresetUpdates();
             if (LauncherClient.GetConfigValue("ImportedUser") != null)
             {
                 ImportedVisuals();                

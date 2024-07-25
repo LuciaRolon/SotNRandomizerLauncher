@@ -187,7 +187,8 @@ namespace SotNRandomizerLauncher
             if (this.importConfirmed)
             {                
                 StoreCores();
-                LauncherClient.InstallAreaRando();                
+                LauncherClient.InstallAreaRando();
+                LauncherClient.InstallMapTracker();
             }            
         }
 
@@ -198,6 +199,7 @@ namespace SotNRandomizerLauncher
             await LauncherClient.DownloadRandoTools();
             StoreCores();
             LauncherClient.InstallAreaRando();
+            LauncherClient.InstallMapTracker();
         }
 
         private void btnChangeCore_Click(object sender, EventArgs e)
@@ -215,7 +217,6 @@ namespace SotNRandomizerLauncher
         void LoadOptions()
         {
             cbLiveSplit.Checked = LauncherClient.GetConfigValue("OpenLiveSplit") == "Yes" || LauncherClient.GetConfigValue("OpenLiveSplit") == null;  // This is the default setting
-            bool areaRandoEnabled = LauncherClient.GetConfigValue("AreaRandoEnabled") == "Yes";
             cbMapTracker.Checked = LauncherClient.GetConfigValue("MapTrackerEnabled") == "Yes";
         }
 

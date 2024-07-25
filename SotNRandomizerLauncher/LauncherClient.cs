@@ -31,6 +31,19 @@ namespace SotNRandomizerLauncher
         }
     }
 
+    internal struct VersionData
+    {
+
+        public string version;
+        public string changelog;
+
+        public VersionData(string version, string changelog)
+        {
+            this.version = version;
+            this.changelog = changelog;
+        }
+    }
+
     static class LauncherClient
     {
         public static string GetAPIUrl()
@@ -636,6 +649,29 @@ namespace SotNRandomizerLauncher
                 }
             }        
             return releaseVersion;
+        }
+
+        public static VersionData GetLatestVersion(string project, bool getChangelog)
+        {
+            // Bizhawk: TASEmulators/BizHawk
+            // LiveSplit: LiveSplit/LiveSplit
+            // RandoTools: TalicZealot/SotnRandoTools
+            string apiUrl = $"{GetAPIUrl()}/latest/{project}";
+            string releaseVersion = "";
+
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonString = response.Content.ReadAsStringAsync().Result;
+                    dynamic release = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
+                    releaseVersion = release.name;
+                    string releaseChanges = release.body;
+                    return new VersionData(releaseVersion, releaseChanges);
+                }
+            }
+            return new VersionData("", "");
         }
 
         #endregion

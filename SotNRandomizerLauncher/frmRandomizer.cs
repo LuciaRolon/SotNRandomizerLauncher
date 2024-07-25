@@ -26,6 +26,8 @@ namespace SotNRandomizerLauncher
         {
             InitializeComponent();
             GetPresets();
+            string closeOnSeedGeneration = LauncherClient.GetConfigValue("CloseOnSeedGeneration");
+            cbCloseOnGeneration.Checked = closeOnSeedGeneration != null && closeOnSeedGeneration == "Yes";
         }
 
         void GetPresets()
@@ -87,6 +89,15 @@ namespace SotNRandomizerLauncher
             }));
         }
 
+        void FinishRandomize(bool finished)
+        {
+            if (this.cts.IsCancellationRequested) return;
+            this.Invoke(new Action(() =>
+            {
+                if (finished && cbCloseOnGeneration.Checked) this.Close();
+            }));
+        }
+
 
         private async void btnConfigure_Click(object sender, EventArgs e)
         {
@@ -96,7 +107,7 @@ namespace SotNRandomizerLauncher
             btnGeneratePPF.Enabled = false;
             isRandomizing = true;
             cts = new CancellationTokenSource();
-            await Randomizer.StartRandomization(UpdateProgressBar, UpdateSeed, UpdateEquipment, GetRandomizerOptions(), cts.Token);
+            await Randomizer.StartRandomization(UpdateProgressBar, UpdateSeed, UpdateEquipment, GetRandomizerOptions(), cts.Token, FinishRandomize);
             isRandomizing = false;
             randomizerTimer.Stop();
             btnGeneratePPF.Enabled = true;
@@ -131,7 +142,9 @@ namespace SotNRandomizerLauncher
                 RelicExtension = (cbRelicExtension.Checked) ? cbExtension.Text : "",
                 BHSeed = IsBHSeed(presetDictionary[cbPreset.Text].Id),
                 AreaRandoOptions = randoOptions,
-                AreaRando = cbAreaRandomizer.Checked
+                AreaRando = cbAreaRandomizer.Checked,
+                IWBMode = cbWingSmashMode.Checked,
+                FastWarpMode = cbFastWarp.Checked
             };
         }
 
@@ -254,6 +267,17 @@ namespace SotNRandomizerLauncher
         private void cbAreaRandomizer_CheckedChanged(object sender, EventArgs e)
         {
             btnAROptions.Enabled = cbAreaRandomizer.Checked;
+        }
+
+        private void cbCloseOnGeneration_CheckedChanged(object sender, EventArgs e)
+        {
+            string closeOnGeneration = (cbCloseOnGeneration.Checked) ? "Yes" : "No";
+            LauncherClient.SetAppConfig("CloseOnSeedGeneration", closeOnGeneration);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

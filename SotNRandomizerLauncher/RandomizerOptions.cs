@@ -35,6 +35,8 @@ namespace SotNRandomizerLauncher
         public bool BHSeed { get; set; }
         public bool AreaRando { get; set; }
         public AreaRandoOptions AreaRandoOptions { get; set; }
+        public bool IWBMode { get; set; }
+        public bool FastWarpMode { get; set; }
 
 
         public string GenerateArguments()
@@ -45,6 +47,8 @@ namespace SotNRandomizerLauncher
             if (this.AntiFreezeMode) arguments += "-z ";
             if (this.ColorRando) arguments += "-l ";
             if (this.MyPurseMode) arguments += "-y ";
+            if (this.IWBMode) arguments += "-b ";
+            if (this.FastWarpMode) arguments += "-9 ";
             if (this.Complexity > 0) arguments += $"-c {this.Complexity} ";
             char mapColor = MapColorToSetting(this.MapColor);
             if (mapColor != ' ') arguments += $"-m {mapColor} ";

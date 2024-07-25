@@ -19,7 +19,8 @@ namespace SotNRandomizerLauncher
                 Action<string> updateSeed,
                 Action<string> updateEquipment,
                 RandomizerOptions options,
-                CancellationToken randomizerCancellation
+                CancellationToken randomizerCancellation,
+                Action<bool> finishRandomize
             )
         {
             string suggestedFileName = "";
@@ -33,7 +34,7 @@ namespace SotNRandomizerLauncher
 
             options.PpfFilePath = LauncherClient.InitiateStoreFile("Seed Preset File", suggestedFileName, "ppf");
             if (options.PpfFilePath == "") return; 
-            await Task.Run(() => RandomizeSeedAsync(progressBarUpdate, updateSeed, updateEquipment, options, randomizerCancellation));
+            await Task.Run(() => RandomizeSeedAsync(progressBarUpdate, updateSeed, updateEquipment, options, randomizerCancellation, finishRandomize));
         }
 
         public static string GenerateSeedName()
@@ -161,7 +162,8 @@ namespace SotNRandomizerLauncher
             Action<string> updateSeed,
             Action<string> updateEquipment,
             RandomizerOptions options,
-            CancellationToken randomizerCancellation)
+            CancellationToken randomizerCancellation,
+            Action<bool> finishRandomize)
         {
             progressBarUpdate(10);
             string args = options.GenerateArguments();
@@ -230,15 +232,18 @@ namespace SotNRandomizerLauncher
                 updateEquipment("Starting Equipment: Equipment hidden.");
             }
 
+            bool randomizeSuccess = false;
             if (string.IsNullOrEmpty(error))
             {
                 MessageBox.Show("Seed generated successfully!", "Randomization Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                randomizeSuccess = true;
             }
             else
             {
                 MessageBox.Show("There was an error during randomization. Please try again.", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             progressBarUpdate(100);
+            finishRandomize(randomizeSuccess);
         }
 
         static async Task<Dictionary<string, string>> RunProcessAsync(ProcessStartInfo startInfo, CancellationToken cancellationToken)
