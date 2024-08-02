@@ -26,13 +26,13 @@ jobs:
       run: nuget restore
 
     - name: Build solution
-      run: msbuild YourSolution.sln /p:Configuration=Release
+      run: msbuild SotNRandomizerLauncher.sln /p:Configuration=Release
 
     - name: Install Inno Setup
       run: choco install innosetup --no-progress
 
     - name: Build Inno Setup Installer
-      run: '"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "{src}\installer.iss"'
+      run: '"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "{src}\launcherinstaller.iss"'
 
     - name: Upload Installer
       uses: actions/upload-artifact@v2
