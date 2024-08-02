@@ -32,7 +32,11 @@ jobs:
       run: choco install innosetup --no-progress
 
     - name: Build Inno Setup Installer
-      run: '"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "{src}\launcherinstaller.iss"'
+      env:
+        ISS_FILE: ${{ github.workspace }}\launcherinstaller.iss 
+      run: |
+        $issFile = "${{ env.ISS_FILE }}"
+        & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" $issFile
 
     - name: Upload Installer
       uses: actions/upload-artifact@v2
