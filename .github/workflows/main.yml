@@ -41,9 +41,9 @@ jobs:
     - name: Zip Files
       run: |
         mkdir Output\zipped
-        cd bin\Release
+        cd SotNRandomizerLauncher\bin\Release
         $items = Get-ChildItem -File -Recurse | Where-Object { $_.Extension -notin ".pdb", ".xml" }
-        Compress-Archive -Path $items.FullName -DestinationPath ..\..\Output\zipped\SotNRandomizerLauncher.zip
+        Compress-Archive -Path $items.FullName -DestinationPath ..\..\..\Output\zipped\SotNRandomizerLauncher.zip
 
 
     - name: Upload Installer
