@@ -43,7 +43,7 @@ jobs:
         mkdir Output\zipped
         cd SotNRandomizerLauncher\bin\Release
         $items = Get-ChildItem -File -Recurse | Where-Object { $_.Extension -notin ".pdb", ".xml" }
-        Compress-Archive -Path $items.FullName -DestinationPath ..\..\..\Output\zipped\SotNRandomizerLauncher.zip
+        Compress-Archive -Path $items.FullName -DestinationPath ..\..\..\Output\zipped\SotNRandomizerLauncher-portable.zip
 
 
     - name: Upload Installer
