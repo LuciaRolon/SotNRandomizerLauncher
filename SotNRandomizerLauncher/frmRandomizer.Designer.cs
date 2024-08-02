@@ -37,6 +37,8 @@
             this.cbPreset = new System.Windows.Forms.ComboBox();
             this.lblNextEvent = new System.Windows.Forms.Label();
             this.grpSettings = new System.Windows.Forms.GroupBox();
+            this.cbWingSmashMode = new System.Windows.Forms.CheckBox();
+            this.cbFastWarp = new System.Windows.Forms.CheckBox();
             this.btnAROptions = new System.Windows.Forms.Button();
             this.cbAreaRandomizer = new System.Windows.Forms.CheckBox();
             this.cbComplexity = new System.Windows.Forms.ComboBox();
@@ -61,8 +63,7 @@
             this.randomizerTimer = new System.Windows.Forms.Timer(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cbCloseOnGeneration = new System.Windows.Forms.CheckBox();
-            this.cbFastWarp = new System.Windows.Forms.CheckBox();
-            this.cbWingSmashMode = new System.Windows.Forms.CheckBox();
+            this.btnCopySeed = new System.Windows.Forms.Button();
             this.grpRandomizations.SuspendLayout();
             this.grpSettings.SuspendLayout();
             this.SuspendLayout();
@@ -175,6 +176,31 @@
             this.grpSettings.TabIndex = 8;
             this.grpSettings.TabStop = false;
             this.grpSettings.Text = "Settings";
+            // 
+            // cbWingSmashMode
+            // 
+            this.cbWingSmashMode.AutoSize = true;
+            this.cbWingSmashMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbWingSmashMode.Location = new System.Drawing.Point(18, 130);
+            this.cbWingSmashMode.Name = "cbWingSmashMode";
+            this.cbWingSmashMode.Size = new System.Drawing.Size(192, 21);
+            this.cbWingSmashMode.TabIndex = 22;
+            this.cbWingSmashMode.Text = "Infinite Wing Smash Mode";
+            this.toolTip.SetToolTip(this.cbWingSmashMode, "Quickens warp animation when using teleporters.");
+            this.cbWingSmashMode.UseVisualStyleBackColor = true;
+            // 
+            // cbFastWarp
+            // 
+            this.cbFastWarp.AutoSize = true;
+            this.cbFastWarp.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbFastWarp.Location = new System.Drawing.Point(222, 104);
+            this.cbFastWarp.Name = "cbFastWarp";
+            this.cbFastWarp.Size = new System.Drawing.Size(127, 21);
+            this.cbFastWarp.TabIndex = 21;
+            this.cbFastWarp.Text = "Fast Warp Mode";
+            this.toolTip.SetToolTip(this.cbFastWarp, "Quickens warp animation when using teleporters.");
+            this.cbFastWarp.UseVisualStyleBackColor = true;
+            this.cbFastWarp.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // btnAROptions
             // 
@@ -450,9 +476,9 @@
             this.lblTimeGenerating.BackColor = System.Drawing.Color.Transparent;
             this.lblTimeGenerating.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTimeGenerating.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblTimeGenerating.Location = new System.Drawing.Point(254, 535);
+            this.lblTimeGenerating.Location = new System.Drawing.Point(124, 535);
             this.lblTimeGenerating.Name = "lblTimeGenerating";
-            this.lblTimeGenerating.Size = new System.Drawing.Size(145, 21);
+            this.lblTimeGenerating.Size = new System.Drawing.Size(275, 21);
             this.lblTimeGenerating.TabIndex = 14;
             this.lblTimeGenerating.Text = "Time Generating: {time}";
             this.lblTimeGenerating.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -485,30 +511,17 @@
             this.cbCloseOnGeneration.UseVisualStyleBackColor = false;
             this.cbCloseOnGeneration.CheckedChanged += new System.EventHandler(this.cbCloseOnGeneration_CheckedChanged);
             // 
-            // cbFastWarp
+            // btnCopySeed
             // 
-            this.cbFastWarp.AutoSize = true;
-            this.cbFastWarp.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbFastWarp.Location = new System.Drawing.Point(222, 104);
-            this.cbFastWarp.Name = "cbFastWarp";
-            this.cbFastWarp.Size = new System.Drawing.Size(127, 21);
-            this.cbFastWarp.TabIndex = 21;
-            this.cbFastWarp.Text = "Fast Warp Mode";
-            this.toolTip.SetToolTip(this.cbFastWarp, "Quickens warp animation when using teleporters.");
-            this.cbFastWarp.UseVisualStyleBackColor = true;
-            this.cbFastWarp.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // cbWingSmashMode
-            // 
-            this.cbWingSmashMode.AutoSize = true;
-            this.cbWingSmashMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbWingSmashMode.Location = new System.Drawing.Point(18, 130);
-            this.cbWingSmashMode.Name = "cbWingSmashMode";
-            this.cbWingSmashMode.Size = new System.Drawing.Size(192, 21);
-            this.cbWingSmashMode.TabIndex = 22;
-            this.cbWingSmashMode.Text = "Infinite Wing Smash Mode";
-            this.toolTip.SetToolTip(this.cbWingSmashMode, "Quickens warp animation when using teleporters.");
-            this.cbWingSmashMode.UseVisualStyleBackColor = true;
+            this.btnCopySeed.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCopySeed.Location = new System.Drawing.Point(250, 428);
+            this.btnCopySeed.Name = "btnCopySeed";
+            this.btnCopySeed.Size = new System.Drawing.Size(156, 29);
+            this.btnCopySeed.TabIndex = 22;
+            this.btnCopySeed.Text = "Copy Seed and Equipment";
+            this.btnCopySeed.UseVisualStyleBackColor = true;
+            this.btnCopySeed.Visible = false;
+            this.btnCopySeed.Click += new System.EventHandler(this.btnCopySeed_Click);
             // 
             // frmRandomizer
             // 
@@ -516,6 +529,7 @@
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(418, 598);
+            this.Controls.Add(this.btnCopySeed);
             this.Controls.Add(this.cbCloseOnGeneration);
             this.Controls.Add(this.lblTimeGenerating);
             this.Controls.Add(this.pgbRandomizingProgress);
@@ -575,5 +589,6 @@
         private System.Windows.Forms.CheckBox cbCloseOnGeneration;
         private System.Windows.Forms.CheckBox cbFastWarp;
         private System.Windows.Forms.CheckBox cbWingSmashMode;
+        private System.Windows.Forms.Button btnCopySeed;
     }
 }

@@ -375,6 +375,7 @@ namespace SotNRandomizerLauncher
             try
             {
                 await LauncherClient.UpdateRandoTools();
+                LauncherClient.RunPresetUpdates();
                 pbRandoTools.Image = Properties.Resources.v_update;
                 btnUpdateRandoTools.Enabled = false;
                 btnUpdateRandoTools.Text = "Up to Date";
@@ -395,6 +396,10 @@ namespace SotNRandomizerLauncher
                 configForm.ShowDialog();
                 ActivateAfterDelay(500);
             }
+            else
+            {
+                ShowSurvey();
+            }
             LauncherClient.CheckForPresetUpdates();
             if (LauncherClient.GetConfigValue("ImportedUser") != null)
             {
@@ -404,6 +409,19 @@ namespace SotNRandomizerLauncher
             {
                 NormalVisuals();
             }
+        }
+
+        void ShowSurvey()
+        {
+            if(LauncherClient.GetConfigValue("SurveySeen") == null)
+            {
+                DialogResult result = MessageBox.Show("We're looking for your opinion on SotN Randomizer! It would help the community a lot if you take 5 minutes to complete a quick survey. Would you like to open it? It will open in your browser.", "Feedback Survey", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(result == DialogResult.Yes)
+                {
+                    Process.Start("https://forms.gle/cNHSaUwwtQEEjLDWA");
+                }
+                LauncherClient.SetAppConfig("SurveySeen", "Yes");
+            }            
         }
 
         void ActivateAfterDelay(int miliseconds)
@@ -554,6 +572,12 @@ namespace SotNRandomizerLauncher
         private void lblVersion_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void lblSurvey_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://forms.gle/cNHSaUwwtQEEjLDWA");
+            MessageBox.Show("Survey opened in your browser. Thank you for taking the time!", "Survey Opened", MessageBoxButtons.OK, MessageBoxIcon.Information);            
         }
     }
 }

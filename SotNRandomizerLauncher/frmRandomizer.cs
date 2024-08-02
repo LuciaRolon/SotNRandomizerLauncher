@@ -94,6 +94,7 @@ namespace SotNRandomizerLauncher
             if (this.cts.IsCancellationRequested) return;
             this.Invoke(new Action(() =>
             {
+                btnCopySeed.Show();
                 if (finished && cbCloseOnGeneration.Checked) this.Close();
             }));
         }
@@ -224,7 +225,7 @@ namespace SotNRandomizerLauncher
         {
             if(cbComplexity.Text == "9" || cbComplexity.Text == "10")
             {
-                MessageBox.Show("Careful! These values may break a seed or make it impossible to complete.", "High Complexity", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Please be warned that increasing complexity increases generation time exponentially and eventually makes seeds impossible to generate.", "High Complexity", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -278,6 +279,12 @@ namespace SotNRandomizerLauncher
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnCopySeed_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText($"{lblSeed.Text}\n{lblStartingEquipment.Text}");
+            lblTimeGenerating.Text = "Seed and Equipment copied to clipboard!";
         }
     }
 }

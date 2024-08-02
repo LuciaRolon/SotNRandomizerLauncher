@@ -62,6 +62,7 @@
             this.lblOfflineMode = new System.Windows.Forms.Label();
             this.btnRandomizer = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.lblSurvey = new System.Windows.Forms.LinkLabel();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -458,6 +459,20 @@
             this.lblVersion.Text = "v0.4.4";
             this.lblVersion.Click += new System.EventHandler(this.lblVersion_Click);
             // 
+            // lblSurvey
+            // 
+            this.lblSurvey.AutoSize = true;
+            this.lblSurvey.BackColor = System.Drawing.Color.Transparent;
+            this.lblSurvey.Font = new System.Drawing.Font("Segoe UI Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSurvey.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.lblSurvey.Location = new System.Drawing.Point(51, 434);
+            this.lblSurvey.Name = "lblSurvey";
+            this.lblSurvey.Size = new System.Drawing.Size(479, 21);
+            this.lblSurvey.TabIndex = 4;
+            this.lblSurvey.TabStop = true;
+            this.lblSurvey.Text = "We\'re looking for your opinion! Click here to open a Survey!";
+            this.lblSurvey.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblSurvey_LinkClicked);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -465,6 +480,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
             this.ClientSize = new System.Drawing.Size(739, 461);
+            this.Controls.Add(this.lblSurvey);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblOfflineMode);
             this.Controls.Add(this.btnRandomizer);
@@ -534,6 +550,7 @@
         private System.Windows.Forms.Button btnRandomizer;
         private System.Windows.Forms.Label lblOfflineMode;
         private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.LinkLabel lblSurvey;
     }
 }
 

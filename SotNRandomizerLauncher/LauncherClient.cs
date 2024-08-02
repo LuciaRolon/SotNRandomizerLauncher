@@ -442,8 +442,7 @@ namespace SotNRandomizerLauncher
         #endregion
 
         public static void CheckForPresetUpdates()
-        {
-            
+        {            
             // Checks for the latest preset updates, with the option for imported users to ignore the update until next release.
             string latestPresetsVersion = LauncherClient.GetLatestVersion("LuciaRolon/CompiledRandomizer");
             bool importedUser = LauncherClient.GetConfigValue("ImportedUser") != null;
@@ -464,7 +463,7 @@ namespace SotNRandomizerLauncher
             }
         }
 
-        async static void RunPresetUpdates()
+        public async static void RunPresetUpdates()
         {
             await LauncherClient.DownloadPresets();
         }
