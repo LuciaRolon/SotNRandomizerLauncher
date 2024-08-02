@@ -1,0 +1,41 @@
+name: Build and Package .NET Framework Windows Forms App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+
+    - name: Restore NuGet packages
+      run: nuget restore
+
+    - name: Build solution
+      run: msbuild YourSolution.sln /p:Configuration=Release
+
+    - name: Install Inno Setup
+      run: choco install innosetup --no-progress
+
+    - name: Build Inno Setup Installer
+      run: '"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "{src}\installer.iss"'
+
+    - name: Upload Installer
+      uses: actions/upload-artifact@v2
+      with:
+        name: WindowsFormsAppInstaller
+        path: '{build}\Output\SotNRandomizerLauncher.exe'
