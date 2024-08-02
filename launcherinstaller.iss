@@ -17,11 +17,11 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile={src}\LICENSE.txt
+LicenseFile=LICENSE.txt
 PrivilegesRequired=lowest
-OutputDir={build}\Output
+OutputDir=Output
 OutputBaseFilename=SotNRandomizerLauncher
-SetupIconFile={src}\SotNRandomizerLauncher\Captykure.ico
+SetupIconFile=SotNRandomizerLauncher\Captykure.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -33,19 +33,19 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: "{src}\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\apply_ppf.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\applyppf3_vc.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\error_recalc.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\Newtonsoft.Json.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\SotNRandomizerLauncher.application"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\SotNRandomizerLauncher.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\SotNRandomizerLauncher.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\LauncherUpdater.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\LauncherUpdater.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{src}\bin\Release\baseFiles\*"; DestDir: "{app}\baseFiles"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{src}\Captykure.ico"; DestDir: "{app}"; Flags: ignoreversion 
+Source: "SotNRandomizerLauncher\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\apply_ppf.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\applyppf3_vc.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\error_recalc.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\Newtonsoft.Json.xml"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\SotNRandomizerLauncher.application"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\SotNRandomizerLauncher.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\SotNRandomizerLauncher.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\LauncherUpdater.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\LauncherUpdater.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "SotNRandomizerLauncher\bin\Release\baseFiles\*"; DestDir: "{app}\baseFiles"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "SotNRandomizerLauncher\Captykure.ico"; DestDir: "{app}"; Flags: ignoreversion 
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\Captykure.ico"
