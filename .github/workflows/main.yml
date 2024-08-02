@@ -41,8 +41,10 @@ jobs:
     - name: Zip Files
       run: |
         mkdir Output\zipped
-        cd SotNRandomizerLauncher\bin\Release
-        powershell -Command "Compress-Archive -Path * -DestinationPath ..\..\..\Output\zipped\SotNRandomizerLauncher-portable.zip -Exclude *.pdb,*.xml"
+        cd bin\Release
+        $items = Get-ChildItem -File -Recurse | Where-Object { $_.Extension -notin ".pdb", ".xml" }
+        Compress-Archive -Path $items.FullName -DestinationPath ..\..\Output\zipped\SotNRandomizerLauncher.zip
+
 
     - name: Upload Installer
       uses: actions/upload-artifact@v2
