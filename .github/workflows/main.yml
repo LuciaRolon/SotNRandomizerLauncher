@@ -38,8 +38,20 @@ jobs:
         $issFile = "${{ env.ISS_FILE }}"
         & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" $issFile
 
+    - name: Zip Files
+      run: |
+        mkdir Output\zipped
+        cd SotNRandomizerLauncher\bin\Release
+        powershell -Command "Compress-Archive -Path * -DestinationPath ..\..\..\Output\zipped\SotNRandomizerLauncher-portable.zip -Exclude *.pdb,*.xml"
+
     - name: Upload Installer
       uses: actions/upload-artifact@v2
       with:
         name: WindowsFormsAppInstaller
         path: 'Output\SotNRandomizerLauncher.exe'
+
+    - name: Upload Zipped Files
+      uses: actions/upload-artifact@v2
+      with:
+        name: ZippedFiles
+        path: 'Output\zipped\SotNRandomizerLauncher-portable.zip'
