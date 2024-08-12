@@ -218,7 +218,7 @@
             this.cbUnlockedMode.Size = new System.Drawing.Size(123, 21);
             this.cbUnlockedMode.TabIndex = 23;
             this.cbUnlockedMode.Text = "Unlocked Mode";
-            this.toolTip.SetToolTip(this.cbUnlockedMode, "Quickens warp animation when using teleporters.");
+            this.toolTip.SetToolTip(this.cbUnlockedMode, "Opens all shortcuts in both castles. (WARNING: This may break logic)");
             this.cbUnlockedMode.UseVisualStyleBackColor = true;
             // 
             // cbWingSmashMode
@@ -325,7 +325,9 @@
             "Green",
             "Gray",
             "Purple",
-            "Pink"});
+            "Pink",
+            "Black",
+            "Invisible"});
             this.cbColor.Location = new System.Drawing.Point(196, 214);
             this.cbColor.Name = "cbColor";
             this.cbColor.Size = new System.Drawing.Size(160, 21);

@@ -15,6 +15,8 @@ namespace SotNRandomizerLauncher
         Gray,
         Purple,
         Pink,
+        Black,
+        Invisible,
         Default
     }
     internal class RandomizerOptions
@@ -55,7 +57,7 @@ namespace SotNRandomizerLauncher
             if (this.ExcludeSongs)
             {
                 string excludeSongList = LauncherClient.GetConfigValue("ExcludedSongs");
-                arguments += $"--eds {excludeSongList}";
+                arguments += $"--eds {excludeSongList} ";
             }
             if (this.Complexity > 0) arguments += $"-c {this.Complexity} ";
             char mapColor = MapColorToSetting(this.MapColor);
@@ -92,8 +94,10 @@ namespace SotNRandomizerLauncher
                 case MapColor.Gray: return 'y';
                 case MapColor.Green: return 'g';
                 case MapColor.Crimson: return 'r';
-                case MapColor.Brown: return 'b';
+                case MapColor.Brown: return 'n';
                 case MapColor.Blue: return 'u';
+                case MapColor.Black: return 'b';
+                case MapColor.Invisible: return 'i';
             }
             return ' ';
         }

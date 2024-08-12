@@ -52,7 +52,7 @@
             "Wood Carving Partita",
             "Crystal Teardrops",
             "Marble Gallery",
-            "Dracula\'s Castle",
+            "Draculas Castle",
             "The Tragic Prince",
             "Tower of Mist",
             "Door of Holy Spirits",
