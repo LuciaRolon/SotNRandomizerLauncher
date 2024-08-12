@@ -15,6 +15,8 @@ namespace SotNRandomizerLauncher
         Gray,
         Purple,
         Pink,
+        Black,
+        Invisible,
         Default
     }
     internal class RandomizerOptions
@@ -37,6 +39,8 @@ namespace SotNRandomizerLauncher
         public AreaRandoOptions AreaRandoOptions { get; set; }
         public bool IWBMode { get; set; }
         public bool FastWarpMode { get; set; }
+        public bool UnlockedMode { get; set; }
+        public bool ExcludeSongs { get; set; }
 
 
         public string GenerateArguments()
@@ -49,6 +53,12 @@ namespace SotNRandomizerLauncher
             if (this.MyPurseMode) arguments += "-y ";
             if (this.IWBMode) arguments += "-b ";
             if (this.FastWarpMode) arguments += "-9 ";
+            if (this.UnlockedMode) arguments += "-U ";
+            if (this.ExcludeSongs)
+            {
+                string excludeSongList = LauncherClient.GetConfigValue("ExcludedSongs");
+                arguments += $"--eds {excludeSongList} ";
+            }
             if (this.Complexity > 0) arguments += $"-c {this.Complexity} ";
             char mapColor = MapColorToSetting(this.MapColor);
             if (mapColor != ' ') arguments += $"-m {mapColor} ";
@@ -84,8 +94,10 @@ namespace SotNRandomizerLauncher
                 case MapColor.Gray: return 'y';
                 case MapColor.Green: return 'g';
                 case MapColor.Crimson: return 'r';
-                case MapColor.Brown: return 'b';
+                case MapColor.Brown: return 'n';
                 case MapColor.Blue: return 'u';
+                case MapColor.Black: return 'b';
+                case MapColor.Invisible: return 'i';
             }
             return ' ';
         }

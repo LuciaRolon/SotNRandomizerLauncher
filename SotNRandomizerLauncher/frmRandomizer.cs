@@ -102,6 +102,11 @@ namespace SotNRandomizerLauncher
 
         private async void btnConfigure_Click(object sender, EventArgs e)
         {
+            if(cbExcludeSongs.Checked && LauncherClient.GetConfigValue("ExcludedSongs") == null)
+            {
+                MessageBox.Show("Please, select which songs to exclude before generating the PPF.", "Excluded Songs Missing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             secondsGenerating = 0;
             randomizerTimer.Start();
             lblTimeGenerating.Show();
@@ -145,7 +150,9 @@ namespace SotNRandomizerLauncher
                 AreaRandoOptions = randoOptions,
                 AreaRando = cbAreaRandomizer.Checked,
                 IWBMode = cbWingSmashMode.Checked,
-                FastWarpMode = cbFastWarp.Checked
+                FastWarpMode = cbFastWarp.Checked,
+                UnlockedMode = cbUnlockedMode.Checked,
+                ExcludeSongs = cbExcludeSongs.Checked
             };
         }
 
@@ -285,6 +292,17 @@ namespace SotNRandomizerLauncher
         {
             Clipboard.SetText($"{lblSeed.Text}\n{lblStartingEquipment.Text}");
             lblTimeGenerating.Text = "Seed and Equipment copied to clipboard!";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmExcludeSongs frmExclude = new frmExcludeSongs();
+            frmExclude.ShowDialog();
+        }
+
+        private void cbExcludeSongs_CheckedChanged(object sender, EventArgs e)
+        {
+            button1.Enabled = cbExcludeSongs.Checked;
         }
     }
 }

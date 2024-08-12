@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.4.4.1";
+        string launcherVersion = "v0.4.5";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
@@ -395,10 +395,6 @@ namespace SotNRandomizerLauncher
                 frmConfigure configForm = new frmConfigure();
                 configForm.ShowDialog();
                 ActivateAfterDelay(500);
-            }
-            else
-            {
-                ShowSurvey();
             }
             LauncherClient.CheckForPresetUpdates();
             if (LauncherClient.GetConfigValue("ImportedUser") != null)
