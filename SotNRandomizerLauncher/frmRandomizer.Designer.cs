@@ -267,6 +267,7 @@
             this.cbAreaRandomizer.Name = "cbAreaRandomizer";
             this.cbAreaRandomizer.Size = new System.Drawing.Size(163, 21);
             this.cbAreaRandomizer.TabIndex = 19;
+            this.cbAreaRandomizer.Tag = "NoInclude";
             this.cbAreaRandomizer.Text = "Area Randomizer (AR)";
             this.toolTip.SetToolTip(this.cbAreaRandomizer, "Randomizes Red Doors, making them teleport you to another random red door in the " +
         "same castle.");
@@ -306,6 +307,7 @@
             this.cbCustomComplexity.Name = "cbCustomComplexity";
             this.cbCustomComplexity.Size = new System.Drawing.Size(152, 21);
             this.cbCustomComplexity.TabIndex = 17;
+            this.cbCustomComplexity.Tag = "NoInclude";
             this.cbCustomComplexity.Text = "Custom Complexity:";
             this.toolTip.SetToolTip(this.cbCustomComplexity, "Changes the complexity of the preset. CAUTION: This can break a seed.");
             this.cbCustomComplexity.UseVisualStyleBackColor = true;
@@ -332,6 +334,7 @@
             this.cbColor.Name = "cbColor";
             this.cbColor.Size = new System.Drawing.Size(160, 21);
             this.cbColor.TabIndex = 16;
+            this.cbColor.SelectedIndexChanged += new System.EventHandler(this.cbColor_SelectedIndexChanged);
             this.cbColor.EnabledChanged += new System.EventHandler(this.cbColor_EnabledChanged);
             // 
             // cbMyPurse
@@ -398,6 +401,7 @@
             this.cbRelicExtension.Name = "cbRelicExtension";
             this.cbRelicExtension.Size = new System.Drawing.Size(175, 21);
             this.cbRelicExtension.TabIndex = 12;
+            this.cbRelicExtension.Tag = "NoInclude";
             this.cbRelicExtension.Text = "Custom Relic Extension:";
             this.toolTip.SetToolTip(this.cbRelicExtension, "Modifies the Preset\'s Relic Locations");
             this.cbRelicExtension.UseVisualStyleBackColor = true;
@@ -590,7 +594,9 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmRandomizer";
             this.Text = "Symphony of the Night Randomizer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRandomizer_FormClosing);
             this.Load += new System.EventHandler(this.frmRandomizer_Load);
+            this.Shown += new System.EventHandler(this.frmRandomizer_Shown);
             this.grpRandomizations.ResumeLayout(false);
             this.grpRandomizations.PerformLayout();
             this.grpSettings.ResumeLayout(false);

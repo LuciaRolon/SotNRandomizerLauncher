@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.IO.Compression;
 using System.Runtime.CompilerServices;
 using System.Net.NetworkInformation;
+using Newtonsoft.Json.Linq;
 
 namespace SotNRandomizerLauncher
 {
@@ -795,6 +796,17 @@ namespace SotNRandomizerLauncher
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             configs.AppSettings.Settings.Remove(key);
             configs.AppSettings.Settings.Add(key, value);
+            configs.Save();
+        }
+
+        public static void SetAppConfig(Dictionary<string, string> configDict)
+        {
+            Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            foreach (KeyValuePair<string, string> entry in configDict)
+            {
+                configs.AppSettings.Settings.Remove(entry.Key);
+                configs.AppSettings.Settings.Add(entry.Key, entry.Value);
+            }
             configs.Save();
         }
 

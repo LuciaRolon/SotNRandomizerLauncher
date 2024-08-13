@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -26,8 +27,24 @@ namespace SotNRandomizerLauncher
         {
             InitializeComponent();
             GetPresets();
-            string closeOnSeedGeneration = LauncherClient.GetConfigValue("CloseOnSeedGeneration");
+        }
+
+        void LoadLastSettings()
+        {
+            Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            foreach (CheckBox checkbox in this.grpSettings.Controls.OfType<CheckBox>())
+            {
+                if (checkbox.Tag != null && checkbox.Tag.ToString() == "NoInclude") continue;
+                string isChecked = LauncherClient.GetConfigValue(configs, checkbox.Name);
+                checkbox.Checked = isChecked != null && isChecked.ToLower() == "true";
+            }
+            string closeOnSeedGeneration = LauncherClient.GetConfigValue(configs, "CloseOnSeedGeneration");
             cbCloseOnGeneration.Checked = closeOnSeedGeneration != null && closeOnSeedGeneration == "Yes";
+            if (cbMapColor.Checked)
+            {
+                string mapColor = LauncherClient.GetConfigValue(configs, "MapColor");
+                if(mapColor != null) cbColor.SelectedIndex = int.Parse(mapColor);
+            }
         }
 
         void GetPresets()
@@ -118,6 +135,17 @@ namespace SotNRandomizerLauncher
             randomizerTimer.Stop();
             btnGeneratePPF.Enabled = true;
         }        
+
+        void SaveLastRandomizingOptions()
+        {
+            Dictionary<string, string> cbValues = new Dictionary<string, string>();
+            foreach(CheckBox control in this.grpSettings.Controls.OfType<CheckBox>())
+            {
+                if ((control.Tag != null && control.Tag.ToString() == "NoInclude") || !control.Checked) continue;
+                cbValues[control.Name] = control.Checked.ToString();
+            }
+            LauncherClient.SetAppConfig(cbValues);
+        }
 
         RandomizerOptions GetRandomizerOptions()
         {
@@ -303,6 +331,21 @@ namespace SotNRandomizerLauncher
         private void cbExcludeSongs_CheckedChanged(object sender, EventArgs e)
         {
             button1.Enabled = cbExcludeSongs.Checked;
+        }
+
+        private void frmRandomizer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveLastRandomizingOptions();
+        }
+
+        private void frmRandomizer_Shown(object sender, EventArgs e)
+        {
+            LoadLastSettings();
+        }
+
+        private void cbColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LauncherClient.SetAppConfig("MapColor", cbColor.SelectedIndex.ToString());
         }
     }
 }
