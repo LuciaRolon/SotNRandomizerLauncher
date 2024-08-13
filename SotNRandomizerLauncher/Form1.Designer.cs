@@ -38,9 +38,6 @@
             this.btnTutorials = new System.Windows.Forms.Button();
             this.btnConfigure = new System.Windows.Forms.Button();
             this.grpOptions = new System.Windows.Forms.GroupBox();
-            this.btnShow = new System.Windows.Forms.Button();
-            this.btnLaunchBizhawk = new System.Windows.Forms.Button();
-            this.btnLaunchLiveSplit = new System.Windows.Forms.Button();
             this.grpTools = new System.Windows.Forms.GroupBox();
             this.pbBizhawk = new System.Windows.Forms.PictureBox();
             this.pbLiveSplit = new System.Windows.Forms.PictureBox();
@@ -62,6 +59,7 @@
             this.lblOfflineMode = new System.Windows.Forms.Label();
             this.btnRandomizer = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.btnReplays = new System.Windows.Forms.Button();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -153,9 +151,7 @@
             // grpOptions
             // 
             this.grpOptions.BackColor = System.Drawing.Color.Transparent;
-            this.grpOptions.Controls.Add(this.btnShow);
-            this.grpOptions.Controls.Add(this.btnLaunchBizhawk);
-            this.grpOptions.Controls.Add(this.btnLaunchLiveSplit);
+            this.grpOptions.Controls.Add(this.btnReplays);
             this.grpOptions.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpOptions.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.grpOptions.Location = new System.Drawing.Point(538, 138);
@@ -163,46 +159,7 @@
             this.grpOptions.Size = new System.Drawing.Size(189, 152);
             this.grpOptions.TabIndex = 3;
             this.grpOptions.TabStop = false;
-            this.grpOptions.Text = "Individual Options";
-            // 
-            // btnShow
-            // 
-            this.btnShow.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShow.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnShow.Location = new System.Drawing.Point(14, 21);
-            this.btnShow.Name = "btnShow";
-            this.btnShow.Size = new System.Drawing.Size(164, 29);
-            this.btnShow.TabIndex = 7;
-            this.btnShow.Text = "Show Individual Options";
-            this.btnShow.UseVisualStyleBackColor = true;
-            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
-            this.btnShow.MouseHover += new System.EventHandler(this.btnShow_MouseHover);
-            // 
-            // btnLaunchBizhawk
-            // 
-            this.btnLaunchBizhawk.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunchBizhawk.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnLaunchBizhawk.Location = new System.Drawing.Point(14, 110);
-            this.btnLaunchBizhawk.Name = "btnLaunchBizhawk";
-            this.btnLaunchBizhawk.Size = new System.Drawing.Size(164, 29);
-            this.btnLaunchBizhawk.TabIndex = 6;
-            this.btnLaunchBizhawk.Text = "Launch Bizhawk";
-            this.btnLaunchBizhawk.UseVisualStyleBackColor = true;
-            this.btnLaunchBizhawk.Visible = false;
-            this.btnLaunchBizhawk.Click += new System.EventHandler(this.btnLaunchBizhawk_Click);
-            // 
-            // btnLaunchLiveSplit
-            // 
-            this.btnLaunchLiveSplit.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunchLiveSplit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnLaunchLiveSplit.Location = new System.Drawing.Point(14, 65);
-            this.btnLaunchLiveSplit.Name = "btnLaunchLiveSplit";
-            this.btnLaunchLiveSplit.Size = new System.Drawing.Size(164, 29);
-            this.btnLaunchLiveSplit.TabIndex = 5;
-            this.btnLaunchLiveSplit.Text = "Launch LiveSplit";
-            this.btnLaunchLiveSplit.UseVisualStyleBackColor = true;
-            this.btnLaunchLiveSplit.Visible = false;
-            this.btnLaunchLiveSplit.Click += new System.EventHandler(this.btnLaunchLiveSplit_Click);
+            this.grpOptions.Text = "Community and Tools";
             // 
             // grpTools
             // 
@@ -458,6 +415,18 @@
             this.lblVersion.Text = "v0.4.4";
             this.lblVersion.Click += new System.EventHandler(this.lblVersion_Click);
             // 
+            // btnReplays
+            // 
+            this.btnReplays.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReplays.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnReplays.Location = new System.Drawing.Point(14, 21);
+            this.btnReplays.Name = "btnReplays";
+            this.btnReplays.Size = new System.Drawing.Size(164, 29);
+            this.btnReplays.TabIndex = 11;
+            this.btnReplays.Text = "Replay Viewer";
+            this.btnReplays.UseVisualStyleBackColor = true;
+            this.btnReplays.Click += new System.EventHandler(this.btnReplays_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -506,8 +475,6 @@
         private System.Windows.Forms.Button btnTutorials;
         private System.Windows.Forms.Button btnConfigure;
         private System.Windows.Forms.GroupBox grpOptions;
-        private System.Windows.Forms.Button btnLaunchBizhawk;
-        private System.Windows.Forms.Button btnLaunchLiveSplit;
         private System.Windows.Forms.GroupBox grpTools;
         private System.Windows.Forms.PictureBox pbRandoTools;
         private System.Windows.Forms.Label lblBizhawk;
@@ -529,11 +496,11 @@
         private System.Windows.Forms.Label lblNextEvent;
         private System.Windows.Forms.Label lblPlayLastSeed;
         private System.Windows.Forms.LinkLabel lblWeekSeed;
-        private System.Windows.Forms.Button btnShow;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Button btnRandomizer;
         private System.Windows.Forms.Label lblOfflineMode;
         private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.Button btnReplays;
     }
 }
 

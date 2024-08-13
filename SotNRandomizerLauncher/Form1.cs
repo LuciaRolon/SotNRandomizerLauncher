@@ -66,6 +66,7 @@ namespace SotNRandomizerLauncher
             LoadEvents();
         }
 
+
         void CheckForLauncherUpdates()
         {
             VersionData versionData = LauncherClient.GetLatestVersion("LuciaRolon/SotNRandomizerLauncher", true);
@@ -506,13 +507,12 @@ namespace SotNRandomizerLauncher
 
         private void btnShow_MouseHover(object sender, EventArgs e)
         {
-            toolTip.Show("Show specific options to open LiveSplit and BizHawk manually.\nThis is intended for testing or troubleshooting purposes.", btnShow);
+            
         }
 
         private void btnShow_Click(object sender, EventArgs e)
         {
-            btnLaunchLiveSplit.Show();
-            btnLaunchBizhawk.Show();
+            
         }
 
         private async void btnRandomizer_Click(object sender, EventArgs e)
@@ -574,6 +574,12 @@ namespace SotNRandomizerLauncher
         {
             Process.Start("https://forms.gle/cNHSaUwwtQEEjLDWA");
             MessageBox.Show("Survey opened in your browser. Thank you for taking the time!", "Survey Opened", MessageBoxButtons.OK, MessageBoxIcon.Information);            
+        }
+
+        private void btnReplays_Click(object sender, EventArgs e)
+        {
+            frmReplays replays = new frmReplays();
+            replays.Show();
         }
     }
 }
