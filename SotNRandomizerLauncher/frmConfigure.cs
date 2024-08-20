@@ -267,5 +267,50 @@ namespace SotNRandomizerLauncher
             string sourcePpf = Path.Combine(randomizedRomPath, track1FileName);
             File.Copy(sourcePpf, targetPath);
         }
+
+        private void btnDeleteCustomPresets_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to delete all Custom Presets?", "Delete Custom Presets", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.No) return;
+
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string customPresetsPath = Path.Combine(currentAppDirectory, "files", "customPresets");
+            if (!Directory.Exists(customPresetsPath)) return;
+
+            foreach (string file in Directory.GetFiles(customPresetsPath))
+            {
+                File.Delete(file);
+            }
+            LauncherClient.SetAppConfig("CustomPresets", "");
+            MessageBox.Show("Presets deleted successfully", "Presets Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnCustomPreset_Click(object sender, EventArgs e)
+        {
+            string newCustomPresetPath = LauncherClient.RequestFile("Select the Preset JSON file to be added", "json");
+            if (newCustomPresetPath == "") return;
+
+            string customPresets = LauncherClient.GetConfigValue("CustomPresets");
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string customPresetsPath = Path.Combine(currentAppDirectory, "files", "customPresets");
+            string bizHawkPresetsPath = Path.Combine(LauncherClient.GetConfigValue("BizHawkPath"), "ExternalTools", "SotnRandoTools", "Presets");
+            if (customPresets == null && !Directory.Exists(customPresetsPath))
+            {
+                Directory.CreateDirectory(customPresetsPath);
+            }
+            // We copy it to our folder and the BizHawk folder
+            File.Copy(newCustomPresetPath, Path.Combine(customPresetsPath, Path.GetFileName(newCustomPresetPath)), true);
+            File.Copy(newCustomPresetPath, Path.Combine(bizHawkPresetsPath, Path.GetFileName(newCustomPresetPath)), true);
+            if(customPresets == null || customPresets == "")
+            {
+                customPresets = Path.GetFileName(newCustomPresetPath);
+            }
+            else
+            {
+                customPresets += $",{Path.GetFileName(newCustomPresetPath)}";
+            }
+            LauncherClient.SetAppConfig("CustomPresets", customPresets);
+            MessageBox.Show("Custom Preset added successfully!", "Preset Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

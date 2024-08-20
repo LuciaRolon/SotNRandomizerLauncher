@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -53,15 +54,47 @@ namespace SotNRandomizerLauncher
             string jsonFilePath = Path.Combine(LauncherClient.GetConfigValue("RandomizerPath"), "Randomizer", "preset-data.json");
             string jsonString = File.ReadAllText(jsonFilePath);
             var presets = JsonConvert.DeserializeObject<List<PresetInfo>>(jsonString);
-
-            // Store presets in a dictionary for quick lookup
-            presetDictionary = presets.ToDictionary(p => p.Name, p => p);
+            
             // Sort presets by Name
             presets.Sort((preset1, preset2) => string.Compare(preset1.Name, preset2.Name));
+            // We add the Custom Presets to the end of the list
+            List<PresetInfo> customPresets = GetCustomPresets();
+            if(customPresets != null)
+            {
+                presets.AddRange(customPresets);
+            }
+            
+            // Store presets in a dictionary for quick lookup
+            presetDictionary = presets.ToDictionary(p => p.Name, p => p);
 
             // Populate ComboBox with names
             cbPreset.DataSource = presets;
             cbPreset.DisplayMember = "Name";        
+        }
+
+        List<PresetInfo> GetCustomPresets()
+        {
+            string customPresets = LauncherClient.GetConfigValue("CustomPresets");
+            if (customPresets == null || customPresets == "") return null;
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string customPresetsPath = Path.Combine(currentAppDirectory, "files", "customPresets");
+
+            string[] presetList = customPresets.Split(',');
+            List<PresetInfo> customPresetList = new List<PresetInfo>();
+            foreach(string presetFile in presetList)
+            {
+                string presetFilePath = Path.Combine(customPresetsPath, presetFile);
+                string jsonString = File.ReadAllText(presetFilePath);
+                // Parse the JSON to get the metadata object
+                JObject jsonObject = JObject.Parse(jsonString);
+                JObject metadata = (JObject)jsonObject["metadata"];
+
+                // Deserialize the metadata into a PresetInfo object
+                PresetInfo presetInfo = metadata.ToObject<PresetInfo>();
+                presetInfo.Name = $"Custom - {presetInfo.Name}";
+                customPresetList.Add(presetInfo);
+            }
+            return customPresetList;
         }
 
         private void txtSeed_MouseClick(object sender, MouseEventArgs e)
@@ -158,7 +191,7 @@ namespace SotNRandomizerLauncher
             {
                 randoOptions = new AreaRandoOptions();
             }
-            
+
 
             return new RandomizerOptions
             {
@@ -180,7 +213,8 @@ namespace SotNRandomizerLauncher
                 IWBMode = cbWingSmashMode.Checked,
                 FastWarpMode = cbFastWarp.Checked,
                 UnlockedMode = cbUnlockedMode.Checked,
-                ExcludeSongs = cbExcludeSongs.Checked
+                ExcludeSongs = cbExcludeSongs.Checked,
+                IsCustom = cbPreset.Text.Contains("Custom")
             };
         }
 
