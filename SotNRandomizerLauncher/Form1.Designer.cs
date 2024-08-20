@@ -38,6 +38,7 @@
             this.btnTutorials = new System.Windows.Forms.Button();
             this.btnConfigure = new System.Windows.Forms.Button();
             this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.btnReplays = new System.Windows.Forms.Button();
             this.grpTools = new System.Windows.Forms.GroupBox();
             this.pbBizhawk = new System.Windows.Forms.PictureBox();
             this.pbLiveSplit = new System.Windows.Forms.PictureBox();
@@ -59,7 +60,6 @@
             this.lblOfflineMode = new System.Windows.Forms.Label();
             this.btnRandomizer = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
-            this.btnReplays = new System.Windows.Forms.Button();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -160,6 +160,18 @@
             this.grpOptions.TabIndex = 3;
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Community and Tools";
+            // 
+            // btnReplays
+            // 
+            this.btnReplays.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReplays.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnReplays.Location = new System.Drawing.Point(14, 21);
+            this.btnReplays.Name = "btnReplays";
+            this.btnReplays.Size = new System.Drawing.Size(164, 29);
+            this.btnReplays.TabIndex = 11;
+            this.btnReplays.Text = "Replay Viewer";
+            this.btnReplays.UseVisualStyleBackColor = true;
+            this.btnReplays.Click += new System.EventHandler(this.btnReplays_Click);
             // 
             // grpTools
             // 
@@ -414,18 +426,6 @@
             this.lblVersion.TabIndex = 10;
             this.lblVersion.Text = "v0.4.4";
             this.lblVersion.Click += new System.EventHandler(this.lblVersion_Click);
-            // 
-            // btnReplays
-            // 
-            this.btnReplays.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReplays.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnReplays.Location = new System.Drawing.Point(14, 21);
-            this.btnReplays.Name = "btnReplays";
-            this.btnReplays.Size = new System.Drawing.Size(164, 29);
-            this.btnReplays.TabIndex = 11;
-            this.btnReplays.Text = "Replay Viewer";
-            this.btnReplays.UseVisualStyleBackColor = true;
-            this.btnReplays.Click += new System.EventHandler(this.btnReplays_Click);
             // 
             // frmMain
             // 
