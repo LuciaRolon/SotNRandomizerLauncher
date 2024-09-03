@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.4.5";
+        string launcherVersion = "v0.4.6";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
@@ -65,6 +65,7 @@ namespace SotNRandomizerLauncher
             }
             LoadEvents();
         }
+
 
         void CheckForLauncherUpdates()
         {
@@ -506,13 +507,12 @@ namespace SotNRandomizerLauncher
 
         private void btnShow_MouseHover(object sender, EventArgs e)
         {
-            toolTip.Show("Show specific options to open LiveSplit and BizHawk manually.\nThis is intended for testing or troubleshooting purposes.", btnShow);
+            
         }
 
         private void btnShow_Click(object sender, EventArgs e)
         {
-            btnLaunchLiveSplit.Show();
-            btnLaunchBizhawk.Show();
+            
         }
 
         private async void btnRandomizer_Click(object sender, EventArgs e)
@@ -574,6 +574,21 @@ namespace SotNRandomizerLauncher
         {
             Process.Start("https://forms.gle/cNHSaUwwtQEEjLDWA");
             MessageBox.Show("Survey opened in your browser. Thank you for taking the time!", "Survey Opened", MessageBoxButtons.OK, MessageBoxIcon.Information);            
+        }
+
+        private void btnReplays_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnPlaceholder_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://taliczealot.github.io/#/apps/replays");
         }
     }
 }

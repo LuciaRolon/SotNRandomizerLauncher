@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,9 @@ namespace SotNRandomizerLauncher
         public bool FastWarpMode { get; set; }
         public bool UnlockedMode { get; set; }
         public bool ExcludeSongs { get; set; }
+        public bool IsCustom { get; set; }
+        public bool EnemyStatRando { get; set; }
+        public bool MisteryMode { get; set; }
 
 
         public string GenerateArguments()
@@ -54,6 +58,8 @@ namespace SotNRandomizerLauncher
             if (this.IWBMode) arguments += "-b ";
             if (this.FastWarpMode) arguments += "-9 ";
             if (this.UnlockedMode) arguments += "-U ";
+            if (this.MisteryMode) arguments += "-S ";
+            if (this.EnemyStatRando) arguments += "-E ";
             if (this.ExcludeSongs)
             {
                 string excludeSongList = LauncherClient.GetConfigValue("ExcludedSongs");
@@ -62,13 +68,33 @@ namespace SotNRandomizerLauncher
             if (this.Complexity > 0) arguments += $"-c {this.Complexity} ";
             char mapColor = MapColorToSetting(this.MapColor);
             if (mapColor != ' ') arguments += $"-m {mapColor} ";
+
+            if (this.IsCustom)
+            {
+                string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string customPresetsPath = Path.Combine(currentAppDirectory, "files", "customPresets");
+                string presetPath = Path.Combine(customPresetsPath, $"{this.Preset}.json");
+                arguments += $"-f {presetPath} ";
+            }
+            else
+            {
+                arguments += $"-p {this.Preset.ToLower()} ";
+            }
+            arguments += $"-s {this.Seed} ";
             
-            arguments += $"-p {this.Preset.ToLower()} -s {this.Seed} ";
             if (this.VanillaMusic || this.RelicExtension != "")
             {
                 arguments += "--opt ";
-                if (this.VanillaMusic) arguments += "~m";                
-                if (this.RelicExtension != "") arguments += $"r:x:{RelicExtension.ToLower()}";                
+                if (this.Preset == "bingo")
+                {
+                    arguments += "~r";
+                }
+                else
+                {
+                    if (this.VanillaMusic) arguments += "~m";
+                    if (this.RelicExtension != "") arguments += $"r:x:{RelicExtension.ToLower()}";
+                }
+                              
             }
             if (this.BHSeed)
             {

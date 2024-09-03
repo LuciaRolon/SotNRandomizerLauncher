@@ -48,6 +48,7 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.cbImport = new System.Windows.Forms.CheckBox();
             this.grpEmulation = new System.Windows.Forms.GroupBox();
+            this.cbCompatibilityFastCore = new System.Windows.Forms.CheckBox();
             this.lblCurrentCore = new System.Windows.Forms.Label();
             this.btnChangeCore = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -55,7 +56,8 @@
             this.grpLauncherSettings = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.cbLiveSplit = new System.Windows.Forms.CheckBox();
-            this.cbCompatibilityFastCore = new System.Windows.Forms.CheckBox();
+            this.btnCustomPreset = new System.Windows.Forms.Button();
+            this.btnDeleteCustomPresets = new System.Windows.Forms.Button();
             this.grpEmulation.SuspendLayout();
             this.grpLauncherSettings.SuspendLayout();
             this.SuspendLayout();
@@ -254,6 +256,19 @@
             this.grpEmulation.Text = "Emulation Settings";
             this.grpEmulation.Visible = false;
             // 
+            // cbCompatibilityFastCore
+            // 
+            this.cbCompatibilityFastCore.AutoSize = true;
+            this.cbCompatibilityFastCore.Location = new System.Drawing.Point(14, 69);
+            this.cbCompatibilityFastCore.Name = "cbCompatibilityFastCore";
+            this.cbCompatibilityFastCore.Size = new System.Drawing.Size(169, 17);
+            this.cbCompatibilityFastCore.TabIndex = 22;
+            this.cbCompatibilityFastCore.Text = "Use Compatibility Fast Core";
+            this.toolTip.SetToolTip(this.cbCompatibilityFastCore, "Check if you\'re having issues running BizHawk with the latest Fast Core version.\r" +
+        "\nIn order for this setting to take effect, enable it, then change to Classic Cor" +
+        "e, then back to Fast Core.");
+            this.cbCompatibilityFastCore.UseVisualStyleBackColor = true;
+            // 
             // lblCurrentCore
             // 
             this.lblCurrentCore.AutoSize = true;
@@ -291,7 +306,7 @@
             // cbMapTracker
             // 
             this.cbMapTracker.AutoSize = true;
-            this.cbMapTracker.Location = new System.Drawing.Point(8, 95);
+            this.cbMapTracker.Location = new System.Drawing.Point(8, 98);
             this.cbMapTracker.Name = "cbMapTracker";
             this.cbMapTracker.Size = new System.Drawing.Size(226, 17);
             this.cbMapTracker.TabIndex = 2;
@@ -303,6 +318,8 @@
             // grpLauncherSettings
             // 
             this.grpLauncherSettings.BackColor = System.Drawing.Color.Transparent;
+            this.grpLauncherSettings.Controls.Add(this.btnDeleteCustomPresets);
+            this.grpLauncherSettings.Controls.Add(this.btnCustomPreset);
             this.grpLauncherSettings.Controls.Add(this.button1);
             this.grpLauncherSettings.Controls.Add(this.cbMapTracker);
             this.grpLauncherSettings.Controls.Add(this.cbLiveSplit);
@@ -322,9 +339,9 @@
             this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button1.Location = new System.Drawing.Point(167, 16);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(145, 47);
+            this.button1.Size = new System.Drawing.Size(145, 22);
             this.button1.TabIndex = 21;
-            this.button1.Text = "Open Randomized ROM Folder";
+            this.button1.Text = "Open ROM Folder";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -341,18 +358,29 @@
             this.cbLiveSplit.UseVisualStyleBackColor = true;
             this.cbLiveSplit.CheckedChanged += new System.EventHandler(this.cbLiveSplit_CheckedChanged);
             // 
-            // cbCompatibilityFastCore
+            // btnCustomPreset
             // 
-            this.cbCompatibilityFastCore.AutoSize = true;
-            this.cbCompatibilityFastCore.Location = new System.Drawing.Point(14, 69);
-            this.cbCompatibilityFastCore.Name = "cbCompatibilityFastCore";
-            this.cbCompatibilityFastCore.Size = new System.Drawing.Size(169, 17);
-            this.cbCompatibilityFastCore.TabIndex = 22;
-            this.cbCompatibilityFastCore.Text = "Use Compatibility Fast Core";
-            this.toolTip.SetToolTip(this.cbCompatibilityFastCore, "Check if you\'re having issues running BizHawk with the latest Fast Core version.\r" +
-        "\nIn order for this setting to take effect, enable it, then change to Classic Cor" +
-        "e, then back to Fast Core.");
-            this.cbCompatibilityFastCore.UseVisualStyleBackColor = true;
+            this.btnCustomPreset.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCustomPreset.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnCustomPreset.Location = new System.Drawing.Point(167, 44);
+            this.btnCustomPreset.Name = "btnCustomPreset";
+            this.btnCustomPreset.Size = new System.Drawing.Size(145, 22);
+            this.btnCustomPreset.TabIndex = 22;
+            this.btnCustomPreset.Text = "Add Custom Preset";
+            this.btnCustomPreset.UseVisualStyleBackColor = true;
+            this.btnCustomPreset.Click += new System.EventHandler(this.btnCustomPreset_Click);
+            // 
+            // btnDeleteCustomPresets
+            // 
+            this.btnDeleteCustomPresets.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteCustomPresets.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnDeleteCustomPresets.Location = new System.Drawing.Point(167, 72);
+            this.btnDeleteCustomPresets.Name = "btnDeleteCustomPresets";
+            this.btnDeleteCustomPresets.Size = new System.Drawing.Size(145, 22);
+            this.btnDeleteCustomPresets.TabIndex = 23;
+            this.btnDeleteCustomPresets.Text = "Delete all Custom Presets";
+            this.btnDeleteCustomPresets.UseVisualStyleBackColor = true;
+            this.btnDeleteCustomPresets.Click += new System.EventHandler(this.btnDeleteCustomPresets_Click);
             // 
             // frmConfigure
             // 
@@ -421,5 +449,7 @@
         private System.Windows.Forms.CheckBox cbLiveSplit;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox cbCompatibilityFastCore;
+        private System.Windows.Forms.Button btnDeleteCustomPresets;
+        private System.Windows.Forms.Button btnCustomPreset;
     }
 }

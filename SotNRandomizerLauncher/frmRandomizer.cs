@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -26,8 +28,24 @@ namespace SotNRandomizerLauncher
         {
             InitializeComponent();
             GetPresets();
-            string closeOnSeedGeneration = LauncherClient.GetConfigValue("CloseOnSeedGeneration");
+        }
+
+        void LoadLastSettings()
+        {
+            Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            foreach (CheckBox checkbox in this.grpSettings.Controls.OfType<CheckBox>())
+            {
+                if (checkbox.Tag != null && checkbox.Tag.ToString() == "NoInclude") continue;
+                string isChecked = LauncherClient.GetConfigValue(configs, checkbox.Name);
+                checkbox.Checked = isChecked != null && isChecked.ToLower() == "true";
+            }
+            string closeOnSeedGeneration = LauncherClient.GetConfigValue(configs, "CloseOnSeedGeneration");
             cbCloseOnGeneration.Checked = closeOnSeedGeneration != null && closeOnSeedGeneration == "Yes";
+            if (cbMapColor.Checked)
+            {
+                string mapColor = LauncherClient.GetConfigValue(configs, "MapColor");
+                if(mapColor != null) cbColor.SelectedIndex = int.Parse(mapColor);
+            }
         }
 
         void GetPresets()
@@ -36,15 +54,47 @@ namespace SotNRandomizerLauncher
             string jsonFilePath = Path.Combine(LauncherClient.GetConfigValue("RandomizerPath"), "Randomizer", "preset-data.json");
             string jsonString = File.ReadAllText(jsonFilePath);
             var presets = JsonConvert.DeserializeObject<List<PresetInfo>>(jsonString);
-
-            // Store presets in a dictionary for quick lookup
-            presetDictionary = presets.ToDictionary(p => p.Name, p => p);
+            
             // Sort presets by Name
             presets.Sort((preset1, preset2) => string.Compare(preset1.Name, preset2.Name));
+            // We add the Custom Presets to the end of the list
+            List<PresetInfo> customPresets = GetCustomPresets();
+            if(customPresets != null)
+            {
+                presets.AddRange(customPresets);
+            }
+            
+            // Store presets in a dictionary for quick lookup
+            presetDictionary = presets.ToDictionary(p => p.Name, p => p);
 
             // Populate ComboBox with names
             cbPreset.DataSource = presets;
             cbPreset.DisplayMember = "Name";        
+        }
+
+        List<PresetInfo> GetCustomPresets()
+        {
+            string customPresets = LauncherClient.GetConfigValue("CustomPresets");
+            if (customPresets == null || customPresets == "") return null;
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string customPresetsPath = Path.Combine(currentAppDirectory, "files", "customPresets");
+
+            string[] presetList = customPresets.Split(',');
+            List<PresetInfo> customPresetList = new List<PresetInfo>();
+            foreach(string presetFile in presetList)
+            {
+                string presetFilePath = Path.Combine(customPresetsPath, presetFile);
+                string jsonString = File.ReadAllText(presetFilePath);
+                // Parse the JSON to get the metadata object
+                JObject jsonObject = JObject.Parse(jsonString);
+                JObject metadata = (JObject)jsonObject["metadata"];
+
+                // Deserialize the metadata into a PresetInfo object
+                PresetInfo presetInfo = metadata.ToObject<PresetInfo>();
+                presetInfo.Name = $"Custom - {presetInfo.Name}";
+                customPresetList.Add(presetInfo);
+            }
+            return customPresetList;
         }
 
         private void txtSeed_MouseClick(object sender, MouseEventArgs e)
@@ -95,7 +145,16 @@ namespace SotNRandomizerLauncher
             this.Invoke(new Action(() =>
             {
                 btnCopySeed.Show();
-                if (finished && cbCloseOnGeneration.Checked) this.Close();
+                if (finished && cbCloseOnGeneration.Checked && presetDictionary[cbPreset.Text].Id != "bingo") this.Close();  // We don't want to close the window for bingo runs.
+            }));
+        }
+
+        void UpdateBingoData(BingoData bingoData)
+        {
+            this.Invoke(new Action(() =>
+            {
+                btnCopySeed.Show();
+                this.rtbBingoInformation.Text = $"Join at: {bingoData.bingoUrl}\nPassword: {bingoData.password}";
             }));
         }
 
@@ -114,10 +173,33 @@ namespace SotNRandomizerLauncher
             isRandomizing = true;
             cts = new CancellationTokenSource();
             await Randomizer.StartRandomization(UpdateProgressBar, UpdateSeed, UpdateEquipment, GetRandomizerOptions(), cts.Token, FinishRandomize);
+            if(presetDictionary[cbPreset.Text].Id == "bingo")
+            {
+                rtbBingoInformation.Text = "Generating Bingo Room...";
+                rtbBingoInformation.Show();
+                lblStartingEquipment.Hide();
+                BingoSpecialSetup();
+            }
             isRandomizing = false;
             randomizerTimer.Stop();
             btnGeneratePPF.Enabled = true;
         }        
+
+        async void BingoSpecialSetup()
+        {
+            await LauncherClient.CreateBingosyncRoom(UpdateBingoData);
+        }
+
+        void SaveLastRandomizingOptions()
+        {
+            Dictionary<string, string> cbValues = new Dictionary<string, string>();
+            foreach(CheckBox control in this.grpSettings.Controls.OfType<CheckBox>())
+            {
+                if ((control.Tag != null && control.Tag.ToString() == "NoInclude") || !control.Checked) continue;
+                cbValues[control.Name] = control.Checked.ToString();
+            }
+            LauncherClient.SetAppConfig(cbValues);
+        }
 
         RandomizerOptions GetRandomizerOptions()
         {
@@ -130,7 +212,7 @@ namespace SotNRandomizerLauncher
             {
                 randoOptions = new AreaRandoOptions();
             }
-            
+
 
             return new RandomizerOptions
             {
@@ -152,7 +234,10 @@ namespace SotNRandomizerLauncher
                 IWBMode = cbWingSmashMode.Checked,
                 FastWarpMode = cbFastWarp.Checked,
                 UnlockedMode = cbUnlockedMode.Checked,
-                ExcludeSongs = cbExcludeSongs.Checked
+                ExcludeSongs = cbExcludeSongs.Checked,
+                IsCustom = cbPreset.Text.Contains("Custom"),
+                MisteryMode = cbMisteryMode.Checked,
+                EnemyStatRando = cbEnemyStatRando.Checked
             };
         }
 
@@ -303,6 +388,26 @@ namespace SotNRandomizerLauncher
         private void cbExcludeSongs_CheckedChanged(object sender, EventArgs e)
         {
             button1.Enabled = cbExcludeSongs.Checked;
+        }
+
+        private void frmRandomizer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveLastRandomizingOptions();
+        }
+
+        private void frmRandomizer_Shown(object sender, EventArgs e)
+        {
+            LoadLastSettings();
+        }
+
+        private void cbColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LauncherClient.SetAppConfig("MapColor", cbColor.SelectedIndex.ToString());
+        }
+
+        private void rtbBingoInformation_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
         }
     }
 }
