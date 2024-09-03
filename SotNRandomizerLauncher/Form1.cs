@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.4.5";
+        string launcherVersion = "v0.4.6";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
@@ -578,8 +578,17 @@ namespace SotNRandomizerLauncher
 
         private void btnReplays_Click(object sender, EventArgs e)
         {
-            frmReplays replays = new frmReplays();
-            replays.Show();
+            
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnPlaceholder_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://taliczealot.github.io/#/apps/replays");
         }
     }
 }

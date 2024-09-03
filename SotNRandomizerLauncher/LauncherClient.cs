@@ -16,6 +16,9 @@ using System.IO.Compression;
 using System.Runtime.CompilerServices;
 using System.Net.NetworkInformation;
 using Newtonsoft.Json.Linq;
+using System.Collections.Specialized;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace SotNRandomizerLauncher
 {
@@ -29,6 +32,19 @@ namespace SotNRandomizerLauncher
         {
             downloadUrl = url;
             releaseVersion = version;
+        }
+    }
+
+    public struct BingoData
+    {
+
+        public string bingoUrl;
+        public string password;
+
+        public BingoData(string bingoUrl, string password)
+        {
+            this.bingoUrl = bingoUrl;
+            this.password = password;
         }
     }
 
@@ -467,6 +483,154 @@ namespace SotNRandomizerLauncher
         public async static void RunPresetUpdates()
         {
             await LauncherClient.DownloadPresets();
+        }
+
+        public static async Task CreateBingosyncRoom(Action<BingoData> bingoNotifier, string password = null)
+        {
+            using (HttpClientHandler handler = new HttpClientHandler())
+            {
+                handler.CookieContainer = new System.Net.CookieContainer();
+                using (HttpClient client = new HttpClient(handler))
+                {
+                    // Step 1: Set up headers                    
+                    client.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8");
+                    client.DefaultRequestHeaders.Add("Accept-Language", "es-AR,es;q=0.8,en-US;q=0.5,en;q=0.3");
+                    client.DefaultRequestHeaders.Add("Referer", "https://bingosync.com/");
+                    client.DefaultRequestHeaders.Add("Origin", "https://bingosync.com");
+                    client.DefaultRequestHeaders.Add("Connection", "keep-alive");
+                    client.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", "1");
+                    client.DefaultRequestHeaders.Add("Sec-Fetch-Dest", "document");
+                    client.DefaultRequestHeaders.Add("Sec-Fetch-Mode", "navigate");
+                    client.DefaultRequestHeaders.Add("Sec-Fetch-Site", "same-origin");
+                    client.DefaultRequestHeaders.Add("Sec-Fetch-User", "?1");
+
+                    // Step 2: Load the homepage to get the CSRF token
+                    string homepageUrl = "https://bingosync.com/";
+                    HttpResponseMessage response = await client.GetAsync(homepageUrl);
+                    response.EnsureSuccessStatusCode();
+
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    // Extract the CSRF token using a regex
+                    string csrfToken = Regex.Match(responseBody, @"<input type=""hidden"" name=""csrfmiddlewaretoken"" value=""(.*?)"">").Groups[1].Value;
+
+                    // Step 3: Prepare the form data
+                    Random random = new Random();
+                    int randomNumber = random.Next(1000, 10000);
+                    int randomPassword = random.Next(100000, 1000000);
+                    if(password == null)
+                    {
+                        password = randomPassword.ToString();
+                    }
+                    var formData = new NameValueCollection
+                    {
+                        { "csrfmiddlewaretoken", csrfToken },
+                        { "room_name", $"SotNRando-{randomNumber}" },
+                        { "passphrase", password },
+                        { "nickname", "LauncherClient" },
+                        { "game_type", "18" },
+                        { "custom_json", BingoObjectives() },
+                        { "lockout_mode", "1" },
+                        { "variant_type", "172" },
+                        { "seed", "" },
+                        { "hide_card", "on" }
+                    };
+
+                    // Convert the form data to a URL-encoded string
+                    string postData = string.Join("&", Array.ConvertAll(formData.AllKeys, key =>
+                        $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(formData[key])}"));
+
+                    // Step 4: Send the POST request
+                    var content = new StringContent(postData, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
+                    response = await client.PostAsync(homepageUrl, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        bingoNotifier(new BingoData(response.RequestMessage.RequestUri.ToString(), password));  // Notifies frmRandomizer of the Bingo Information
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Failed to create room. Status code: {response.StatusCode}", "Error Creating Bingo Room", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private static string BingoObjectives()
+        {
+            return @"[{""name"": ""Collect all familiars""},
+                    {""name"": ""Defeat Olrox with Sword Familiar Summoned""},
+                    {""name"": ""Complete the Clock Tower Puzzle in both castles""},
+                    {""name"": ""Do 40 or more damage with spirit orb on (Excluding Crits)""},
+                    {""name"": ""Collect Spirit Orb, Faerie Scroll and Merman Statue""},
+                    {""name"": ""Take Damage from the Confession Booth""},
+                    {""name"": ""Collect holy symbol and Force of Echo""},
+                    {""name"": ""Press the Shortcut Switch between Castle Entrance And Marble Gallery""},
+                    {""name"": ""Press the Shortcut Switch between Castle Entrance And Caverns""},
+                    {""name"": ""Defeat galamoth""},
+                    {""name"": ""Defeat Hippogryph before Collecting Soul of Bat or Gravity Boots""},
+                    {""name"": ""Defeat Scylla with Holy Symbol Active""},
+                    {""name"": ""Defeat granfaloon""},
+                    {""name"": ""Defeat Medusa with only subweapons""},
+                    {""name"": ""Defeat Scylla Without items, Spells, subweapons, or equipment""},
+                    {""name"": ""Defeat Beezlebub Without Transforming""},
+                    {""name"": ""Defeat Doppleganger 40 without subweapons""},
+                    {""name"": ""Pickup silver ring while wearing spikebreaker""},
+                    {""name"": ""Pickup spikebreaker while having Echo of Bat""},
+                    {""name"": ""Use Gravity Boots on the Librarian""},
+                    {""name"": ""Have fairy familiar uses a non healing item""},
+                    {""name"": ""complete the spell menu""},
+                    {""name"": ""visit the Jewel sword room""},
+                    {""name"": ""visit the Beryl Circlet room""},
+                    {""name"": ""Pickup skill of wolf, power of wolf, and soul of wolf""},
+                    {""name"": ""Pickup Soul of bat, Fire of Bat, Echo, and Force of Echo""},
+                    {""name"": ""Defeat creature using only spells""},
+                    {""name"": ""All Castle 1 warps""},
+                    {""name"": ""All castle 2 warps""},
+                    {""name"": ""Collect Cube of Zoe after Defeating doppleganager 10""},
+                    {""name"": ""Kill a dodo bird""},
+                    {""name"": ""Look Through the telescope""},
+                    {""name"": ""Kill Richter (You can save beforehand and reset after killing him)""},
+                    {""name"": ""Defeat slogra and giabon at castle entrance""},
+                    {""name"": ""Collect All Vlad Relics""},
+                    {""name"": ""Kill a Guardian with Faerie Scroll active""},
+                    {""name"": ""Kill 3 Azaghals with Faerie Scroll active""},
+                    {""name"": ""Kill at least one Lion, Scarecrow, and Tin Man""},
+                    {""name"": ""Kill at least one Red Venus Weed and Blue Venus Weed with Faerie Scroll active""},
+                    {""name"": ""Defeat Fake Heroes (Sypha, Grant, and Trevor without spells)""},
+                    {""name"": ""Have the Ghost Familiar Kill a Ghost""},
+                    {""name"": ""Have the Devil Familiar kill an Imp""},
+                    {""name"": ""Have the Bat Familiar kill an bat""},
+                    {""name"": ""Kill at least 1 Ctulhu in both castles with Faerie Scroll active""},
+                    {""name"": ""Kill grave keeper Using Fists and Kicks Only""},
+                    {""name"": ""Kill a Frozen Half with Faerie Scroll active""},
+                    {""name"": ""Kill at least 1 Blade, Hammer, and Gurkha with Faerie Scroll active""},
+                    {""name"": ""Kill at least 1 fire demon with Faerie Scroll active""},
+                    {""name"": ""Kill all 3 types of Spectral Sword (lvl 13, lvl 15, and lvl 36) with Faerie Scroll active""},
+                    {""name"": ""Kill at least 5 Cloaked Knights with Faerie Scroll active""},
+                    {""name"": ""Pickup Soul of Wolf after collecting Form of Mist""},
+                    {""name"": ""kill spike ball with Faerie Scroll active""},
+                    {""name"": ""visit cave life apple location (reverse demon switch breakable wall)""},
+                    {""name"": ""visit reverse spike breaker room""},
+                    {""name"": ""visit both sub weapon vats room""},
+                    {""name"": ""Open Both Demon Switches""},
+                    {""name"": ""Kill at least 1 Skull Lord in both castles with Faerie Scroll active""},
+                    {""name"": ""Kill at least 1 Valhalla Knight in 2nd castle with Faerie Scroll active""},
+                    {""name"": ""Kill at least 1 Paranthropus in both castles with Faerie Scroll active""},
+                    {""name"": ""Pickup Soul of Bat with Bat Card Active""},
+                    {""name"": ""Visit the Infinite Peanuts (Reverse Succubus)""},
+                    {""name"": ""See the ~Magically Sealed~ message in 4 locations""},
+                    {""name"": ""See the ~Mist could pass~ message in 4 locations""},
+                    {""name"": ""Visit the Alucard Shield Location""},
+                    {""name"": ""Explore behind both rotating bookshelves""},
+                    {""name"": ""Kill Karasuman in second castle before Defeating the Karasuman Boss""},
+                    {""name"": ""Kill 5 slimes""},
+                    {""name"": ""Kill a Sword Lord, Hunting Girl, and Azaghal""},
+                    {""name"": ""Talk to Librarian for the first time while in Bat Form""},
+                    {""name"": ""Collect Holy Glasses From Maria""},
+                    {""name"": ""Collect Gold Ring before Collecting Soul of Bat""},
+                    {""name"": ""Have Sword Familiar Kill a Floating Sword Enemy (spectral sword, Vandal Sword, Hunting Girl, Azaghal)""},
+                    {""name"": ""visit osafune room in reverse castle""}]";
         }
 
 

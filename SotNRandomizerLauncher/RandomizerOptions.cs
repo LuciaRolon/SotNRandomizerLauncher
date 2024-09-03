@@ -43,6 +43,8 @@ namespace SotNRandomizerLauncher
         public bool UnlockedMode { get; set; }
         public bool ExcludeSongs { get; set; }
         public bool IsCustom { get; set; }
+        public bool EnemyStatRando { get; set; }
+        public bool MisteryMode { get; set; }
 
 
         public string GenerateArguments()
@@ -56,6 +58,8 @@ namespace SotNRandomizerLauncher
             if (this.IWBMode) arguments += "-b ";
             if (this.FastWarpMode) arguments += "-9 ";
             if (this.UnlockedMode) arguments += "-U ";
+            if (this.MisteryMode) arguments += "-S ";
+            if (this.EnemyStatRando) arguments += "-E ";
             if (this.ExcludeSongs)
             {
                 string excludeSongList = LauncherClient.GetConfigValue("ExcludedSongs");
@@ -81,8 +85,16 @@ namespace SotNRandomizerLauncher
             if (this.VanillaMusic || this.RelicExtension != "")
             {
                 arguments += "--opt ";
-                if (this.VanillaMusic) arguments += "~m";                
-                if (this.RelicExtension != "") arguments += $"r:x:{RelicExtension.ToLower()}";                
+                if (this.Preset == "bingo")
+                {
+                    arguments += "~r";
+                }
+                else
+                {
+                    if (this.VanillaMusic) arguments += "~m";
+                    if (this.RelicExtension != "") arguments += $"r:x:{RelicExtension.ToLower()}";
+                }
+                              
             }
             if (this.BHSeed)
             {

@@ -145,7 +145,16 @@ namespace SotNRandomizerLauncher
             this.Invoke(new Action(() =>
             {
                 btnCopySeed.Show();
-                if (finished && cbCloseOnGeneration.Checked) this.Close();
+                if (finished && cbCloseOnGeneration.Checked && presetDictionary[cbPreset.Text].Id != "bingo") this.Close();  // We don't want to close the window for bingo runs.
+            }));
+        }
+
+        void UpdateBingoData(BingoData bingoData)
+        {
+            this.Invoke(new Action(() =>
+            {
+                btnCopySeed.Show();
+                this.rtbBingoInformation.Text = $"Join at: {bingoData.bingoUrl}\nPassword: {bingoData.password}";
             }));
         }
 
@@ -164,10 +173,22 @@ namespace SotNRandomizerLauncher
             isRandomizing = true;
             cts = new CancellationTokenSource();
             await Randomizer.StartRandomization(UpdateProgressBar, UpdateSeed, UpdateEquipment, GetRandomizerOptions(), cts.Token, FinishRandomize);
+            if(presetDictionary[cbPreset.Text].Id == "bingo")
+            {
+                rtbBingoInformation.Text = "Generating Bingo Room...";
+                rtbBingoInformation.Show();
+                lblStartingEquipment.Hide();
+                BingoSpecialSetup();
+            }
             isRandomizing = false;
             randomizerTimer.Stop();
             btnGeneratePPF.Enabled = true;
         }        
+
+        async void BingoSpecialSetup()
+        {
+            await LauncherClient.CreateBingosyncRoom(UpdateBingoData);
+        }
 
         void SaveLastRandomizingOptions()
         {
@@ -214,7 +235,9 @@ namespace SotNRandomizerLauncher
                 FastWarpMode = cbFastWarp.Checked,
                 UnlockedMode = cbUnlockedMode.Checked,
                 ExcludeSongs = cbExcludeSongs.Checked,
-                IsCustom = cbPreset.Text.Contains("Custom")
+                IsCustom = cbPreset.Text.Contains("Custom"),
+                MisteryMode = cbMisteryMode.Checked,
+                EnemyStatRando = cbEnemyStatRando.Checked
             };
         }
 
@@ -380,6 +403,11 @@ namespace SotNRandomizerLauncher
         private void cbColor_SelectedIndexChanged(object sender, EventArgs e)
         {
             LauncherClient.SetAppConfig("MapColor", cbColor.SelectedIndex.ToString());
+        }
+
+        private void rtbBingoInformation_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
         }
     }
 }

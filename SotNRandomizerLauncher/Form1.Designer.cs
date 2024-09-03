@@ -38,7 +38,6 @@
             this.btnTutorials = new System.Windows.Forms.Button();
             this.btnConfigure = new System.Windows.Forms.Button();
             this.grpOptions = new System.Windows.Forms.GroupBox();
-            this.btnReplays = new System.Windows.Forms.Button();
             this.grpTools = new System.Windows.Forms.GroupBox();
             this.pbBizhawk = new System.Windows.Forms.PictureBox();
             this.pbLiveSplit = new System.Windows.Forms.PictureBox();
@@ -60,6 +59,7 @@
             this.lblOfflineMode = new System.Windows.Forms.Label();
             this.btnRandomizer = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.btnPlaceholder = new System.Windows.Forms.Button();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -151,7 +151,7 @@
             // grpOptions
             // 
             this.grpOptions.BackColor = System.Drawing.Color.Transparent;
-            this.grpOptions.Controls.Add(this.btnReplays);
+            this.grpOptions.Controls.Add(this.btnPlaceholder);
             this.grpOptions.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpOptions.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.grpOptions.Location = new System.Drawing.Point(538, 138);
@@ -160,18 +160,6 @@
             this.grpOptions.TabIndex = 3;
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Community and Tools";
-            // 
-            // btnReplays
-            // 
-            this.btnReplays.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReplays.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnReplays.Location = new System.Drawing.Point(14, 21);
-            this.btnReplays.Name = "btnReplays";
-            this.btnReplays.Size = new System.Drawing.Size(164, 29);
-            this.btnReplays.TabIndex = 11;
-            this.btnReplays.Text = "Replay Viewer";
-            this.btnReplays.UseVisualStyleBackColor = true;
-            this.btnReplays.Click += new System.EventHandler(this.btnReplays_Click);
             // 
             // grpTools
             // 
@@ -427,6 +415,18 @@
             this.lblVersion.Text = "v0.4.4";
             this.lblVersion.Click += new System.EventHandler(this.lblVersion_Click);
             // 
+            // btnPlaceholder
+            // 
+            this.btnPlaceholder.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlaceholder.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnPlaceholder.Location = new System.Drawing.Point(14, 21);
+            this.btnPlaceholder.Name = "btnPlaceholder";
+            this.btnPlaceholder.Size = new System.Drawing.Size(164, 29);
+            this.btnPlaceholder.TabIndex = 11;
+            this.btnPlaceholder.Text = "Replay Viewer";
+            this.btnPlaceholder.UseVisualStyleBackColor = true;
+            this.btnPlaceholder.Click += new System.EventHandler(this.btnPlaceholder_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -500,7 +500,7 @@
         private System.Windows.Forms.Button btnRandomizer;
         private System.Windows.Forms.Label lblOfflineMode;
         private System.Windows.Forms.Label lblVersion;
-        private System.Windows.Forms.Button btnReplays;
+        private System.Windows.Forms.Button btnPlaceholder;
     }
 }
 
