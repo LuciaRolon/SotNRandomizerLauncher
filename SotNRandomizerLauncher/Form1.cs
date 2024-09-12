@@ -22,6 +22,7 @@ namespace SotNRandomizerLauncher
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
+        bool isInitialized = false;
         public frmMain()
         {
             InitializeComponent();
@@ -397,7 +398,11 @@ namespace SotNRandomizerLauncher
                 configForm.ShowDialog();
                 ActivateAfterDelay(500);
             }
-            LauncherClient.CheckForPresetUpdates();
+            if (!this.isOfflineMode && !this.isInitialized)
+            {
+                LauncherClient.CheckForPresetUpdates();
+            }
+            
             if (LauncherClient.GetConfigValue("ImportedUser") != null)
             {
                 ImportedVisuals();                
@@ -406,6 +411,7 @@ namespace SotNRandomizerLauncher
             {
                 NormalVisuals();
             }
+            isInitialized = true;
         }
 
         void ShowSurvey()
