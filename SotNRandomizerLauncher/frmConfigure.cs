@@ -136,7 +136,7 @@ namespace SotNRandomizerLauncher
             if (cbImport.Checked)
             {
                 DialogResult result = MessageBox.Show(
-                    "Using your own installation of Bizhawk and LiveSplit means that you won't receive automatic updates for these tools. Are you sure you want to continue?",
+                    "Using your own installation of Bizhawk and LiveSplit means that you won't receive automatic updates for these tools. It will also install the Fast Core to your BizHawk. Are you sure you want to continue?",
                     "Import Warning",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning
@@ -187,6 +187,7 @@ namespace SotNRandomizerLauncher
             if (this.importConfirmed)
             {                
                 StoreCores();
+                LauncherClient.SwapCores(true, false, false);
                 LauncherClient.InstallAreaRando();
                 LauncherClient.InstallMapTracker();
             }            
@@ -198,6 +199,7 @@ namespace SotNRandomizerLauncher
             await LauncherClient.DownloadBizHawk();
             await LauncherClient.DownloadRandoTools();
             StoreCores();
+            LauncherClient.SwapCores(true, false, false);
             LauncherClient.InstallAreaRando();
             LauncherClient.InstallMapTracker();
         }
@@ -205,7 +207,7 @@ namespace SotNRandomizerLauncher
         private void btnChangeCore_Click(object sender, EventArgs e)
         {
             // If the classic core is installed, swaps to Fast. Else, swaps to Classic.
-            LauncherClient.SwapCores(this.classicCoreInstalled, cbCompatibilityFastCore.Checked);
+            LauncherClient.SwapCores(this.classicCoreInstalled, cbCompatibilityFastCore.Checked, true);
             ChangeCoreData();
         }
 

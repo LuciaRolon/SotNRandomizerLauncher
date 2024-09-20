@@ -321,7 +321,7 @@ namespace SotNRandomizerLauncher
         }
 
 
-        public static void SwapCores(bool toFastCore, bool compatibilityCore)
+        public static void SwapCores(bool toFastCore, bool compatibilityCore, bool showMessage)
         {
             try
             {
@@ -347,7 +347,7 @@ namespace SotNRandomizerLauncher
                     SetAppConfig("CoreInstalled", "ClassicCore");
                 }
                 
-                MessageBox.Show("Core changed succesfully!", "Core Swap", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if(showMessage) MessageBox.Show("Core changed succesfully!", "Core Swap", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }catch(Exception ex)
             {
                 MessageBox.Show($"Error swapping core: {ex.Message}", "Core Swap Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

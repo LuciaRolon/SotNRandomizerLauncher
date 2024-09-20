@@ -38,6 +38,7 @@
             this.btnTutorials = new System.Windows.Forms.Button();
             this.btnConfigure = new System.Windows.Forms.Button();
             this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.btnPlaceholder = new System.Windows.Forms.Button();
             this.grpTools = new System.Windows.Forms.GroupBox();
             this.pbBizhawk = new System.Windows.Forms.PictureBox();
             this.pbLiveSplit = new System.Windows.Forms.PictureBox();
@@ -59,7 +60,7 @@
             this.lblOfflineMode = new System.Windows.Forms.Label();
             this.btnRandomizer = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
-            this.btnPlaceholder = new System.Windows.Forms.Button();
+            this.lblCore = new System.Windows.Forms.Label();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -160,6 +161,18 @@
             this.grpOptions.TabIndex = 3;
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Community and Tools";
+            // 
+            // btnPlaceholder
+            // 
+            this.btnPlaceholder.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlaceholder.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnPlaceholder.Location = new System.Drawing.Point(14, 21);
+            this.btnPlaceholder.Name = "btnPlaceholder";
+            this.btnPlaceholder.Size = new System.Drawing.Size(164, 29);
+            this.btnPlaceholder.TabIndex = 11;
+            this.btnPlaceholder.Text = "Replay Viewer";
+            this.btnPlaceholder.UseVisualStyleBackColor = true;
+            this.btnPlaceholder.Click += new System.EventHandler(this.btnPlaceholder_Click);
             // 
             // grpTools
             // 
@@ -415,17 +428,18 @@
             this.lblVersion.Text = "v0.4.4";
             this.lblVersion.Click += new System.EventHandler(this.lblVersion_Click);
             // 
-            // btnPlaceholder
+            // lblCore
             // 
-            this.btnPlaceholder.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPlaceholder.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnPlaceholder.Location = new System.Drawing.Point(14, 21);
-            this.btnPlaceholder.Name = "btnPlaceholder";
-            this.btnPlaceholder.Size = new System.Drawing.Size(164, 29);
-            this.btnPlaceholder.TabIndex = 11;
-            this.btnPlaceholder.Text = "Replay Viewer";
-            this.btnPlaceholder.UseVisualStyleBackColor = true;
-            this.btnPlaceholder.Click += new System.EventHandler(this.btnPlaceholder_Click);
+            this.lblCore.BackColor = System.Drawing.Color.Transparent;
+            this.lblCore.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCore.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblCore.Location = new System.Drawing.Point(611, 319);
+            this.lblCore.Name = "lblCore";
+            this.lblCore.Size = new System.Drawing.Size(116, 14);
+            this.lblCore.TabIndex = 11;
+            this.lblCore.Text = "Core: FastCore";
+            this.lblCore.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblCore.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // frmMain
             // 
@@ -445,6 +459,7 @@
             this.Controls.Add(this.btnConfigure);
             this.Controls.Add(this.btnTutorials);
             this.Controls.Add(this.grpNews);
+            this.Controls.Add(this.lblCore);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
@@ -501,6 +516,7 @@
         private System.Windows.Forms.Label lblOfflineMode;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Button btnPlaceholder;
+        private System.Windows.Forms.Label lblCore;
     }
 }
 

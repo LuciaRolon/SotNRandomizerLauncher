@@ -37,7 +37,7 @@ namespace SotNRandomizerLauncher
             {
                 lblPlayLastSeed.Hide();
                 btnPlay.Enabled = false;
-            }
+            }            
             bool importedUser = LauncherClient.GetConfigValue("ImportedUser") != null;
             if (importedUser)
             {
@@ -325,11 +325,6 @@ namespace SotNRandomizerLauncher
 
         private async void btnPlay_Click(object sender, EventArgs e)
         {
-            if (LauncherClient.GetConfigValue("CoreInstalled") == "FastCore")
-            {
-                DialogResult result = MessageBox.Show("You're about to start a run using the Fast Core. Proceed?", "Fast Core Installed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.No) return;
-            }
             if (ppfFile != null && Path.GetFileNameWithoutExtension(ppfFile).Length > 3 && LauncherClient.GetConfigValue("MapTrackerEnabled") != "Yes")
             {
                 string ppfFileName = Path.GetFileNameWithoutExtension(ppfFile);
@@ -402,7 +397,12 @@ namespace SotNRandomizerLauncher
             {
                 LauncherClient.CheckForPresetUpdates();
             }
-            
+
+            string core = LauncherClient.GetConfigValue("CoreInstalled");
+            core = core != null ? core : "FastCore";
+            lblCore.ForeColor = core == "FastCore" ? Color.White : Color.IndianRed;
+            lblCore.Text = $"Core: {core}";
+
             if (LauncherClient.GetConfigValue("ImportedUser") != null)
             {
                 ImportedVisuals();                
@@ -595,6 +595,11 @@ namespace SotNRandomizerLauncher
         private void btnPlaceholder_Click(object sender, EventArgs e)
         {
             Process.Start("https://taliczealot.github.io/#/apps/replays");
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
