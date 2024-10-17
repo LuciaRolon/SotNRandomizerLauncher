@@ -18,10 +18,11 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.4.6";
+        string launcherVersion = "v0.4.6.1";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
+        bool isInitialized = false;
         public frmMain()
         {
             InitializeComponent();
@@ -36,7 +37,7 @@ namespace SotNRandomizerLauncher
             {
                 lblPlayLastSeed.Hide();
                 btnPlay.Enabled = false;
-            }
+            }            
             bool importedUser = LauncherClient.GetConfigValue("ImportedUser") != null;
             if (importedUser)
             {
@@ -324,11 +325,6 @@ namespace SotNRandomizerLauncher
 
         private async void btnPlay_Click(object sender, EventArgs e)
         {
-            if (LauncherClient.GetConfigValue("CoreInstalled") == "FastCore")
-            {
-                DialogResult result = MessageBox.Show("You're about to start a run using the Fast Core. Proceed?", "Fast Core Installed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.No) return;
-            }
             if (ppfFile != null && Path.GetFileNameWithoutExtension(ppfFile).Length > 3 && LauncherClient.GetConfigValue("MapTrackerEnabled") != "Yes")
             {
                 string ppfFileName = Path.GetFileNameWithoutExtension(ppfFile);
@@ -397,7 +393,16 @@ namespace SotNRandomizerLauncher
                 configForm.ShowDialog();
                 ActivateAfterDelay(500);
             }
-            LauncherClient.CheckForPresetUpdates();
+            if (!this.isOfflineMode && !this.isInitialized)
+            {
+                LauncherClient.CheckForPresetUpdates();
+            }
+
+            string core = LauncherClient.GetConfigValue("CoreInstalled");
+            core = core != null ? core : "FastCore";
+            lblCore.ForeColor = core == "FastCore" ? Color.White : Color.IndianRed;
+            lblCore.Text = $"Core: {core}";
+
             if (LauncherClient.GetConfigValue("ImportedUser") != null)
             {
                 ImportedVisuals();                
@@ -406,6 +411,7 @@ namespace SotNRandomizerLauncher
             {
                 NormalVisuals();
             }
+            isInitialized = true;
         }
 
         void ShowSurvey()
@@ -589,6 +595,11 @@ namespace SotNRandomizerLauncher
         private void btnPlaceholder_Click(object sender, EventArgs e)
         {
             Process.Start("https://taliczealot.github.io/#/apps/replays");
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

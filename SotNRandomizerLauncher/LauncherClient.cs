@@ -321,7 +321,7 @@ namespace SotNRandomizerLauncher
         }
 
 
-        public static void SwapCores(bool toFastCore, bool compatibilityCore)
+        public static void SwapCores(bool toFastCore, bool compatibilityCore, bool showMessage)
         {
             try
             {
@@ -347,7 +347,7 @@ namespace SotNRandomizerLauncher
                     SetAppConfig("CoreInstalled", "ClassicCore");
                 }
                 
-                MessageBox.Show("Core changed succesfully!", "Core Swap", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if(showMessage) MessageBox.Show("Core changed succesfully!", "Core Swap", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }catch(Exception ex)
             {
                 MessageBox.Show($"Error swapping core: {ex.Message}", "Core Swap Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -568,7 +568,7 @@ namespace SotNRandomizerLauncher
                     {""name"": ""Press the Shortcut Switch between Castle Entrance And Marble Gallery""},
                     {""name"": ""Press the Shortcut Switch between Castle Entrance And Caverns""},
                     {""name"": ""Defeat galamoth""},
-                    {""name"": ""Defeat Hippogryph before Collecting Soul of Bat or Gravity Boots""},
+                    {""name"": ""Defeat Hippogryph without having Soul of Bat or Gravity Boots""},
                     {""name"": ""Defeat Scylla with Holy Symbol Active""},
                     {""name"": ""Defeat granfaloon""},
                     {""name"": ""Defeat Medusa with only subweapons""},
@@ -596,16 +596,16 @@ namespace SotNRandomizerLauncher
                     {""name"": ""Kill a Guardian with Faerie Scroll active""},
                     {""name"": ""Kill 3 Azaghals with Faerie Scroll active""},
                     {""name"": ""Kill at least one Lion, Scarecrow, and Tin Man""},
-                    {""name"": ""Kill at least one Red Venus Weed and Blue Venus Weed with Faerie Scroll active""},
+                    {""name"": ""Kill at least one (Red) Venus Weed and Blue Venus Weed""},
                     {""name"": ""Defeat Fake Heroes (Sypha, Grant, and Trevor without spells)""},
                     {""name"": ""Have the Ghost Familiar Kill a Ghost""},
                     {""name"": ""Have the Devil Familiar kill an Imp""},
                     {""name"": ""Have the Bat Familiar kill an bat""},
-                    {""name"": ""Kill at least 1 Ctulhu in both castles with Faerie Scroll active""},
+                    {""name"": ""Kill at least 1 Ctulhu in both castles""},
                     {""name"": ""Kill grave keeper Using Fists and Kicks Only""},
                     {""name"": ""Kill a Frozen Half with Faerie Scroll active""},
                     {""name"": ""Kill at least 1 Blade, Hammer, and Gurkha with Faerie Scroll active""},
-                    {""name"": ""Kill at least 1 fire demon with Faerie Scroll active""},
+                    {""name"": ""Kill at least 1 fire demon""},
                     {""name"": ""Kill all 3 types of Spectral Sword (lvl 13, lvl 15, and lvl 36) with Faerie Scroll active""},
                     {""name"": ""Kill at least 5 Cloaked Knights with Faerie Scroll active""},
                     {""name"": ""Pickup Soul of Wolf after collecting Form of Mist""},
@@ -615,20 +615,20 @@ namespace SotNRandomizerLauncher
                     {""name"": ""visit both sub weapon vats room""},
                     {""name"": ""Open Both Demon Switches""},
                     {""name"": ""Kill at least 1 Skull Lord in both castles with Faerie Scroll active""},
-                    {""name"": ""Kill at least 1 Valhalla Knight in 2nd castle with Faerie Scroll active""},
-                    {""name"": ""Kill at least 1 Paranthropus in both castles with Faerie Scroll active""},
+                    {""name"": ""Kill at least 1 Valhalla Knight in both castles""},
+                    {""name"": ""Kill at least 1 Paranthropus in both castles""},
                     {""name"": ""Pickup Soul of Bat with Bat Card Active""},
-                    {""name"": ""Visit the Infinite Peanuts (Reverse Succubus)""},
+                    {""name"": ""Visit the Infinite Peanuts Room (Reverse Succubus)""},
                     {""name"": ""See the ~Magically Sealed~ message in 4 locations""},
                     {""name"": ""See the ~Mist could pass~ message in 4 locations""},
                     {""name"": ""Visit the Alucard Shield Location""},
                     {""name"": ""Explore behind both rotating bookshelves""},
-                    {""name"": ""Kill Karasuman in second castle before Defeating the Karasuman Boss""},
-                    {""name"": ""Kill 5 slimes""},
+                    {""name"": ""Kill Karasuman in 2nd castle Without Defeating the Karasuman Boss""},
+                    {""name"": ""Kill 5 (green) slimes""},
                     {""name"": ""Kill a Sword Lord, Hunting Girl, and Azaghal""},
                     {""name"": ""Talk to Librarian for the first time while in Bat Form""},
                     {""name"": ""Collect Holy Glasses From Maria""},
-                    {""name"": ""Collect Gold Ring before Collecting Soul of Bat""},
+                    {""name"": ""Collect Gold Ring without Collecting Soul of Bat""},
                     {""name"": ""Have Sword Familiar Kill a Floating Sword Enemy (spectral sword, Vandal Sword, Hunting Girl, Azaghal)""},
                     {""name"": ""visit osafune room in reverse castle""}]";
         }
