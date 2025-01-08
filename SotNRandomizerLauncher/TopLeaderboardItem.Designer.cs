@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblSeed = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.lblPosition = new System.Windows.Forms.Label();
             this.lblPlayerTitle = new System.Windows.Forms.Label();
             this.lblPlayerName = new System.Windows.Forms.Label();
             this.pbUserIcon = new System.Windows.Forms.PictureBox();
+            this.lblSeed = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserIcon)).BeginInit();
             this.SuspendLayout();
@@ -52,17 +52,6 @@
             this.groupBox1.Size = new System.Drawing.Size(269, 207);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            // 
-            // lblSeed
-            // 
-            this.lblSeed.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSeed.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblSeed.Location = new System.Drawing.Point(6, 179);
-            this.lblSeed.Name = "lblSeed";
-            this.lblSeed.Size = new System.Drawing.Size(257, 22);
-            this.lblSeed.TabIndex = 5;
-            this.lblSeed.Text = "Seed: Preset-Seed";
-            this.lblSeed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblTime
             // 
@@ -85,6 +74,7 @@
             this.lblPosition.TabIndex = 3;
             this.lblPosition.Text = "#1";
             this.lblPosition.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblPosition.Click += new System.EventHandler(this.lblPosition_Click);
             // 
             // lblPlayerTitle
             // 
@@ -119,6 +109,20 @@
             this.pbUserIcon.TabStop = false;
             this.pbUserIcon.Click += new System.EventHandler(this.pbUserIcon_Click);
             // 
+            // lblSeed
+            // 
+            this.lblSeed.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSeed.LinkColor = System.Drawing.Color.IndianRed;
+            this.lblSeed.Location = new System.Drawing.Point(1, 181);
+            this.lblSeed.Name = "lblSeed";
+            this.lblSeed.Size = new System.Drawing.Size(269, 23);
+            this.lblSeed.TabIndex = 5;
+            this.lblSeed.TabStop = true;
+            this.lblSeed.Text = "Seed: preset-seed";
+            this.lblSeed.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblSeed.Visible = false;
+            this.lblSeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblSeed_LinkClicked);
+            // 
             // TopLeaderboardItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,6 +146,6 @@
         private System.Windows.Forms.Label lblPosition;
         private System.Windows.Forms.Label lblPlayerTitle;
         private System.Windows.Forms.Label lblPlayerName;
-        private System.Windows.Forms.Label lblSeed;
+        private System.Windows.Forms.LinkLabel lblSeed;
     }
 }

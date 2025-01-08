@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.4.6.1";
+        string launcherVersion = "v0.5.1";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
@@ -600,6 +600,15 @@ namespace SotNRandomizerLauncher
         private void label1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            if (!this.isOfflineMode)
+            {
+                frmProfile frmProfile = new frmProfile();
+                frmProfile.Show();
+            }
         }
     }
 }

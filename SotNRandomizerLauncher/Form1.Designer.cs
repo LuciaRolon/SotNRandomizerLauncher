@@ -38,6 +38,7 @@
             this.btnTutorials = new System.Windows.Forms.Button();
             this.btnConfigure = new System.Windows.Forms.Button();
             this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnPlaceholder = new System.Windows.Forms.Button();
             this.grpTools = new System.Windows.Forms.GroupBox();
             this.pbBizhawk = new System.Windows.Forms.PictureBox();
@@ -152,6 +153,7 @@
             // grpOptions
             // 
             this.grpOptions.BackColor = System.Drawing.Color.Transparent;
+            this.grpOptions.Controls.Add(this.button1);
             this.grpOptions.Controls.Add(this.btnPlaceholder);
             this.grpOptions.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpOptions.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -161,6 +163,18 @@
             this.grpOptions.TabIndex = 3;
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Community and Tools";
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button1.Location = new System.Drawing.Point(14, 65);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(164, 29);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Profile and Leaderboards";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
             // btnPlaceholder
             // 
@@ -517,6 +531,7 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Button btnPlaceholder;
         private System.Windows.Forms.Label lblCore;
+        private System.Windows.Forms.Button button1;
     }
 }
 

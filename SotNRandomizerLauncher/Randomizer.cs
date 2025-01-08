@@ -151,6 +151,7 @@ namespace SotNRandomizerLauncher
                 }
                 else
                 {
+                    Console.WriteLine(error);
                     MessageBox.Show("There was an error during randomization. Please, try again.", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }  
             }

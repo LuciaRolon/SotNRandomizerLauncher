@@ -314,5 +314,12 @@ namespace SotNRandomizerLauncher
             LauncherClient.SetAppConfig("CustomPresets", customPresets);
             MessageBox.Show("Custom Preset added successfully!", "Preset Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LauncherClient.SetAppConfig("PlayerDiscordId", "");
+            LauncherClient.SetAppConfig("PlayerDiscordUsername", "");
+            MessageBox.Show("User data reset successfully!", "Preset Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

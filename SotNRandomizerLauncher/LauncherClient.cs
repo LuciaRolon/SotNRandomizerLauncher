@@ -66,7 +66,7 @@ namespace SotNRandomizerLauncher
         public static string GetAPIUrl()
         {
 
-            return "http://35.208.162.255:8080";
+            return "http://35.208.162.255:8080"; //"http://35.208.162.255:8080"
         }
 
         public static bool HasInternetConnection()
@@ -791,6 +791,24 @@ namespace SotNRandomizerLauncher
                 }
             }
             return new DownloadData(downloadUrl, releaseVersion);
+        }
+
+        public static dynamic CallDataAPI(string path)
+        {            
+            string apiUrl = $"{GetAPIUrl()}/{path}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonString = response.Content.ReadAsStringAsync().Result;
+                    dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
+                    return result;
+                }
+            }
+
+            return null;
         }
 
         public static string GetLatestVersion(string project)

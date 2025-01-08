@@ -9,9 +9,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.UI;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -33,12 +35,16 @@ namespace SotNRandomizerLauncher
         void LoadLastSettings()
         {
             Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            foreach (CheckBox checkbox in this.grpSettings.Controls.OfType<CheckBox>())
+            foreach (TabPage tabPage in tabOptions.TabPages)
             {
-                if (checkbox.Tag != null && checkbox.Tag.ToString() == "NoInclude") continue;
-                string isChecked = LauncherClient.GetConfigValue(configs, checkbox.Name);
-                checkbox.Checked = isChecked != null && isChecked.ToLower() == "true";
+                foreach (CheckBox checkbox in tabPage.Controls.OfType<CheckBox>())
+                {
+                    if ((checkbox.Tag != null && checkbox.Tag.ToString() == "NoInclude") || checkbox.ThreeState) continue;
+                    string isChecked = LauncherClient.GetConfigValue(configs, checkbox.Name);
+                    checkbox.Checked = isChecked != null && isChecked.ToLower() == "true";                    
+                }
             }
+            
             string closeOnSeedGeneration = LauncherClient.GetConfigValue(configs, "CloseOnSeedGeneration");
             cbCloseOnGeneration.Checked = closeOnSeedGeneration != null && closeOnSeedGeneration == "Yes";
             if (cbMapColor.Checked)
@@ -46,6 +52,7 @@ namespace SotNRandomizerLauncher
                 string mapColor = LauncherClient.GetConfigValue(configs, "MapColor");
                 if(mapColor != null) cbColor.SelectedIndex = int.Parse(mapColor);
             }
+            cbPreset.SelectedIndex = cbPreset.FindStringExact("Guarded O.G.");
         }
 
         void GetPresets()
@@ -193,10 +200,13 @@ namespace SotNRandomizerLauncher
         void SaveLastRandomizingOptions()
         {
             Dictionary<string, string> cbValues = new Dictionary<string, string>();
-            foreach(CheckBox control in this.grpSettings.Controls.OfType<CheckBox>())
+            foreach (TabPage tabPage in tabOptions.TabPages)
             {
-                if ((control.Tag != null && control.Tag.ToString() == "NoInclude") || !control.Checked) continue;
-                cbValues[control.Name] = control.Checked.ToString();
+                foreach (CheckBox control in tabPage.Controls.OfType<CheckBox>())
+                {
+                    if ((control.Tag != null && control.Tag.ToString() == "NoInclude") || !control.Checked || control.ThreeState) continue;
+                    cbValues[control.Name] = control.Checked.ToString();
+                }
             }
             LauncherClient.SetAppConfig(cbValues);
         }
@@ -237,7 +247,17 @@ namespace SotNRandomizerLauncher
                 ExcludeSongs = cbExcludeSongs.Checked,
                 IsCustom = cbPreset.Text.Contains("Custom"),
                 MisteryMode = cbMisteryMode.Checked,
-                EnemyStatRando = cbEnemyStatRando.Checked
+                EnemyStatRando = cbEnemyStatRando.Checked,
+                ShopPrices = cbRandoShop.Checked,
+                StartingZone = cbStartingZoneRando.Checked,
+                NoPrologue = cbNoPrologue.Checked,
+                EnemyDrops = cbEnemyDrops.CheckState,
+                ItemLocations = cbItemLocations.CheckState,
+                ItemStats = cbItemStats.CheckState,
+                PrologueRewards = cbPrologueRewards.CheckState,
+                RelicLocations = cbRelicLocations.CheckState,
+                StartingEquipment = cbStartingEquipment.CheckState,
+                TurkeyMode = cbTurkeyMode.CheckState
             };
         }
 
@@ -253,12 +273,33 @@ namespace SotNRandomizerLauncher
             try
             {
                 string description = presetDictionary[cbPreset.Text].Description;
-                string author = presetDictionary[cbPreset.Text].Author;
-                toolTip.SetToolTip(lblDescription, $"{description}\nAuthor: {author}");
+                string[] authors = presetDictionary[cbPreset.Text].Author;
+                string knowledgeCheck = presetDictionary[cbPreset.Text].KnowledgeCheck;
+                string timeFrame = presetDictionary[cbPreset.Text].TimeFrame;
+                string modLevel = presetDictionary[cbPreset.Text].ModdedLevel;
+                string castleType = presetDictionary[cbPreset.Text].CastleType;
+                string transformEarly = presetDictionary[cbPreset.Text].TransformEarly;
+                string transformFocus = presetDictionary[cbPreset.Text].TransformFocus;
+                string winCondition = presetDictionary[cbPreset.Text].WinCondition;
+                string extension = presetDictionary[cbPreset.Text].MetaExtension;
+                string complexity = presetDictionary[cbPreset.Text].MetaComplexity;
+                string randoStats = presetDictionary[cbPreset.Text].ItemStats;
+                lblPresetDescription.Text = description;
+                lblAuthors.Text = $"Authors: {string.Join(",", authors)}";
+                lblKnowledge.Text = $"Knowledge Required: {knowledgeCheck}";
+                lblExtension.Text = $"Relic Extension: {extension}";
+                lblComplexity.Text = $"Minimum Complexity: {complexity}";
+                lblItemStats.Text = $"Randomized Item Stats: {randoStats}";
+                lblModLevel.Text = $"Modification Level: {modLevel}";
+                lblCastleType.Text = $"Castle Type: {castleType}";
+                lblEarlyTransformation.Text = $"Early Transformations: {transformEarly}";
+                lblWinCondition.Text = $"Win Condition: {winCondition}";
+                lblTransformationFocus.Text = $"Transformation Focus: {transformFocus}";
+                lblCompletionPace.Text = $"Completion Pace: {timeFrame}";
             }
             catch (Exception)
             {
-                toolTip.SetToolTip(lblDescription, "No preset selected");
+                lblPresetDescription.Text = "Preset failed to load.";
             }            
         }
 
@@ -408,6 +449,27 @@ namespace SotNRandomizerLauncher
         private void rtbBingoInformation_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             Process.Start(e.LinkText);
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbPreset_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void lnkLocations_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://www.symphonyrando.fun/locations");
+        }
+
+        private void btnPresetList_Click(object sender, EventArgs e)
+        {
+            frmPresetList frmPresetList = new frmPresetList();
+            frmPresetList.Show();
         }
     }
 }

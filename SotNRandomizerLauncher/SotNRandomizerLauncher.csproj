@@ -98,7 +98,19 @@
     <Compile Include="cntLeaderboards.Designer.cs">
       <DependentUpon>cntLeaderboards.cs</DependentUpon>
     </Compile>
+    <Compile Include="cntProfile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="cntProfile.Designer.cs">
+      <DependentUpon>cntProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="ctnSmallMatchHistory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctnSmallMatchHistory.Designer.cs">
+      <DependentUpon>ctnSmallMatchHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +147,18 @@
     <Compile Include="frmImport.Designer.cs">
       <DependentUpon>frmImport.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPresetList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPresetList.Designer.cs">
+      <DependentUpon>frmPresetList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProfile.Designer.cs">
+      <DependentUpon>frmProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmRandomizer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +170,12 @@
     </Compile>
     <Compile Include="frmTutorials.Designer.cs">
       <DependentUpon>frmTutorials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmUploadPlayerId.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUploadPlayerId.Designer.cs">
+      <DependentUpon>frmUploadPlayerId.cs</DependentUpon>
     </Compile>
     <Compile Include="LauncherClient.cs" />
     <Compile Include="LeaderboardItem.cs">
@@ -170,6 +200,12 @@
     <EmbeddedResource Include="cntLeaderboards.resx">
       <DependentUpon>cntLeaderboards.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="cntProfile.resx">
+      <DependentUpon>cntProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctnSmallMatchHistory.resx">
+      <DependentUpon>ctnSmallMatchHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -188,11 +224,20 @@
     <EmbeddedResource Include="frmImport.resx">
       <DependentUpon>frmImport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPresetList.resx">
+      <DependentUpon>frmPresetList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProfile.resx">
+      <DependentUpon>frmProfile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmRandomizer.resx">
       <DependentUpon>frmRandomizer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTutorials.resx">
       <DependentUpon>frmTutorials.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUploadPlayerId.resx">
+      <DependentUpon>frmUploadPlayerId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LeaderboardItem.resx">
       <DependentUpon>LeaderboardItem.cs</DependentUpon>
@@ -235,6 +280,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="baseFiles\nymashock.wbx.zst">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="baseFiles\preset-data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="baseFiles\PSX-Autosplitter.lua">

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
@@ -15,6 +16,8 @@ namespace SotNRandomizerLauncher
     public partial class TopLeaderboardItem : UserControl
     {
         private string imageUrl;
+        private Color textColor;
+        private string seedUrl;
 
         [Category("Data")]
         [Description("Sets the player name of the control.")]
@@ -66,13 +69,31 @@ namespace SotNRandomizerLauncher
 
         [Category("Data")]
         [Description("Sets the seed for the position.")]
-        [DefaultValue("Seed: preset-Seed")]
         public string Seed
         {
             get { return lblSeed.Text; }
             set
             {
+                if (value != null && value.Length != 0)
+                {
+                    lblSeed.Show();
+                }
+                else
+                {
+                    lblSeed.Hide();
+                }
                 lblSeed.Text = value;
+            }
+        }
+
+        [Category("Data")]
+        [Description("Sets the seed url.")]
+        public string SeedUrl
+        {
+            get { return this.seedUrl; }
+            set
+            {
+                this.seedUrl = value;
             }
         }
 
@@ -86,6 +107,20 @@ namespace SotNRandomizerLauncher
                 if (imageUrl != value)
                 {
                     imageUrl = value;                   
+                }
+            }
+        }
+
+        [Category("Data")]
+        [Description("Sets the text color.")]
+        public Color TextColor
+        {
+            get { return textColor; }
+            set
+            {
+                if (textColor != value)
+                {
+                    textColor = value;
                 }
             }
         }
@@ -128,9 +163,38 @@ namespace SotNRandomizerLauncher
 
         }
 
+        void LoadColors()
+        {
+            lblPlayerName.ForeColor = this.textColor;
+            lblPlayerTitle.ForeColor = this.textColor;
+            lblPosition.ForeColor = this.textColor;
+            lblSeed.ForeColor = this.textColor;
+            lblTime.ForeColor = this.textColor;
+        }
+
         private void TopLeaderboardItem_Load(object sender, EventArgs e)
         {
+            
+        }
+
+        public void LoadItem()
+        {
             LoadImageAsync(this.imageUrl);
+            if (this.textColor == null)
+            {
+                this.TextColor = Color.White;   
+            }
+            LoadColors();
+        }
+
+        private void lblPosition_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblSeed_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(this.seedUrl);
         }
     }
 }

@@ -33,7 +33,7 @@
             this.lblPlayerName = new System.Windows.Forms.Label();
             this.lblPlayerTitle = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
-            this.lblSeed = new System.Windows.Forms.Label();
+            this.lblSeed = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserIcon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,6 +42,7 @@
             this.pbUserIcon.Location = new System.Drawing.Point(77, 0);
             this.pbUserIcon.Name = "pbUserIcon";
             this.pbUserIcon.Size = new System.Drawing.Size(47, 47);
+            this.pbUserIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbUserIcon.TabIndex = 0;
             this.pbUserIcon.TabStop = false;
             // 
@@ -77,6 +78,7 @@
             this.lblPlayerTitle.TabIndex = 6;
             this.lblPlayerTitle.Text = "Player Title";
             this.lblPlayerTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblPlayerTitle.Click += new System.EventHandler(this.lblPlayerTitle_Click);
             // 
             // lblTime
             // 
@@ -91,27 +93,29 @@
             // 
             // lblSeed
             // 
-            this.lblSeed.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSeed.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblSeed.Location = new System.Drawing.Point(570, 12);
+            this.lblSeed.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSeed.LinkColor = System.Drawing.Color.IndianRed;
+            this.lblSeed.Location = new System.Drawing.Point(573, 13);
             this.lblSeed.Name = "lblSeed";
-            this.lblSeed.Size = new System.Drawing.Size(257, 22);
-            this.lblSeed.TabIndex = 8;
+            this.lblSeed.Size = new System.Drawing.Size(255, 23);
+            this.lblSeed.TabIndex = 9;
+            this.lblSeed.TabStop = true;
             this.lblSeed.Text = "Seed: Preset-Seed";
             this.lblSeed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblSeed.Click += new System.EventHandler(this.lblSeed_Click);
+            this.lblSeed.Visible = false;
+            this.lblSeed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblSeed_LinkClicked);
             // 
             // LeaderboardItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.lblSeed);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblPlayerTitle);
             this.Controls.Add(this.lblPlayerName);
             this.Controls.Add(this.lblPosition);
             this.Controls.Add(this.pbUserIcon);
+            this.Controls.Add(this.lblSeed);
             this.Name = "LeaderboardItem";
             this.Size = new System.Drawing.Size(828, 47);
             this.Load += new System.EventHandler(this.LeaderboardItem_Load);
@@ -127,6 +131,6 @@
         private System.Windows.Forms.Label lblPlayerName;
         private System.Windows.Forms.Label lblPlayerTitle;
         private System.Windows.Forms.Label lblTime;
-        private System.Windows.Forms.Label lblSeed;
+        private System.Windows.Forms.LinkLabel lblSeed;
     }
 }

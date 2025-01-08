@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SotNRandomizerLauncher
 {
@@ -45,6 +46,22 @@ namespace SotNRandomizerLauncher
         public bool IsCustom { get; set; }
         public bool EnemyStatRando { get; set; }
         public bool MisteryMode { get; set; }
+        public bool ShopPrices { get; set; }
+        public bool StartingZone { get; set; }
+        public bool NoPrologue { get; set; }
+        public CheckState ItemStats { get; set; }
+        public CheckState ItemLocations { get; set; }
+        public CheckState EnemyDrops { get; set; }
+        public CheckState StartingEquipment { get; set; }
+        public CheckState PrologueRewards { get; set; }
+        public CheckState TurkeyMode { get; set; }
+        public CheckState RelicLocations { get; set; }
+
+        private string GetArgument(CheckState state, string checkedValue)
+        {
+            if(state == CheckState.Indeterminate) return "";
+            return state == CheckState.Checked ? checkedValue : $"~{checkedValue}";
+        }
 
 
         public string GenerateArguments()
@@ -60,6 +77,9 @@ namespace SotNRandomizerLauncher
             if (this.UnlockedMode) arguments += "-U ";
             if (this.MisteryMode) arguments += "-S ";
             if (this.EnemyStatRando) arguments += "-E ";
+            if (this.ShopPrices) arguments += "--sh ";
+            if (this.StartingZone) arguments += "--ori ";
+            if (this.NoPrologue) arguments += "-R ";
             if (this.ExcludeSongs)
             {
                 string excludeSongList = LauncherClient.GetConfigValue("ExcludedSongs");
@@ -81,20 +101,32 @@ namespace SotNRandomizerLauncher
                 arguments += $"-p {this.Preset.ToLower()} ";
             }
             arguments += $"-s {this.Seed} ";
-            
-            if (this.VanillaMusic || this.RelicExtension != "")
+            var states = new[] { this.EnemyDrops, this.ItemLocations, this.ItemStats, this.StartingEquipment, this.PrologueRewards, this.TurkeyMode, this.RelicLocations };
+            if (this.VanillaMusic || this.RelicExtension != "" || states.Any(state => state != CheckState.Indeterminate))
             {
                 arguments += "--opt ";
                 if (this.Preset == "bingo")
                 {
-                    arguments += "~r";
+                    arguments += "~r";                    
                 }
                 else
                 {
                     if (this.VanillaMusic) arguments += "~m";
-                    if (this.RelicExtension != "") arguments += $"r:x:{RelicExtension.ToLower()}";
+                    if (this.RelicExtension != "")
+                    {
+                        arguments += $"r:x:{RelicExtension.ToLower()}";
+                    }else if(this.RelicLocations == CheckState.Unchecked)
+                    {
+                        arguments += "~r";
+                    }
+                    
                 }
-                              
+                arguments += GetArgument(this.EnemyDrops, "d");
+                arguments += GetArgument(this.ItemLocations, "i");
+                arguments += GetArgument(this.ItemStats, "s");
+                arguments += GetArgument(this.StartingEquipment, "e");
+                arguments += GetArgument(this.PrologueRewards, "b");
+                arguments += GetArgument(this.TurkeyMode, "k");
             }
             if (this.BHSeed)
             {

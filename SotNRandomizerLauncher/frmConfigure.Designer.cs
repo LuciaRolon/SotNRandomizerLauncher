@@ -54,10 +54,11 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cbMapTracker = new System.Windows.Forms.CheckBox();
             this.grpLauncherSettings = new System.Windows.Forms.GroupBox();
+            this.btnDeleteCustomPresets = new System.Windows.Forms.Button();
+            this.btnCustomPreset = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.cbLiveSplit = new System.Windows.Forms.CheckBox();
-            this.btnCustomPreset = new System.Windows.Forms.Button();
-            this.btnDeleteCustomPresets = new System.Windows.Forms.Button();
+            this.btnDeleteUserData = new System.Windows.Forms.Button();
             this.grpEmulation.SuspendLayout();
             this.grpLauncherSettings.SuspendLayout();
             this.SuspendLayout();
@@ -318,6 +319,7 @@
             // grpLauncherSettings
             // 
             this.grpLauncherSettings.BackColor = System.Drawing.Color.Transparent;
+            this.grpLauncherSettings.Controls.Add(this.btnDeleteUserData);
             this.grpLauncherSettings.Controls.Add(this.btnDeleteCustomPresets);
             this.grpLauncherSettings.Controls.Add(this.btnCustomPreset);
             this.grpLauncherSettings.Controls.Add(this.button1);
@@ -332,6 +334,30 @@
             this.grpLauncherSettings.TabStop = false;
             this.grpLauncherSettings.Text = "Launcher Settings";
             this.grpLauncherSettings.Visible = false;
+            // 
+            // btnDeleteCustomPresets
+            // 
+            this.btnDeleteCustomPresets.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteCustomPresets.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnDeleteCustomPresets.Location = new System.Drawing.Point(167, 72);
+            this.btnDeleteCustomPresets.Name = "btnDeleteCustomPresets";
+            this.btnDeleteCustomPresets.Size = new System.Drawing.Size(145, 22);
+            this.btnDeleteCustomPresets.TabIndex = 23;
+            this.btnDeleteCustomPresets.Text = "Delete all Custom Presets";
+            this.btnDeleteCustomPresets.UseVisualStyleBackColor = true;
+            this.btnDeleteCustomPresets.Click += new System.EventHandler(this.btnDeleteCustomPresets_Click);
+            // 
+            // btnCustomPreset
+            // 
+            this.btnCustomPreset.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCustomPreset.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnCustomPreset.Location = new System.Drawing.Point(167, 44);
+            this.btnCustomPreset.Name = "btnCustomPreset";
+            this.btnCustomPreset.Size = new System.Drawing.Size(145, 22);
+            this.btnCustomPreset.TabIndex = 22;
+            this.btnCustomPreset.Text = "Add Custom Preset";
+            this.btnCustomPreset.UseVisualStyleBackColor = true;
+            this.btnCustomPreset.Click += new System.EventHandler(this.btnCustomPreset_Click);
             // 
             // button1
             // 
@@ -358,29 +384,20 @@
             this.cbLiveSplit.UseVisualStyleBackColor = true;
             this.cbLiveSplit.CheckedChanged += new System.EventHandler(this.cbLiveSplit_CheckedChanged);
             // 
-            // btnCustomPreset
+            // btnDeleteUserData
             // 
-            this.btnCustomPreset.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCustomPreset.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnCustomPreset.Location = new System.Drawing.Point(167, 44);
-            this.btnCustomPreset.Name = "btnCustomPreset";
-            this.btnCustomPreset.Size = new System.Drawing.Size(145, 22);
-            this.btnCustomPreset.TabIndex = 22;
-            this.btnCustomPreset.Text = "Add Custom Preset";
-            this.btnCustomPreset.UseVisualStyleBackColor = true;
-            this.btnCustomPreset.Click += new System.EventHandler(this.btnCustomPreset_Click);
-            // 
-            // btnDeleteCustomPresets
-            // 
-            this.btnDeleteCustomPresets.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteCustomPresets.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnDeleteCustomPresets.Location = new System.Drawing.Point(167, 72);
-            this.btnDeleteCustomPresets.Name = "btnDeleteCustomPresets";
-            this.btnDeleteCustomPresets.Size = new System.Drawing.Size(145, 22);
-            this.btnDeleteCustomPresets.TabIndex = 23;
-            this.btnDeleteCustomPresets.Text = "Delete all Custom Presets";
-            this.btnDeleteCustomPresets.UseVisualStyleBackColor = true;
-            this.btnDeleteCustomPresets.Click += new System.EventHandler(this.btnDeleteCustomPresets_Click);
+            this.btnDeleteUserData.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteUserData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnDeleteUserData.Location = new System.Drawing.Point(8, 44);
+            this.btnDeleteUserData.Name = "btnDeleteUserData";
+            this.btnDeleteUserData.Size = new System.Drawing.Size(145, 22);
+            this.btnDeleteUserData.TabIndex = 24;
+            this.btnDeleteUserData.Text = "Delete User Data";
+            this.toolTip.SetToolTip(this.btnDeleteUserData, "Unlinks this Launcher installation from your Discord Account. \r\nThis means next t" +
+        "ime you open the Profile section, you will be\r\nprompted to select your Discord u" +
+        "sername again.");
+            this.btnDeleteUserData.UseVisualStyleBackColor = true;
+            this.btnDeleteUserData.Click += new System.EventHandler(this.button2_Click);
             // 
             // frmConfigure
             // 
@@ -451,5 +468,6 @@
         private System.Windows.Forms.CheckBox cbCompatibilityFastCore;
         private System.Windows.Forms.Button btnDeleteCustomPresets;
         private System.Windows.Forms.Button btnCustomPreset;
+        private System.Windows.Forms.Button btnDeleteUserData;
     }
 }
