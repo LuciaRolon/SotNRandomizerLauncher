@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web.UI;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ComboBox = System.Windows.Forms.ComboBox;
 
 namespace SotNRandomizerLauncher
 {
@@ -45,6 +46,7 @@ namespace SotNRandomizerLauncher
                 }
             }
             
+            
             string closeOnSeedGeneration = LauncherClient.GetConfigValue(configs, "CloseOnSeedGeneration");
             cbCloseOnGeneration.Checked = closeOnSeedGeneration != null && closeOnSeedGeneration == "Yes";
             if (cbMapColor.Checked)
@@ -52,7 +54,15 @@ namespace SotNRandomizerLauncher
                 string mapColor = LauncherClient.GetConfigValue(configs, "MapColor");
                 if(mapColor != null) cbColor.SelectedIndex = int.Parse(mapColor);
             }
-            cbPreset.SelectedIndex = cbPreset.FindStringExact("Guarded O.G.");
+            bool isFirstLaunch = LauncherClient.GetConfigValue("LastPreset") == null;
+            if (isFirstLaunch)
+            {
+                cbPreset.SelectedIndex = cbPreset.FindStringExact("Guarded O.G.");
+            }
+            else
+            {
+                cbPreset.SelectedIndex = cbPreset.FindStringExact(LauncherClient.GetConfigValue("LastPreset"));
+            }
         }
 
         void GetPresets()
@@ -204,11 +214,12 @@ namespace SotNRandomizerLauncher
             {
                 foreach (CheckBox control in tabPage.Controls.OfType<CheckBox>())
                 {
-                    if ((control.Tag != null && control.Tag.ToString() == "NoInclude") || !control.Checked || control.ThreeState) continue;
+                    if ((control.Tag != null && control.Tag.ToString() == "NoInclude") || control.ThreeState) continue;
                     cbValues[control.Name] = control.Checked.ToString();
                 }
             }
             LauncherClient.SetAppConfig(cbValues);
+            LauncherClient.SetAppConfig("LastPreset", cbPreset.Text);
         }
 
         RandomizerOptions GetRandomizerOptions()

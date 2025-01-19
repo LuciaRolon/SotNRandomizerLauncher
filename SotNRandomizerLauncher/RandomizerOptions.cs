@@ -111,15 +111,7 @@ namespace SotNRandomizerLauncher
                 }
                 else
                 {
-                    if (this.VanillaMusic) arguments += "~m";
-                    if (this.RelicExtension != "")
-                    {
-                        arguments += $"r:x:{RelicExtension.ToLower()}";
-                    }else if(this.RelicLocations == CheckState.Unchecked)
-                    {
-                        arguments += "~r";
-                    }
-                    
+                    if (this.VanillaMusic) arguments += "~m";                  
                 }
                 arguments += GetArgument(this.EnemyDrops, "d");
                 arguments += GetArgument(this.ItemLocations, "i");
@@ -127,6 +119,14 @@ namespace SotNRandomizerLauncher
                 arguments += GetArgument(this.StartingEquipment, "e");
                 arguments += GetArgument(this.PrologueRewards, "b");
                 arguments += GetArgument(this.TurkeyMode, "k");
+                if (this.RelicExtension != "")
+                {
+                    arguments += $"r:x:{RelicExtension.ToLower()}";
+                }
+                else if (this.RelicLocations == CheckState.Unchecked)
+                {
+                    arguments += "~r";
+                }
             }
             if (this.BHSeed)
             {

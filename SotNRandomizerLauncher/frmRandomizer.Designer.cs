@@ -316,7 +316,7 @@
             this.cbColor.BackColor = System.Drawing.SystemColors.InfoText;
             this.cbColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbColor.Enabled = false;
-            this.cbColor.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cbColor.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.cbColor.FormattingEnabled = true;
             this.cbColor.Items.AddRange(new object[] {
             "Blue",
@@ -377,7 +377,7 @@
             this.cbExtension.BackColor = System.Drawing.SystemColors.InfoText;
             this.cbExtension.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbExtension.Enabled = false;
-            this.cbExtension.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cbExtension.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.cbExtension.FormattingEnabled = true;
             this.cbExtension.Items.AddRange(new object[] {
             "Guarded",
@@ -825,7 +825,7 @@
             this.cbComplexity.BackColor = System.Drawing.SystemColors.InfoText;
             this.cbComplexity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbComplexity.Enabled = false;
-            this.cbComplexity.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cbComplexity.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.cbComplexity.FormattingEnabled = true;
             this.cbComplexity.Items.AddRange(new object[] {
             "1",
