@@ -184,6 +184,7 @@
     <Compile Include="LeaderboardItem.Designer.cs">
       <DependentUpon>LeaderboardItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logger.cs" />
     <Compile Include="PresetInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

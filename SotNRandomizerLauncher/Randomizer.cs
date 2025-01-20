@@ -242,6 +242,7 @@ namespace SotNRandomizerLauncher
             else
             {
                 MessageBox.Show("There was an error during randomization. Please try again.", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                new Logger().LogError("Error after Randomization", error, args);
             }
             progressBarUpdate(100);
             finishRandomize(randomizeSuccess);

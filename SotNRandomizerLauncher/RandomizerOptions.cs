@@ -94,7 +94,7 @@ namespace SotNRandomizerLauncher
                 string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 string customPresetsPath = Path.Combine(currentAppDirectory, "files", "customPresets");
                 string presetPath = Path.Combine(customPresetsPath, $"{this.Preset}.json");
-                arguments += $"-f {presetPath} ";
+                arguments += $"-f \"{presetPath}\" ";
             }
             else
             {
