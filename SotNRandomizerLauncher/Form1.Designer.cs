@@ -78,7 +78,7 @@
             this.grpNews.Controls.Add(this.lblEventSubtext);
             this.grpNews.Controls.Add(this.label2);
             this.grpNews.Controls.Add(this.lblNextEvent);
-            this.grpNews.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpNews.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.grpNews.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.grpNews.Location = new System.Drawing.Point(15, 12);
             this.grpNews.Name = "grpNews";
@@ -90,7 +90,7 @@
             // lblWeekSeed
             // 
             this.lblWeekSeed.AutoSize = true;
-            this.lblWeekSeed.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWeekSeed.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.lblWeekSeed.LinkColor = System.Drawing.Color.IndianRed;
             this.lblWeekSeed.Location = new System.Drawing.Point(157, 69);
             this.lblWeekSeed.Name = "lblWeekSeed";
@@ -111,7 +111,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.label2.Location = new System.Drawing.Point(14, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(152, 21);
@@ -121,7 +121,7 @@
             // lblNextEvent
             // 
             this.lblNextEvent.AutoSize = true;
-            this.lblNextEvent.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNextEvent.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.lblNextEvent.Location = new System.Drawing.Point(14, 18);
             this.lblNextEvent.Name = "lblNextEvent";
             this.lblNextEvent.Size = new System.Drawing.Size(284, 21);
@@ -130,7 +130,7 @@
             // 
             // btnTutorials
             // 
-            this.btnTutorials.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTutorials.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.btnTutorials.Location = new System.Drawing.Point(552, 17);
             this.btnTutorials.Name = "btnTutorials";
             this.btnTutorials.Size = new System.Drawing.Size(164, 29);
@@ -141,7 +141,7 @@
             // 
             // btnConfigure
             // 
-            this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfigure.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.btnConfigure.Location = new System.Drawing.Point(552, 83);
             this.btnConfigure.Name = "btnConfigure";
             this.btnConfigure.Size = new System.Drawing.Size(164, 29);
@@ -155,7 +155,7 @@
             this.grpOptions.BackColor = System.Drawing.Color.Transparent;
             this.grpOptions.Controls.Add(this.button1);
             this.grpOptions.Controls.Add(this.btnPlaceholder);
-            this.grpOptions.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpOptions.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.grpOptions.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.grpOptions.Location = new System.Drawing.Point(538, 138);
             this.grpOptions.Name = "grpOptions";
@@ -166,7 +166,7 @@
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button1.Location = new System.Drawing.Point(14, 65);
             this.button1.Name = "button1";
@@ -178,7 +178,7 @@
             // 
             // btnPlaceholder
             // 
-            this.btnPlaceholder.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlaceholder.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.btnPlaceholder.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnPlaceholder.Location = new System.Drawing.Point(14, 21);
             this.btnPlaceholder.Name = "btnPlaceholder";
@@ -200,7 +200,7 @@
             this.grpTools.Controls.Add(this.btnUpdateBizhawk);
             this.grpTools.Controls.Add(this.btnUpdateLiveSplit);
             this.grpTools.Controls.Add(this.btnUpdateRandoTools);
-            this.grpTools.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpTools.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.grpTools.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.grpTools.Location = new System.Drawing.Point(15, 138);
             this.grpTools.Name = "grpTools";
@@ -242,7 +242,7 @@
             // lblBizhawk
             // 
             this.lblBizhawk.AutoSize = true;
-            this.lblBizhawk.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBizhawk.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.lblBizhawk.Location = new System.Drawing.Point(15, 115);
             this.lblBizhawk.Name = "lblBizhawk";
             this.lblBizhawk.Size = new System.Drawing.Size(98, 17);
@@ -252,7 +252,7 @@
             // lblLivesplit
             // 
             this.lblLivesplit.AutoSize = true;
-            this.lblLivesplit.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLivesplit.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.lblLivesplit.Location = new System.Drawing.Point(15, 70);
             this.lblLivesplit.Name = "lblLivesplit";
             this.lblLivesplit.Size = new System.Drawing.Size(101, 17);
@@ -262,7 +262,7 @@
             // lblRandoTools
             // 
             this.lblRandoTools.AutoSize = true;
-            this.lblRandoTools.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRandoTools.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.lblRandoTools.Location = new System.Drawing.Point(15, 26);
             this.lblRandoTools.Name = "lblRandoTools";
             this.lblRandoTools.Size = new System.Drawing.Size(147, 17);
@@ -272,7 +272,7 @@
             // btnUpdateBizhawk
             // 
             this.btnUpdateBizhawk.Enabled = false;
-            this.btnUpdateBizhawk.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdateBizhawk.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.btnUpdateBizhawk.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnUpdateBizhawk.Location = new System.Drawing.Point(246, 110);
             this.btnUpdateBizhawk.Name = "btnUpdateBizhawk";
@@ -285,7 +285,7 @@
             // btnUpdateLiveSplit
             // 
             this.btnUpdateLiveSplit.Enabled = false;
-            this.btnUpdateLiveSplit.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdateLiveSplit.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.btnUpdateLiveSplit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnUpdateLiveSplit.Location = new System.Drawing.Point(246, 65);
             this.btnUpdateLiveSplit.Name = "btnUpdateLiveSplit";
@@ -298,7 +298,7 @@
             // btnUpdateRandoTools
             // 
             this.btnUpdateRandoTools.Enabled = false;
-            this.btnUpdateRandoTools.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdateRandoTools.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.btnUpdateRandoTools.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnUpdateRandoTools.Location = new System.Drawing.Point(246, 21);
             this.btnUpdateRandoTools.Name = "btnUpdateRandoTools";
@@ -312,7 +312,7 @@
             // 
             this.btnPlay.BackColor = System.Drawing.SystemColors.Control;
             this.btnPlay.Enabled = false;
-            this.btnPlay.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlay.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
             this.btnPlay.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnPlay.Location = new System.Drawing.Point(538, 335);
             this.btnPlay.Name = "btnPlay";
@@ -329,7 +329,7 @@
             this.grpSeed.Controls.Add(this.pgbRandomizing);
             this.grpSeed.Controls.Add(this.lblSelectedSeed);
             this.grpSeed.Controls.Add(this.btnPpfFile);
-            this.grpSeed.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpSeed.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.grpSeed.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.grpSeed.Location = new System.Drawing.Point(15, 329);
             this.grpSeed.Name = "grpSeed";
@@ -371,7 +371,7 @@
             this.btnPpfFile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Brown;
             this.btnPpfFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.btnPpfFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPpfFile.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPpfFile.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnPpfFile.ForeColor = System.Drawing.Color.Transparent;
             this.btnPpfFile.Image = global::SotNRandomizerLauncher.Properties.Resources.upload_icon;
             this.btnPpfFile.ImageAlign = System.Drawing.ContentAlignment.TopRight;
@@ -388,7 +388,7 @@
             // lblPlayLastSeed
             // 
             this.lblPlayLastSeed.BackColor = System.Drawing.Color.Transparent;
-            this.lblPlayLastSeed.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayLastSeed.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.lblPlayLastSeed.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblPlayLastSeed.Location = new System.Drawing.Point(538, 429);
             this.lblPlayLastSeed.Name = "lblPlayLastSeed";
@@ -407,7 +407,7 @@
             // 
             this.lblOfflineMode.AutoSize = true;
             this.lblOfflineMode.BackColor = System.Drawing.Color.Transparent;
-            this.lblOfflineMode.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOfflineMode.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.lblOfflineMode.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblOfflineMode.Location = new System.Drawing.Point(662, 1);
             this.lblOfflineMode.Name = "lblOfflineMode";
@@ -420,7 +420,7 @@
             // 
             // btnRandomizer
             // 
-            this.btnRandomizer.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRandomizer.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.btnRandomizer.Location = new System.Drawing.Point(552, 50);
             this.btnRandomizer.Name = "btnRandomizer";
             this.btnRandomizer.Size = new System.Drawing.Size(164, 29);
@@ -433,7 +433,7 @@
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.BackColor = System.Drawing.Color.Transparent;
-            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 6.75F);
             this.lblVersion.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblVersion.Location = new System.Drawing.Point(1, 446);
             this.lblVersion.Name = "lblVersion";
@@ -445,7 +445,7 @@
             // lblCore
             // 
             this.lblCore.BackColor = System.Drawing.Color.Transparent;
-            this.lblCore.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCore.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.lblCore.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblCore.Location = new System.Drawing.Point(611, 319);
             this.lblCore.Name = "lblCore";

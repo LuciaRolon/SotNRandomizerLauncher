@@ -19,6 +19,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace SotNRandomizerLauncher
 {
@@ -318,6 +319,24 @@ namespace SotNRandomizerLauncher
             downloadForm.Show();
 
             await Task.Run(() => DownloadPresets(downloadForm));
+        }
+
+        private static void UpdateBizhawkConfig()
+        {
+            if (GetConfigValue("BizHawkVersion").Contains("2.10"))
+            {
+                string bizHawkDirectory = GetConfigValue("BizHawkPath");
+                string configPath = Path.Combine(bizHawkDirectory, "config.ini");
+                string json = File.ReadAllText(configPath);
+                JObject jsonObj = JObject.Parse(json);
+                jsonObj["CommonToolSettings"]["BizHawk.Client.EmuHawk.LuaConsole"] = new JObject();
+                jsonObj["CustomToolSettings"]["BizHawk.Client.EmuHawk.LuaConsole"] = new JObject();
+                jsonObj["LastWrittenFrom"] = "2.10";
+                jsonObj["LastWrittenFromDetailed"] = "Version 2.10";
+                jsonObj["FirstBoot"] = false;
+                File.WriteAllText(configPath, jsonObj.ToString(Formatting.Indented));
+                SwapCores(true, false, false);
+            }            
         }
 
 
@@ -653,6 +672,7 @@ namespace SotNRandomizerLauncher
         {
             frmDownload downloadForm = (frmDownload)obj;
             BaseUpdateApp(downloadForm, "BizHawk", "TASEmulators/BizHawk", "win");
+            UpdateBizhawkConfig();
         }
 
         private static void DownloadBizhawkApp(object obj)

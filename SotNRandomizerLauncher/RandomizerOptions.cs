@@ -48,6 +48,7 @@ namespace SotNRandomizerLauncher
         public bool MisteryMode { get; set; }
         public bool ShopPrices { get; set; }
         public bool StartingZone { get; set; }
+        public bool StartingZone2 { get; set; }
         public bool NoPrologue { get; set; }
         public CheckState ItemStats { get; set; }
         public CheckState ItemLocations { get; set; }
@@ -79,6 +80,7 @@ namespace SotNRandomizerLauncher
             if (this.EnemyStatRando) arguments += "-E ";
             if (this.ShopPrices) arguments += "--sh ";
             if (this.StartingZone) arguments += "--ori ";
+            if (this.StartingZone2) arguments += "--ori2 ";
             if (this.NoPrologue) arguments += "-R ";
             if (this.ExcludeSongs)
             {

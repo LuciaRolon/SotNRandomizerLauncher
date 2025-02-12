@@ -102,6 +102,7 @@
             this.lblWinCondition = new System.Windows.Forms.Label();
             this.lblCompletionPace = new System.Windows.Forms.Label();
             this.lblCastleType = new System.Windows.Forms.Label();
+            this.cbStartingZoneRando2 = new System.Windows.Forms.CheckBox();
             this.grpRandomizations.SuspendLayout();
             this.tabOptions.SuspendLayout();
             this.Randomizations.SuspendLayout();
@@ -578,11 +579,11 @@
             this.cbStartingZoneRando.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbStartingZoneRando.Location = new System.Drawing.Point(187, 51);
             this.cbStartingZoneRando.Name = "cbStartingZoneRando";
-            this.cbStartingZoneRando.Size = new System.Drawing.Size(111, 21);
+            this.cbStartingZoneRando.Size = new System.Drawing.Size(174, 21);
             this.cbStartingZoneRando.TabIndex = 28;
-            this.cbStartingZoneRando.Text = "Starting Zone";
+            this.cbStartingZoneRando.Text = "Starting Zone 1st Castle";
             this.toolTip.SetToolTip(this.cbStartingZoneRando, "Start in the entrance as usual but after the first Warg, you are\r\nteleported to a" +
-        " random zone to start the rest of your run.");
+        " random zone in the 1st castle to start the rest of your run.");
             this.cbStartingZoneRando.UseVisualStyleBackColor = true;
             // 
             // cbNoPrologue
@@ -763,6 +764,7 @@
             // Randomizations
             // 
             this.Randomizations.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
+            this.Randomizations.Controls.Add(this.cbStartingZoneRando2);
             this.Randomizations.Controls.Add(this.cbStartingZoneRando);
             this.Randomizations.Controls.Add(this.cbRandoShop);
             this.Randomizations.Controls.Add(this.cbColorRando);
@@ -1058,6 +1060,19 @@
             this.lblCastleType.TabIndex = 28;
             this.lblCastleType.Text = "Castle Type:";
             // 
+            // cbStartingZoneRando2
+            // 
+            this.cbStartingZoneRando2.AutoSize = true;
+            this.cbStartingZoneRando2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbStartingZoneRando2.Location = new System.Drawing.Point(187, 75);
+            this.cbStartingZoneRando2.Name = "cbStartingZoneRando2";
+            this.cbStartingZoneRando2.Size = new System.Drawing.Size(179, 21);
+            this.cbStartingZoneRando2.TabIndex = 29;
+            this.cbStartingZoneRando2.Text = "Starting Zone 2nd Castle";
+            this.toolTip.SetToolTip(this.cbStartingZoneRando2, "Start in the entrance as usual but after the first Warg, you are\r\nteleported to a" +
+        " random zone in the 2nd castle to start the rest of your run.");
+            this.cbStartingZoneRando2.UseVisualStyleBackColor = true;
+            // 
             // frmRandomizer
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1181,5 +1196,6 @@
         private System.Windows.Forms.CheckBox cbPrologueRewards;
         private System.Windows.Forms.CheckBox cbRelicLocations;
         private System.Windows.Forms.Button btnPresetList;
+        private System.Windows.Forms.CheckBox cbStartingZoneRando2;
     }
 }

@@ -261,6 +261,7 @@ namespace SotNRandomizerLauncher
                 EnemyStatRando = cbEnemyStatRando.Checked,
                 ShopPrices = cbRandoShop.Checked,
                 StartingZone = cbStartingZoneRando.Checked,
+                StartingZone2 = cbStartingZoneRando2.Checked,
                 NoPrologue = cbNoPrologue.Checked,
                 EnemyDrops = cbEnemyDrops.CheckState,
                 ItemLocations = cbItemLocations.CheckState,
