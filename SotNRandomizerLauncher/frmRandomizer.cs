@@ -175,6 +175,14 @@ namespace SotNRandomizerLauncher
             }));
         }
 
+        void UpdateBatchSeedNumber(int seedsGenerated)
+        {
+            this.Invoke(new Action(() =>
+            {
+                lblBatchSeeds.Text = $"Seeds Generated: {seedsGenerated} of {(int)numBatchSeeds.Value}";
+            }));
+        }
+
 
         private async void btnConfigure_Click(object sender, EventArgs e)
         {
@@ -189,7 +197,14 @@ namespace SotNRandomizerLauncher
             btnGeneratePPF.Enabled = false;
             isRandomizing = true;
             cts = new CancellationTokenSource();
-            await Randomizer.StartRandomization(UpdateProgressBar, UpdateSeed, UpdateEquipment, GetRandomizerOptions(), cts.Token, FinishRandomize);
+            int batchSeeds = 1;
+            if (cbBatchGenerate.Checked)
+            {
+                batchSeeds = (int)numBatchSeeds.Value;
+                lblBatchSeeds.Text = $"Seeds Generated: 0 of {batchSeeds}";
+            }
+            lblBatchSeeds.Visible = cbBatchGenerate.Checked;
+            await Randomizer.StartRandomization(UpdateProgressBar, UpdateSeed, UpdateEquipment, GetRandomizerOptions(), cts.Token, FinishRandomize, UpdateBatchSeedNumber, batchSeeds);
             if(presetDictionary[cbPreset.Text].Id == "bingo")
             {
                 rtbBingoInformation.Text = "Generating Bingo Room...";
@@ -269,7 +284,8 @@ namespace SotNRandomizerLauncher
                 PrologueRewards = cbPrologueRewards.CheckState,
                 RelicLocations = cbRelicLocations.CheckState,
                 StartingEquipment = cbStartingEquipment.CheckState,
-                TurkeyMode = cbTurkeyMode.CheckState
+                TurkeyMode = cbTurkeyMode.CheckState,
+                ItemNameRando = cbItemNames.Checked
             };
         }
 
@@ -482,6 +498,69 @@ namespace SotNRandomizerLauncher
         {
             frmPresetList frmPresetList = new frmPresetList();
             frmPresetList.Show();
+        }
+
+
+        void SpecialPresetLocks(string presetId)
+        {
+            ResetLockableOptions();
+
+            string[] glitchPresets = { "glitch", "glitchmaster", "any-percent" };
+            string[] secondCastleLocked = { "dog-life", "magic-mirror", "mobility", "lookingglass", "boss-rush", "beyond" };
+            string[] firstCastleLocked = { "boss-rush", "beyond" };
+            string[] unlockedModeLocked = { "boss-rush" };
+            string[] enemyStatRandoLocked = { "big-toss" };
+
+            if (glitchPresets.Contains(presetId))
+            {
+                cbAntiFreeze.Checked = false;
+                cbAntiFreeze.Enabled = false;                
+            }
+            if (secondCastleLocked.Contains(presetId))
+            {
+                cbStartingZoneRando2.Checked = false;
+                cbStartingZoneRando2.Enabled = false;
+            }
+            if (firstCastleLocked.Contains(presetId))
+            {
+                cbStartingZoneRando.Checked = false;
+                cbStartingZoneRando.Enabled = false;
+            }
+            if (unlockedModeLocked.Contains(presetId))
+            {
+                cbUnlockedMode.Checked = false;
+                cbUnlockedMode.Enabled = false;
+            }
+            if (enemyStatRandoLocked.Contains(presetId))
+            {
+                cbEnemyStatRando.Checked = false;
+                cbEnemyStatRando.Enabled = false;
+            }
+            if (presetId == "bingo")
+            {
+                cbBatchGenerate.Checked = false;
+                cbBatchGenerate.Enabled = false;
+            }
+        }
+
+        void ResetLockableOptions()
+        {
+            cbAntiFreeze.Enabled = true;
+            cbStartingZoneRando.Enabled = true;
+            cbEnemyStatRando.Enabled = true;
+            cbStartingZoneRando2.Enabled = true;
+            cbUnlockedMode.Enabled = true;
+            cbBatchGenerate.Enabled = true;
+        }
+
+        private void cbBatchGenerate_CheckedChanged(object sender, EventArgs e)
+        {
+            numBatchSeeds.Enabled = cbBatchGenerate.Checked;            
+        }
+
+        private void cbStartingZoneRando2_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -50,6 +50,7 @@ namespace SotNRandomizerLauncher
         public bool StartingZone { get; set; }
         public bool StartingZone2 { get; set; }
         public bool NoPrologue { get; set; }
+        public bool ItemNameRando { get; set; }
         public CheckState ItemStats { get; set; }
         public CheckState ItemLocations { get; set; }
         public CheckState EnemyDrops { get; set; }
@@ -82,6 +83,7 @@ namespace SotNRandomizerLauncher
             if (this.StartingZone) arguments += "--ori ";
             if (this.StartingZone2) arguments += "--ori2 ";
             if (this.NoPrologue) arguments += "-R ";
+            if (this.ItemNameRando) arguments += "--in ";
             if (this.ExcludeSongs)
             {
                 string excludeSongList = LauncherClient.GetConfigValue("ExcludedSongs");
@@ -161,5 +163,6 @@ namespace SotNRandomizerLauncher
             }
             return ' ';
         }
+
     }
 }

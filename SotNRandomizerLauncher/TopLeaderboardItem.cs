@@ -194,7 +194,7 @@ namespace SotNRandomizerLauncher
 
         private void lblSeed_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(this.seedUrl);
+            if(this.seedUrl != null) Process.Start(this.seedUrl);
         }
     }
 }

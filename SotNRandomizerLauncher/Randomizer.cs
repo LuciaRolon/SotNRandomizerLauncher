@@ -20,7 +20,9 @@ namespace SotNRandomizerLauncher
                 Action<string> updateEquipment,
                 RandomizerOptions options,
                 CancellationToken randomizerCancellation,
-                Action<bool> finishRandomize
+                Action<bool> finishRandomize,
+                Action<int> updateBatch,
+                int batchSeedNumber
             )
         {
             string suggestedFileName = "";
@@ -34,7 +36,40 @@ namespace SotNRandomizerLauncher
 
             options.PpfFilePath = LauncherClient.InitiateStoreFile("Seed Preset File", suggestedFileName, "ppf");
             if (options.PpfFilePath == "") return; 
-            await Task.Run(() => RandomizeSeedAsync(progressBarUpdate, updateSeed, updateEquipment, options, randomizerCancellation, finishRandomize));
+            if (batchSeedNumber == 1)
+            {
+                await Task.Run(() => RandomizeSeedAsync(progressBarUpdate, updateSeed, updateEquipment, options, randomizerCancellation, finishRandomize, false));
+            }
+            else
+            {
+                await Task.Run(() => BatchRandomization(progressBarUpdate, updateSeed, updateEquipment, options, randomizerCancellation, finishRandomize, updateBatch, batchSeedNumber));
+            }
+            
+        }
+
+        public static async Task BatchRandomization(
+                Action<int> progressBarUpdate,
+                Action<string> updateSeed,
+                Action<string> updateEquipment,
+                RandomizerOptions options,
+                CancellationToken randomizerCancellation,
+                Action<bool> finishRandomize,
+                Action<int> updateBatch,
+                int batchSeedNumber
+           )
+        {
+            for( int i = 0; i < batchSeedNumber; i++)
+            {
+                options.Seed = GenerateSeedName();
+                options.PpfFilePath = Path.Combine(Path.GetDirectoryName(options.PpfFilePath), $"{options.Preset}-{options.Seed}.ppf");
+                await Task.Run(() => RandomizeSeedAsync(progressBarUpdate, updateSeed, updateEquipment, options, randomizerCancellation, finishRandomize, true));
+                updateBatch(i+1);
+                if (randomizerCancellation.IsCancellationRequested)
+                {
+                    return;
+                }
+            }
+            MessageBox.Show($"{batchSeedNumber} Seeds generated successfully!", "Randomization Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public static string GenerateSeedName()
@@ -164,7 +199,9 @@ namespace SotNRandomizerLauncher
             Action<string> updateEquipment,
             RandomizerOptions options,
             CancellationToken randomizerCancellation,
-            Action<bool> finishRandomize)
+            Action<bool> finishRandomize,
+            bool hideMessage
+        )
         {
             progressBarUpdate(10);
             string args = options.GenerateArguments();
@@ -234,14 +271,17 @@ namespace SotNRandomizerLauncher
             }
 
             bool randomizeSuccess = false;
-            if (string.IsNullOrEmpty(error))
+            if (string.IsNullOrEmpty(error) && !hideMessage)
             {
                 MessageBox.Show("Seed generated successfully!", "Randomization Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 randomizeSuccess = true;
             }
             else
             {
-                MessageBox.Show("There was an error during randomization. Please try again.", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!hideMessage)
+                {
+                    MessageBox.Show("There was an error during randomization. Please try again.", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }                
                 new Logger().LogError("Error after Randomization", error, args);
             }
             progressBarUpdate(100);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
@@ -18,7 +19,7 @@ namespace SotNRandomizerLauncher
     public partial class cntLeaderboards : UserControl
     {
         Dictionary<int, dynamic> places = new Dictionary<int, dynamic>();
-        Dictionary<string, PresetInfo> presetDictionary;
+        Dictionary<string, LeaderboardPreset> presetDictionary;
         bool loaded = false;
         public cntLeaderboards()
         {
@@ -37,25 +38,36 @@ namespace SotNRandomizerLauncher
             places[8] = leaderboardItem5;
         }
 
+        static string ConvertToTitleCase(string input)
+        {
+            return string.Join(" ", input.Split('-')
+                .Select(word => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(word)));
+        }
+
         void GetPresets()
         {
             cbPreset.Items.Clear();
-            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string jsonFilePath = Path.Combine(currentAppDirectory, "baseFiles", "preset-data.json");
-            string jsonString = System.IO.File.ReadAllText(jsonFilePath);
-            var presets = JsonConvert.DeserializeObject<List<PresetInfo>>(jsonString);
             dynamic result = LauncherClient.CallDataAPI($"ranked/presets");
             List<string> presetNames = result.presets.ToObject<List<string>>();
-            presets = presets.Where(p => presetNames.Contains(p.Id)).ToList();
+            List<LeaderboardPreset> leaderboardPresets = new List<LeaderboardPreset>();
+            foreach(string presetName in presetNames)
+            {
+                leaderboardPresets.Add(new LeaderboardPreset
+                {
+                    PresetID = presetName,
+                    PresetName = ConvertToTitleCase(presetName),
+                });
+            }
+            presetNames = presetNames.Select(ConvertToTitleCase).ToList();
 
             // Sort presets by Name
-            presets.Sort((preset1, preset2) => string.Compare(preset1.Name, preset2.Name));
+            leaderboardPresets.Sort((preset1, preset2) => string.Compare(preset1.PresetName, preset2.PresetName));
 
             // Store presets in a dictionary for quick lookup
-            presetDictionary = presets.ToDictionary(p => p.Name, p => p);
+            presetDictionary = leaderboardPresets.ToDictionary(p => p.PresetName, p => p);
 
             // Populate ComboBox with names
-            cbPreset.DataSource = presets;
+            cbPreset.DataSource = leaderboardPresets;
             cbPreset.DisplayMember = "Name";            
         }
 
@@ -80,6 +92,7 @@ namespace SotNRandomizerLauncher
 
         private void HideAllItems()
         {
+            lblDefaultMessage.Hide();
             lblTitle.Hide();
             foreach (Control control in this.Controls)
             {
@@ -90,7 +103,7 @@ namespace SotNRandomizerLauncher
             }
         }
 
-        void AddPlayerData(int place, string userId, string username, string timeElo, string seed, string seedUrl)
+        void AddPlayerData(int place, string userId, string username, string timeElo, string seed, string seedUrl, string matchNumber)
         {
             places[place].ImageUrl = GetPlayerIcon(userId);
             places[place].PlayerName = username;
@@ -100,6 +113,11 @@ namespace SotNRandomizerLauncher
             {
                 places[place].Seed = $"Seed: {seed}";
                 places[place].SeedUrl = seedUrl;
+            }else if (matchNumber != null)
+            {
+                int matches = int.Parse(matchNumber) - 1;
+                places[place].Seed = $"Total Matches: {matches}";
+                places[place].SeedUrl = "";
             }
             else
             {
@@ -149,27 +167,28 @@ namespace SotNRandomizerLauncher
         void LoadNewPresetLeaderboards()
         {
             HideAllItems();
-            var selectedPreset = cbPreset.SelectedItem as PresetInfo;
+            var selectedPreset = cbPreset.SelectedItem as LeaderboardPreset;
             if (selectedPreset == null)
             {
                 return;
             }
-            string preset = selectedPreset.Id;
+            string preset = selectedPreset.PresetID;
             if ((string)cbBestBy.SelectedItem == "Elo")
             {
                 dynamic result = LauncherClient.CallDataAPI($"leaderboards/elo/{preset}?player_limit=8");
                 int place = 1;
-                if (result.leaderboards.Count == 0)
+                if (result is null || result.leaderboards.Count == 0)
                 {
+                    lblDefaultMessage.Show();
                     lblDefaultMessage.Text = "No data found for the selected preset.";
                     return;
                 }
                 lblDefaultMessage.Hide();                
-                lblTitle.Text = $"{selectedPreset.Name} (by Elo)";
+                lblTitle.Text = $"{selectedPreset.PresetName} (by Elo)";
                 lblTitle.Show();
                 foreach (dynamic player in result.leaderboards)
                 {
-                    AddPlayerData(place, (string)player.user_id, (string)player.username, (string)player.elo, null, null);
+                    AddPlayerData(place, (string)player.user_id, (string)player.username, (string)player.elo, null, null, (string)player.matches);
                     place++;
                 }
             }
@@ -177,13 +196,14 @@ namespace SotNRandomizerLauncher
             {
                 dynamic result = LauncherClient.CallDataAPI($"leaderboards/time/{preset}?result_limit=8");
                 int place = 1;
-                if (result.leaderboards.Count == 0)
+                if (result is null || result.leaderboards.Count == 0)
                 {
+                    lblDefaultMessage.Show();
                     lblDefaultMessage.Text = "No data found for the selected preset.";
                     return;
                 }
                 lblDefaultMessage.Hide();
-                lblTitle.Text = $"{selectedPreset.Name} (by Time)";
+                lblTitle.Text = $"{selectedPreset.PresetName} (by Time)";
                 lblTitle.Show();
                 foreach (dynamic player in result.leaderboards)
                 {
@@ -194,7 +214,7 @@ namespace SotNRandomizerLauncher
                         seed = (string)player.seed_name;
                         seedUrl = (string)player.seed_url;
                     }
-                    AddPlayerData(place, (string)player.user_id, (string)player.username, (string)player.time, seed, seedUrl);
+                    AddPlayerData(place, (string)player.user_id, (string)player.username, (string)player.time, seed, seedUrl, null);
                     place++;
                 }
             }
