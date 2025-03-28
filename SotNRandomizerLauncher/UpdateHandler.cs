@@ -74,7 +74,7 @@ namespace SotNRandomizerLauncher
             string bizHawkDirectory = LauncherClient.GetConfigValue("BizHawkPath");
             string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
             LauncherClient.StoreCores(currentAppDirectory, bizHawkDirectory);
-            LauncherClient.SwapCores(false, false, false);
+            LauncherClient.SwapCores(false, false);
             MessageBox.Show("This update has reset your core back to Classic Core. If you want to use the Fast Core, swap it again in the Settings.", "Update Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

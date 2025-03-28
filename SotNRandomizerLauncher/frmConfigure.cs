@@ -187,7 +187,7 @@ namespace SotNRandomizerLauncher
             if (this.importConfirmed)
             {                
                 StoreCores();
-                LauncherClient.SwapCores(true, false, false);
+                LauncherClient.SwapCores(true, false);
                 LauncherClient.InstallAreaRando();
                 LauncherClient.InstallMapTracker();
             }            
@@ -199,7 +199,7 @@ namespace SotNRandomizerLauncher
             await LauncherClient.DownloadBizHawk();
             await LauncherClient.DownloadRandoTools();
             StoreCores();
-            LauncherClient.SwapCores(true, false, false);
+            LauncherClient.SwapCores(true, false);
             LauncherClient.InstallAreaRando();
             LauncherClient.InstallMapTracker();
         }
@@ -207,7 +207,7 @@ namespace SotNRandomizerLauncher
         private void btnChangeCore_Click(object sender, EventArgs e)
         {
             // If the classic core is installed, swaps to Fast. Else, swaps to Classic.
-            LauncherClient.SwapCores(this.classicCoreInstalled, cbCompatibilityFastCore.Checked, true);
+            LauncherClient.SwapCores(this.classicCoreInstalled, true);
             ChangeCoreData();
         }
 

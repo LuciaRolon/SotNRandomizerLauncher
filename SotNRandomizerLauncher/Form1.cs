@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.5.3";
+        string launcherVersion = "v0.5.4";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;

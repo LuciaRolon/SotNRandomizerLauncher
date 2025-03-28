@@ -298,6 +298,8 @@ namespace SotNRandomizerLauncher
         private void cbPreset_SelectedValueChanged(object sender, EventArgs e)
         {
             btnGeneratePPF.Enabled = true;
+            PresetInfo presetInfo = cbPreset.SelectedItem as PresetInfo;
+            SpecialPresetLocks(presetInfo.Id);
             try
             {
                 string description = presetDictionary[cbPreset.Text].Description;

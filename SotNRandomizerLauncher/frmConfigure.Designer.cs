@@ -48,17 +48,16 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.cbImport = new System.Windows.Forms.CheckBox();
             this.grpEmulation = new System.Windows.Forms.GroupBox();
-            this.cbCompatibilityFastCore = new System.Windows.Forms.CheckBox();
             this.lblCurrentCore = new System.Windows.Forms.Label();
             this.btnChangeCore = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cbMapTracker = new System.Windows.Forms.CheckBox();
+            this.btnDeleteUserData = new System.Windows.Forms.Button();
             this.grpLauncherSettings = new System.Windows.Forms.GroupBox();
             this.btnDeleteCustomPresets = new System.Windows.Forms.Button();
             this.btnCustomPreset = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.cbLiveSplit = new System.Windows.Forms.CheckBox();
-            this.btnDeleteUserData = new System.Windows.Forms.Button();
             this.grpEmulation.SuspendLayout();
             this.grpLauncherSettings.SuspendLayout();
             this.SuspendLayout();
@@ -244,7 +243,6 @@
             // grpEmulation
             // 
             this.grpEmulation.BackColor = System.Drawing.Color.Transparent;
-            this.grpEmulation.Controls.Add(this.cbCompatibilityFastCore);
             this.grpEmulation.Controls.Add(this.lblCurrentCore);
             this.grpEmulation.Controls.Add(this.btnChangeCore);
             this.grpEmulation.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -256,19 +254,6 @@
             this.grpEmulation.TabStop = false;
             this.grpEmulation.Text = "Emulation Settings";
             this.grpEmulation.Visible = false;
-            // 
-            // cbCompatibilityFastCore
-            // 
-            this.cbCompatibilityFastCore.AutoSize = true;
-            this.cbCompatibilityFastCore.Location = new System.Drawing.Point(14, 69);
-            this.cbCompatibilityFastCore.Name = "cbCompatibilityFastCore";
-            this.cbCompatibilityFastCore.Size = new System.Drawing.Size(169, 17);
-            this.cbCompatibilityFastCore.TabIndex = 22;
-            this.cbCompatibilityFastCore.Text = "Use Compatibility Fast Core";
-            this.toolTip.SetToolTip(this.cbCompatibilityFastCore, "Check if you\'re having issues running BizHawk with the latest Fast Core version.\r" +
-        "\nIn order for this setting to take effect, enable it, then change to Classic Cor" +
-        "e, then back to Fast Core.");
-            this.cbCompatibilityFastCore.UseVisualStyleBackColor = true;
             // 
             // lblCurrentCore
             // 
@@ -315,6 +300,21 @@
             this.toolTip.SetToolTip(this.cbMapTracker, "Enables the Map Tracker used in Area Randomizer Seeds");
             this.cbMapTracker.UseVisualStyleBackColor = true;
             this.cbMapTracker.CheckedChanged += new System.EventHandler(this.cbMapTracker_CheckedChanged);
+            // 
+            // btnDeleteUserData
+            // 
+            this.btnDeleteUserData.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteUserData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnDeleteUserData.Location = new System.Drawing.Point(8, 44);
+            this.btnDeleteUserData.Name = "btnDeleteUserData";
+            this.btnDeleteUserData.Size = new System.Drawing.Size(145, 22);
+            this.btnDeleteUserData.TabIndex = 24;
+            this.btnDeleteUserData.Text = "Delete User Data";
+            this.toolTip.SetToolTip(this.btnDeleteUserData, "Unlinks this Launcher installation from your Discord Account. \r\nThis means next t" +
+        "ime you open the Profile section, you will be\r\nprompted to select your Discord u" +
+        "sername again.");
+            this.btnDeleteUserData.UseVisualStyleBackColor = true;
+            this.btnDeleteUserData.Click += new System.EventHandler(this.button2_Click);
             // 
             // grpLauncherSettings
             // 
@@ -384,21 +384,6 @@
             this.cbLiveSplit.UseVisualStyleBackColor = true;
             this.cbLiveSplit.CheckedChanged += new System.EventHandler(this.cbLiveSplit_CheckedChanged);
             // 
-            // btnDeleteUserData
-            // 
-            this.btnDeleteUserData.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteUserData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnDeleteUserData.Location = new System.Drawing.Point(8, 44);
-            this.btnDeleteUserData.Name = "btnDeleteUserData";
-            this.btnDeleteUserData.Size = new System.Drawing.Size(145, 22);
-            this.btnDeleteUserData.TabIndex = 24;
-            this.btnDeleteUserData.Text = "Delete User Data";
-            this.toolTip.SetToolTip(this.btnDeleteUserData, "Unlinks this Launcher installation from your Discord Account. \r\nThis means next t" +
-        "ime you open the Profile section, you will be\r\nprompted to select your Discord u" +
-        "sername again.");
-            this.btnDeleteUserData.UseVisualStyleBackColor = true;
-            this.btnDeleteUserData.Click += new System.EventHandler(this.button2_Click);
-            // 
             // frmConfigure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -465,7 +450,6 @@
         private System.Windows.Forms.CheckBox cbMapTracker;
         private System.Windows.Forms.CheckBox cbLiveSplit;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox cbCompatibilityFastCore;
         private System.Windows.Forms.Button btnDeleteCustomPresets;
         private System.Windows.Forms.Button btnCustomPreset;
         private System.Windows.Forms.Button btnDeleteUserData;

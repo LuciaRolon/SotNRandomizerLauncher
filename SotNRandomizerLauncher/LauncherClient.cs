@@ -323,10 +323,13 @@ namespace SotNRandomizerLauncher
 
         private static void UpdateBizhawkConfig()
         {
-            if (GetConfigValue("BizHawkVersion").Contains("2.10"))
+            if (GetConfigValue("BizHawkVersion").Contains("2.10") && LauncherClient.GetConfigValue("BizHawkConfigVersion") != "2.10")
             {
+                string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                if (!Directory.Exists(Path.Combine(currentAppDirectory, "backup"))) Directory.CreateDirectory(Path.Combine(currentAppDirectory, "backup"));                
                 string bizHawkDirectory = GetConfigValue("BizHawkPath");
                 string configPath = Path.Combine(bizHawkDirectory, "config.ini");
+                File.Copy(configPath, Path.Combine(currentAppDirectory, "backup", "old-config.ini"));
                 string json = File.ReadAllText(configPath);
                 JObject jsonObj = JObject.Parse(json);
                 jsonObj["CommonToolSettings"]["BizHawk.Client.EmuHawk.LuaConsole"] = new JObject();
@@ -335,34 +338,46 @@ namespace SotNRandomizerLauncher
                 jsonObj["LastWrittenFromDetailed"] = "Version 2.10";
                 jsonObj["FirstBoot"] = false;
                 File.WriteAllText(configPath, jsonObj.ToString(Formatting.Indented));
-                SwapCores(true, false, false);
+                UpdateCores("2.10");
+                LauncherClient.SetAppConfig("BizHawkConfigVersion", "2.10");
+                SwapCores(true, false);                
             }            
         }
 
+        private static void UpdateCores(string version)
+        {
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string bizHawkDirectory = GetConfigValue("BizHawkPath");
+            string nymashockCorePath = Path.Combine(bizHawkDirectory, "dll", $"{version}.classic-core.zst");
+            string nymafastCorePath = Path.Combine(bizHawkDirectory, "dll", $"{version}.fast-core.zst");
+            File.Copy(Path.Combine(currentAppDirectory, "baseFiles", $"{version}.classic-core.zst"), nymashockCorePath, true);
+            File.Copy(Path.Combine(currentAppDirectory, "baseFiles", $"{version}.fast-core.zst"), nymafastCorePath, true);
+            SetAppConfig("CoreInstalled", "ClassicCore");
+        }
 
-        public static void SwapCores(bool toFastCore, bool compatibilityCore, bool showMessage)
+
+        public static void SwapCores(bool toFastCore, bool showMessage)
         {
             try
             {
+                string version = LauncherClient.GetConfigValue("BizHawkConfigVersion");
                 string bizHawkDirectory = GetConfigValue("BizHawkPath");
+                string oldCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx.zst");
+                File.Delete(oldCorePath);
                 if (toFastCore)
-                {
-                    string fastCoreName = "nymafast.wbx";
-                    if (compatibilityCore) fastCoreName = "nymafast-comp.wbx";
-                    string oldCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx.zst");
-                    string newCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx");
-                    string newCoreTempFile = Path.Combine(bizHawkDirectory, "dll", fastCoreName);
-                    File.Delete(oldCorePath);
-                    File.Copy(newCoreTempFile, newCorePath, true);
+                {                    
+                    string newCorePath = Path.Combine(bizHawkDirectory, "dll", $"{version}.fast-core.zst");
+                    string newCoreTempFile = Path.Combine(bizHawkDirectory, "dll", "shock.wbx.zst");
+                    
+                    File.Copy(newCorePath, newCoreTempFile, true);
                     SetAppConfig("CoreInstalled", "FastCore");
                 }
                 else
                 {
-                    string oldCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx");
-                    string newCorePath = Path.Combine(bizHawkDirectory, "dll", "shock.wbx.zst");
-                    string newCoreTempFile = Path.Combine(bizHawkDirectory, "dll", "nymashock.wbx.zst");
-                    File.Delete(oldCorePath);
-                    File.Copy(newCoreTempFile, newCorePath, true);
+                    string newCorePath = Path.Combine(bizHawkDirectory, "dll", $"{version}.classic-core.zst");
+                    string newCoreTempFile = Path.Combine(bizHawkDirectory, "dll", "shock.wbx.zst");
+
+                    File.Copy(newCorePath, newCoreTempFile, true);
                     SetAppConfig("CoreInstalled", "ClassicCore");
                 }
                 
@@ -405,7 +420,6 @@ namespace SotNRandomizerLauncher
             string nymafastCorePath = Path.Combine(targetDirectory, "dll", "nymafast.wbx");
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "nymashock.wbx.zst"), nymashockCorePath, true);
             File.Copy(Path.Combine(currentAppDirectory, "baseFiles", "nymafast.wbx"), nymafastCorePath, true);
-            StoreCompatCore(currentAppDirectory, targetDirectory);
             SetAppConfig("CoreInstalled", "ClassicCore");
         }
 
@@ -679,6 +693,7 @@ namespace SotNRandomizerLauncher
         {
             frmDownload downloadForm = (frmDownload)obj;
             BaseDownloadApp(downloadForm, "BizHawk", "TASEmulators/BizHawk", "win", ApplyBizHawkSettings);
+            UpdateBizhawkConfig();
         }
 
         private static void DownloadRandoToolsApp(object obj)

@@ -263,6 +263,12 @@
     <None Include="apply_ppf.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="baseFiles\2.10.classic-core.zst">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="baseFiles\2.10.fast-core.zst">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="baseFiles\AreaRando.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
