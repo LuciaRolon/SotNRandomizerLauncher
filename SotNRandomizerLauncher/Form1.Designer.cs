@@ -218,6 +218,8 @@
             this.pbBizhawk.Size = new System.Drawing.Size(30, 30);
             this.pbBizhawk.TabIndex = 12;
             this.pbBizhawk.TabStop = false;
+            this.toolTip.SetToolTip(this.pbBizhawk, "Double Click Here to force an update.");
+            this.pbBizhawk.Click += new System.EventHandler(this.pbBizhawk_Click);
             // 
             // pbLiveSplit
             // 
@@ -228,6 +230,8 @@
             this.pbLiveSplit.Size = new System.Drawing.Size(30, 30);
             this.pbLiveSplit.TabIndex = 11;
             this.pbLiveSplit.TabStop = false;
+            this.toolTip.SetToolTip(this.pbLiveSplit, "Double Click Here to force an update.");
+            this.pbLiveSplit.DoubleClick += new System.EventHandler(this.pbLiveSplit_DoubleClick);
             // 
             // pbRandoTools
             // 
@@ -238,6 +242,8 @@
             this.pbRandoTools.Size = new System.Drawing.Size(30, 30);
             this.pbRandoTools.TabIndex = 10;
             this.pbRandoTools.TabStop = false;
+            this.toolTip.SetToolTip(this.pbRandoTools, "Double Click Here to force an update.");
+            this.pbRandoTools.DoubleClick += new System.EventHandler(this.pbRandoTools_DoubleClick);
             // 
             // lblBizhawk
             // 

@@ -53,12 +53,13 @@
             this.btnChangeCore = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cbMapTracker = new System.Windows.Forms.CheckBox();
+            this.btnDeleteUserData = new System.Windows.Forms.Button();
             this.grpLauncherSettings = new System.Windows.Forms.GroupBox();
             this.btnDeleteCustomPresets = new System.Windows.Forms.Button();
             this.btnCustomPreset = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.cbLiveSplit = new System.Windows.Forms.CheckBox();
-            this.btnDeleteUserData = new System.Windows.Forms.Button();
+            this.btnReinstall = new System.Windows.Forms.Button();
             this.grpEmulation.SuspendLayout();
             this.grpLauncherSettings.SuspendLayout();
             this.SuspendLayout();
@@ -316,9 +317,25 @@
             this.cbMapTracker.UseVisualStyleBackColor = true;
             this.cbMapTracker.CheckedChanged += new System.EventHandler(this.cbMapTracker_CheckedChanged);
             // 
+            // btnDeleteUserData
+            // 
+            this.btnDeleteUserData.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteUserData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnDeleteUserData.Location = new System.Drawing.Point(8, 44);
+            this.btnDeleteUserData.Name = "btnDeleteUserData";
+            this.btnDeleteUserData.Size = new System.Drawing.Size(145, 22);
+            this.btnDeleteUserData.TabIndex = 24;
+            this.btnDeleteUserData.Text = "Delete User Data";
+            this.toolTip.SetToolTip(this.btnDeleteUserData, "Unlinks this Launcher installation from your Discord Account. \r\nThis means next t" +
+        "ime you open the Profile section, you will be\r\nprompted to select your Discord u" +
+        "sername again.");
+            this.btnDeleteUserData.UseVisualStyleBackColor = true;
+            this.btnDeleteUserData.Click += new System.EventHandler(this.button2_Click);
+            // 
             // grpLauncherSettings
             // 
             this.grpLauncherSettings.BackColor = System.Drawing.Color.Transparent;
+            this.grpLauncherSettings.Controls.Add(this.btnReinstall);
             this.grpLauncherSettings.Controls.Add(this.btnDeleteUserData);
             this.grpLauncherSettings.Controls.Add(this.btnDeleteCustomPresets);
             this.grpLauncherSettings.Controls.Add(this.btnCustomPreset);
@@ -384,20 +401,19 @@
             this.cbLiveSplit.UseVisualStyleBackColor = true;
             this.cbLiveSplit.CheckedChanged += new System.EventHandler(this.cbLiveSplit_CheckedChanged);
             // 
-            // btnDeleteUserData
+            // btnReinstall
             // 
-            this.btnDeleteUserData.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteUserData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnDeleteUserData.Location = new System.Drawing.Point(8, 44);
-            this.btnDeleteUserData.Name = "btnDeleteUserData";
-            this.btnDeleteUserData.Size = new System.Drawing.Size(145, 22);
-            this.btnDeleteUserData.TabIndex = 24;
-            this.btnDeleteUserData.Text = "Delete User Data";
-            this.toolTip.SetToolTip(this.btnDeleteUserData, "Unlinks this Launcher installation from your Discord Account. \r\nThis means next t" +
-        "ime you open the Profile section, you will be\r\nprompted to select your Discord u" +
-        "sername again.");
-            this.btnDeleteUserData.UseVisualStyleBackColor = true;
-            this.btnDeleteUserData.Click += new System.EventHandler(this.button2_Click);
+            this.btnReinstall.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReinstall.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnReinstall.Location = new System.Drawing.Point(8, 72);
+            this.btnReinstall.Name = "btnReinstall";
+            this.btnReinstall.Size = new System.Drawing.Size(145, 22);
+            this.btnReinstall.TabIndex = 25;
+            this.btnReinstall.Text = "Reinstall all Tools";
+            this.toolTip.SetToolTip(this.btnReinstall, "Reinstalls all the tools: LiveSplit, RandoTools and BizHawk.\r\nWARNING: All custom" +
+        " configs and settings will be overridden.");
+            this.btnReinstall.UseVisualStyleBackColor = true;
+            this.btnReinstall.Click += new System.EventHandler(this.btnReinstall_Click);
             // 
             // frmConfigure
             // 
@@ -469,5 +485,6 @@
         private System.Windows.Forms.Button btnDeleteCustomPresets;
         private System.Windows.Forms.Button btnCustomPreset;
         private System.Windows.Forms.Button btnDeleteUserData;
+        private System.Windows.Forms.Button btnReinstall;
     }
 }

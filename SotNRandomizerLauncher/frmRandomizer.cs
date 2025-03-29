@@ -73,6 +73,17 @@ namespace SotNRandomizerLauncher
             var presets = JsonConvert.DeserializeObject<List<PresetInfo>>(jsonString);
             
             // Sort presets by Name
+            if(DateTime.Now.Month == 4 && DateTime.Now.Day == 1)
+            {
+                foreach(PresetInfo preset in presets)
+                {
+                    if (preset.Id == "april-fools") 
+                    {
+                        preset.Name = "Magically Sealed Preset";
+                        preset.Description = "A unique and special and super magical preset you'll love <3";
+                    }
+                }
+            }
             presets.Sort((preset1, preset2) => string.Compare(preset1.Name, preset2.Name));
             // We add the Custom Presets to the end of the list
             List<PresetInfo> customPresets = GetCustomPresets();
@@ -183,9 +194,62 @@ namespace SotNRandomizerLauncher
             }));
         }
 
+        void AprilFoolsJoke(string chosenPreset)
+        {
+            int jokeLevel = 0;
+            try
+            {
+                ShowJokeMessage($"Not sure about that...", $"It seems like you're trying to generate {chosenPreset}. Are you sure about that?", DialogResult.Yes, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                ShowJokeMessage("I disagree.", $"I don't know. It doesn't seem like a good fit for you. Maybe you can try our shiny Magically Sealed Preset?", DialogResult.No, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                ShowJokeMessage($"Don't resist...", $"You can't just say no to our suggestions! I'll give you some time while you make up your mind, okay?", DialogResult.OK, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Thread.Sleep(5000);
+                jokeLevel++;
+                ShowJokeMessage($"Thinking is good for you", "Okay, now that you thought about it. Are you sure you don't want to play our Preset?", DialogResult.Cancel, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                jokeLevel++;
+                ShowJokeMessage($"No Escape", "You really thought that a new button would save you? Just press Yes and let's get this over with.", DialogResult.No, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                ShowJokeMessage($"Persistant much huh?", "Okay, we'll stay here then. You won't play. I'll just go rest in that window there while you just look.", DialogResult.OK, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Thread.Sleep(10000);
+                jokeLevel++;
+                ShowJokeMessage($"I got you!", "Psst. Seems like she's asleep. Come here. I'll help you generate your preset. Press OK and I'll help you.", DialogResult.Cancel, MessageBoxButtons.OKCancel, MessageBoxIcon.Hand);
+                ShowJokeMessage($"You got me!", "Okay. It's over. You win. Stop bothering me and bye.", DialogResult.OK, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            catch (Exception)
+            {
+                if (jokeLevel == 0)
+                {
+                    MessageBox.Show("Good idea! One Magically Sealed Preset coming your way!", "Nice!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else if (jokeLevel == 1)
+                {
+                    MessageBox.Show("You see? Thinking is good for you. Thank you. Now let's get to play.", ":D", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else if (jokeLevel == 2)
+                {
+                    MessageBox.Show("Finally we can agree on something! I was starting to think you didn't like me :(", "Ok", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else if (jokeLevel == 3)
+                {
+                    MessageBox.Show("LMAO you really thought I would help you xd. Just go play the new preset and don't bother me anymore.", ">:c", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                }
+                cbPreset.SelectedIndex = cbPreset.FindStringExact("Magically Sealed Preset");
+            }
+        }
+
+        void ShowJokeMessage(string title, string message, DialogResult expectedResult, MessageBoxButtons buttons, MessageBoxIcon icon)
+        {
+            DialogResult result = MessageBox.Show(message, title, buttons, icon);
+            if(result != expectedResult)
+            {
+                throw new Exception("Nope!");
+            }
+        }
 
         private async void btnConfigure_Click(object sender, EventArgs e)
         {
+            if(DateTime.Now.Month == 4 && DateTime.Now.Day == 1 && presetDictionary[cbPreset.Text].Id != "april-fools")
+            {
+                AprilFoolsJoke(cbPreset.Text);
+            }
             if(cbExcludeSongs.Checked && LauncherClient.GetConfigValue("ExcludedSongs") == null)
             {
                 MessageBox.Show("Please, select which songs to exclude before generating the PPF.", "Excluded Songs Missing", MessageBoxButtons.OK, MessageBoxIcon.Error);

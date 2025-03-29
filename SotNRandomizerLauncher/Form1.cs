@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.5.3";
+        string launcherVersion = "v0.5.3.2";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
@@ -609,6 +609,22 @@ namespace SotNRandomizerLauncher
                 frmProfile frmProfile = new frmProfile();
                 frmProfile.Show();
             }
+        }
+
+        private async void pbRandoTools_DoubleClick(object sender, EventArgs e)
+        {
+            await LauncherClient.UpdateRandoTools();
+            LauncherClient.RunPresetUpdates();
+        }
+
+        private async void pbLiveSplit_DoubleClick(object sender, EventArgs e)
+        {
+            await LauncherClient.UpdateLiveSplit();
+        }
+
+        private async void pbBizhawk_Click(object sender, EventArgs e)
+        {
+            await LauncherClient.UpdateBizHawk();
         }
     }
 }

@@ -274,6 +274,14 @@ namespace SotNRandomizerLauncher
             await Task.Run(() => UpdateLiveSplitApp(downloadForm));
         }
 
+        public static void DeleteLiveSplit()
+        {
+            string path = LauncherClient.GetConfigValue("LiveSplitPath");
+            Directory.Delete(path, true);
+            DeleteAppConfig("LiveSplitPath");
+            DeleteAppConfig("LiveSplitVersion");
+        }
+
         public static async Task DownloadBizHawk()
         {
             frmDownload downloadForm = new frmDownload();
@@ -287,6 +295,15 @@ namespace SotNRandomizerLauncher
             downloadForm.Show();
 
             await Task.Run(() => UpdateBizhawkApp(downloadForm));
+        }
+
+        public static void DeleteBizHawk()
+        {
+            LauncherClient.SetAppConfig("BizHawkConfigVersion", "2.9");
+            string path = LauncherClient.GetConfigValue("BizHawkPath");
+            Directory.Delete(path, true);
+            DeleteAppConfig("BizHawkPath");
+            DeleteAppConfig("BizHawkVersion");
         }
 
         public async static Task DownloadRandoTools()
@@ -303,6 +320,14 @@ namespace SotNRandomizerLauncher
             downloadForm.Show();
 
             await Task.Run(() => UpdateRandoToolsApp(downloadForm));
+        }
+
+        public static void DeleteRandoTools()
+        {
+            string path = LauncherClient.GetConfigValue("RandoToolsPath");
+            Directory.Delete(path, true);
+            DeleteAppConfig("RandoToolsPath");
+            DeleteAppConfig("RandoToolsVersion");
         }
 
         public async static Task DownloadRandomizer()
@@ -991,6 +1016,13 @@ namespace SotNRandomizerLauncher
                 frmTutorials frmTutorials = new frmTutorials();
                 frmTutorials.ShowDialog();
             }
+        }
+
+        public static void DeleteAppConfig(string key)
+        {
+            Configuration configs = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            configs.AppSettings.Settings.Remove(key);
+            configs.Save();
         }
 
         public static void SetAppConfig(string key, string value)

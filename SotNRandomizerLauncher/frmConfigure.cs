@@ -47,6 +47,10 @@ namespace SotNRandomizerLauncher
             {
                 btnContinue.Enabled = true;
             }
+            if (LauncherClient.GetConfigValue("ImportedUser") != null)
+            {
+                btnReinstall.Hide();
+            }
         }
 
         private void ChangeCoreData()
@@ -320,6 +324,18 @@ namespace SotNRandomizerLauncher
             LauncherClient.SetAppConfig("PlayerDiscordId", "");
             LauncherClient.SetAppConfig("PlayerDiscordUsername", "");
             MessageBox.Show("User data reset successfully!", "Preset Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private async void btnReinstall_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("This will uninstall all tools and download them again, deleting all custom configs and settings for them. Are you sure?", "Reinstall Tools", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes) return;            
+            LauncherClient.DeleteLiveSplit();
+            LauncherClient.DeleteRandoTools();
+            LauncherClient.DeleteBizHawk();
+
+            await NewUserProcess();
+            await LauncherClient.InitialSetupDone();
         }
     }
 }
