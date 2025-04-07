@@ -91,6 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiClient.cs" />
     <Compile Include="AreaRandoOptions.cs" />
     <Compile Include="cntLeaderboards.cs">
       <SubType>UserControl</SubType>

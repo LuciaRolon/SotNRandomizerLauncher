@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.5.3.2";
+        string launcherVersion = "v0.5.3.3";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
@@ -532,7 +532,7 @@ namespace SotNRandomizerLauncher
                 }
                 return;
             }
-            frmRandomizer randoForm = new frmRandomizer();
+            frmRandomizer randoForm = new frmRandomizer(isOfflineMode);
             randoForm.ShowDialog();
         }
 

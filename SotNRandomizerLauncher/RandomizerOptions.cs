@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,6 +21,14 @@ namespace SotNRandomizerLauncher
         Black,
         Invisible,
         Default
+    }
+
+    enum Goal
+    {
+        Default,
+        AllBosses,
+        AllRelics,
+        AllBossesRelics
     }
     internal class RandomizerOptions
     {
@@ -51,6 +60,10 @@ namespace SotNRandomizerLauncher
         public bool StartingZone2 { get; set; }
         public bool NoPrologue { get; set; }
         public bool ItemNameRando { get; set; }
+        public bool GuaranteedDrops { get; set; }
+        public bool AlucardPalette { get; set; }
+        public bool ReverseLibraryCard { get; set; }
+        public Goal CustomGoal { get; set; }
         public CheckState ItemStats { get; set; }
         public CheckState ItemLocations { get; set; }
         public CheckState EnemyDrops { get; set; }
@@ -83,6 +96,9 @@ namespace SotNRandomizerLauncher
             if (this.StartingZone) arguments += "--ori ";
             if (this.StartingZone2) arguments += "--ori2 ";
             if (this.NoPrologue) arguments += "-R ";
+            if (this.AlucardPalette) arguments += "--ap ";
+            if (this.ReverseLibraryCard) arguments += "--rl ";
+            if (this.GuaranteedDrops) arguments += "--gd ";
             if (this.ItemNameRando) arguments += "--in ";
             if (this.ExcludeSongs)
             {
@@ -92,6 +108,8 @@ namespace SotNRandomizerLauncher
             if (this.Complexity > 0) arguments += $"-c {this.Complexity} ";
             char mapColor = MapColorToSetting(this.MapColor);
             if (mapColor != ' ') arguments += $"-m {mapColor} ";
+            char customGoal = GoalToSetting(this.CustomGoal);
+            if (customGoal != ' ') arguments += $"-g {customGoal} ";
 
             if (this.IsCustom)
             {
@@ -160,6 +178,18 @@ namespace SotNRandomizerLauncher
                 case MapColor.Blue: return 'u';
                 case MapColor.Black: return 'b';
                 case MapColor.Invisible: return 'i';
+            }
+            return ' ';
+        }
+
+        public char GoalToSetting(Goal goal)
+        {
+            switch (goal)
+            {
+                case Goal.Default: return 'd';
+                case Goal.AllRelics: return 'r';
+                case Goal.AllBosses: return 'b';
+                case Goal.AllBossesRelics: return 'a';
             }
             return ' ';
         }

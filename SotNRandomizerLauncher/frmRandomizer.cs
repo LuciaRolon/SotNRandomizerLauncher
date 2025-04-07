@@ -22,15 +22,17 @@ namespace SotNRandomizerLauncher
 {
     public partial class frmRandomizer : Form
     {
+        bool isOfflineMode = false;
         int secondsGenerating = 0;
         private Dictionary<string, PresetInfo> presetDictionary;
         AreaRandoOptions randoOptions;
         bool isRandomizing = false;
         CancellationTokenSource cts;  // Cancellation token to cancel randomization
-        public frmRandomizer()
+        public frmRandomizer(bool isOfflineMode)
         {
             InitializeComponent();
             GetPresets();
+            this.isOfflineMode = isOfflineMode;
         }
 
         void LoadLastSettings()
@@ -269,17 +271,66 @@ namespace SotNRandomizerLauncher
             }
             lblBatchSeeds.Visible = cbBatchGenerate.Checked;
             await Randomizer.StartRandomization(UpdateProgressBar, UpdateSeed, UpdateEquipment, GetRandomizerOptions(), cts.Token, FinishRandomize, UpdateBatchSeedNumber, batchSeeds);
-            if(presetDictionary[cbPreset.Text].Id == "bingo")
+            string presetId = presetDictionary[cbPreset.Text].Id;
+            if (presetId == "bingo")
             {
                 rtbBingoInformation.Text = "Generating Bingo Room...";
                 rtbBingoInformation.Show();
                 lblStartingEquipment.Hide();
                 BingoSpecialSetup();
             }
+            await Task.Run(() => SendPresetGenerationData(
+                    isOfflineMode,
+                    presetId,
+                    secondsGenerating * 1000,
+                    cbTournamentMode.Checked,
+                    cbColorRando.Checked,
+                    cbMagicMax.Checked,
+                    cbAntiFreeze.Checked,
+                    cbMyPurse.Checked,
+                    cbWingSmashMode.Checked,
+                    cbFastWarp.Checked,
+                    cbNoPrologue.Checked,
+                    cbUnlockedMode.Checked,
+                    cbMisteryMode.Checked,
+                    cbEnemyStatRando.Checked
+                )
+            );
             isRandomizing = false;
             randomizerTimer.Stop();
             btnGeneratePPF.Enabled = true;
-        }        
+        }     
+        
+        async Task<bool> SendPresetGenerationData(bool offlineMode, string presetId, int generationTime, bool tournament, bool colorRando, bool magicMax, bool antiFreeze, bool purseMode, bool iws, bool fastWarp, bool noPrologue, bool unlocked, bool surprise, bool enemyStat)
+        {
+            if (!offlineMode)
+            {                
+                var settingsDict = new Dictionary<string, object>
+                {
+                    { "tournament", tournament },
+                    { "color_rando", colorRando },
+                    { "magic_max", magicMax },
+                    { "anti_freeze", antiFreeze },
+                    { "purse_mode", purseMode },
+                    { "infinite_wing_smash", iws },
+                    { "fast_warp", fastWarp },
+                    { "no_prologue", noPrologue },
+                    { "unlocked", unlocked },
+                    { "surprise", surprise },
+                    { "enemy_stat", enemyStat },
+                    { "relic_extension", "" }             
+                };
+                var postDict = new Dictionary<string, object>
+                {
+                    { "preset", presetId },
+                    { "generation_time", generationTime },
+                    { "app", "Launcher" },
+                    { "settings", settingsDict }
+                };
+                await ApiClient.Instance.PostAsync("/data/presets", postDict);                
+            }
+            return true;
+        }
 
         async void BingoSpecialSetup()
         {
@@ -307,6 +358,12 @@ namespace SotNRandomizerLauncher
             if (cbMapColor.Checked)
             {
                 mapColor = (MapColor)Enum.Parse(typeof(MapColor), cbColor.Text);
+            }
+            Goal customGoal = Goal.Default;            
+            if (cbCustomGoals.Checked)
+            {
+                string cleanedGoal = cbGoalsList.Text.Replace(" ", "").Replace("&", "");
+                customGoal = (Goal)Enum.Parse(typeof(Goal), cleanedGoal);
             }
             if (cbAreaRandomizer.Checked && randoOptions == null)
             {
@@ -349,7 +406,10 @@ namespace SotNRandomizerLauncher
                 RelicLocations = cbRelicLocations.CheckState,
                 StartingEquipment = cbStartingEquipment.CheckState,
                 TurkeyMode = cbTurkeyMode.CheckState,
-                ItemNameRando = cbItemNames.Checked
+                ItemNameRando = cbItemNames.Checked,
+                AlucardPalette = cbAlucardPalette.Checked,
+                CustomGoal = customGoal,
+                ReverseLibraryCard = cbReverseLibraryCard.Checked
             };
         }
 
@@ -625,6 +685,17 @@ namespace SotNRandomizerLauncher
         private void cbStartingZoneRando2_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Enhancements_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbCustomGoals_CheckedChanged(object sender, EventArgs e)
+        {
+            cbGoalsList.SelectedIndex = -1;
+            cbGoalsList.Enabled = cbCustomGoals.Checked;
         }
     }
 }

@@ -107,6 +107,12 @@
             this.lblCompletionPace = new System.Windows.Forms.Label();
             this.lblCastleType = new System.Windows.Forms.Label();
             this.lblBatchSeeds = new System.Windows.Forms.Label();
+            this.cbGuaranteedDrops = new System.Windows.Forms.CheckBox();
+            this.cbReverseLibraryCard = new System.Windows.Forms.CheckBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cbAlucardPalette = new System.Windows.Forms.CheckBox();
+            this.cbCustomGoals = new System.Windows.Forms.CheckBox();
+            this.cbGoalsList = new System.Windows.Forms.ComboBox();
             this.grpRandomizations.SuspendLayout();
             this.tabOptions.SuspendLayout();
             this.Randomizations.SuspendLayout();
@@ -118,6 +124,7 @@
             this.BasicInfo.SuspendLayout();
             this.RandomizationDetails.SuspendLayout();
             this.AdditionalRules.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpRandomizations
@@ -205,7 +212,7 @@
             // 
             this.cbMisteryMode.AutoSize = true;
             this.cbMisteryMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbMisteryMode.Location = new System.Drawing.Point(183, 61);
+            this.cbMisteryMode.Location = new System.Drawing.Point(183, 49);
             this.cbMisteryMode.Name = "cbMisteryMode";
             this.cbMisteryMode.Size = new System.Drawing.Size(114, 21);
             this.cbMisteryMode.TabIndex = 27;
@@ -218,7 +225,7 @@
             // 
             this.cbEnemyStatRando.AutoSize = true;
             this.cbEnemyStatRando.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbEnemyStatRando.Location = new System.Drawing.Point(10, 48);
+            this.cbEnemyStatRando.Location = new System.Drawing.Point(10, 36);
             this.cbEnemyStatRando.Name = "cbEnemyStatRando";
             this.cbEnemyStatRando.Size = new System.Drawing.Size(102, 21);
             this.cbEnemyStatRando.TabIndex = 26;
@@ -231,7 +238,7 @@
             this.button1.Enabled = false;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button1.Location = new System.Drawing.Point(187, 118);
+            this.button1.Location = new System.Drawing.Point(187, 90);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(162, 23);
             this.button1.TabIndex = 25;
@@ -243,7 +250,7 @@
             // 
             this.cbExcludeSongs.AutoSize = true;
             this.cbExcludeSongs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbExcludeSongs.Location = new System.Drawing.Point(10, 120);
+            this.cbExcludeSongs.Location = new System.Drawing.Point(10, 92);
             this.cbExcludeSongs.Name = "cbExcludeSongs";
             this.cbExcludeSongs.Size = new System.Drawing.Size(119, 21);
             this.cbExcludeSongs.TabIndex = 24;
@@ -256,7 +263,7 @@
             // 
             this.cbUnlockedMode.AutoSize = true;
             this.cbUnlockedMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbUnlockedMode.Location = new System.Drawing.Point(183, 34);
+            this.cbUnlockedMode.Location = new System.Drawing.Point(183, 22);
             this.cbUnlockedMode.Name = "cbUnlockedMode";
             this.cbUnlockedMode.Size = new System.Drawing.Size(123, 21);
             this.cbUnlockedMode.TabIndex = 23;
@@ -268,7 +275,7 @@
             // 
             this.cbWingSmashMode.AutoSize = true;
             this.cbWingSmashMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbWingSmashMode.Location = new System.Drawing.Point(10, 113);
+            this.cbWingSmashMode.Location = new System.Drawing.Point(10, 101);
             this.cbWingSmashMode.Name = "cbWingSmashMode";
             this.cbWingSmashMode.Size = new System.Drawing.Size(153, 21);
             this.cbWingSmashMode.TabIndex = 22;
@@ -280,7 +287,7 @@
             // 
             this.cbFastWarp.AutoSize = true;
             this.cbFastWarp.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbFastWarp.Location = new System.Drawing.Point(10, 86);
+            this.cbFastWarp.Location = new System.Drawing.Point(10, 74);
             this.cbFastWarp.Name = "cbFastWarp";
             this.cbFastWarp.Size = new System.Drawing.Size(94, 21);
             this.cbFastWarp.TabIndex = 21;
@@ -294,7 +301,7 @@
             this.btnAROptions.Enabled = false;
             this.btnAROptions.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAROptions.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnAROptions.Location = new System.Drawing.Point(187, 99);
+            this.btnAROptions.Location = new System.Drawing.Point(187, 113);
             this.btnAROptions.Name = "btnAROptions";
             this.btnAROptions.Size = new System.Drawing.Size(162, 23);
             this.btnAROptions.TabIndex = 20;
@@ -306,7 +313,7 @@
             // 
             this.cbAreaRandomizer.AutoSize = true;
             this.cbAreaRandomizer.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbAreaRandomizer.Location = new System.Drawing.Point(10, 101);
+            this.cbAreaRandomizer.Location = new System.Drawing.Point(10, 89);
             this.cbAreaRandomizer.Name = "cbAreaRandomizer";
             this.cbAreaRandomizer.Size = new System.Drawing.Size(163, 21);
             this.cbAreaRandomizer.TabIndex = 19;
@@ -334,7 +341,7 @@
             "Pink",
             "Black",
             "Invisible"});
-            this.cbColor.Location = new System.Drawing.Point(188, 66);
+            this.cbColor.Location = new System.Drawing.Point(188, 47);
             this.cbColor.Name = "cbColor";
             this.cbColor.Size = new System.Drawing.Size(160, 23);
             this.cbColor.TabIndex = 16;
@@ -345,7 +352,7 @@
             // 
             this.cbMyPurse.AutoSize = true;
             this.cbMyPurse.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbMyPurse.Location = new System.Drawing.Point(183, 88);
+            this.cbMyPurse.Location = new System.Drawing.Point(183, 76);
             this.cbMyPurse.Name = "cbMyPurse";
             this.cbMyPurse.Size = new System.Drawing.Size(129, 21);
             this.cbMyPurse.TabIndex = 15;
@@ -357,7 +364,7 @@
             // 
             this.cbMapColor.AutoSize = true;
             this.cbMapColor.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbMapColor.Location = new System.Drawing.Point(10, 66);
+            this.cbMapColor.Location = new System.Drawing.Point(10, 47);
             this.cbMapColor.Name = "cbMapColor";
             this.cbMapColor.Size = new System.Drawing.Size(147, 21);
             this.cbMapColor.TabIndex = 14;
@@ -370,7 +377,7 @@
             // 
             this.cbColorRando.AutoSize = true;
             this.cbColorRando.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbColorRando.Location = new System.Drawing.Point(10, 22);
+            this.cbColorRando.Location = new System.Drawing.Point(10, 74);
             this.cbColorRando.Name = "cbColorRando";
             this.cbColorRando.Size = new System.Drawing.Size(137, 21);
             this.cbColorRando.TabIndex = 13;
@@ -391,7 +398,7 @@
             "Equipment",
             "Scenic",
             "Extended"});
-            this.cbExtension.Location = new System.Drawing.Point(188, 93);
+            this.cbExtension.Location = new System.Drawing.Point(188, 65);
             this.cbExtension.Name = "cbExtension";
             this.cbExtension.Size = new System.Drawing.Size(160, 23);
             this.cbExtension.TabIndex = 8;
@@ -401,7 +408,7 @@
             // 
             this.cbRelicExtension.AutoSize = true;
             this.cbRelicExtension.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbRelicExtension.Location = new System.Drawing.Point(10, 93);
+            this.cbRelicExtension.Location = new System.Drawing.Point(10, 65);
             this.cbRelicExtension.Name = "cbRelicExtension";
             this.cbRelicExtension.Size = new System.Drawing.Size(175, 21);
             this.cbRelicExtension.TabIndex = 12;
@@ -415,7 +422,7 @@
             // 
             this.cbAntiFreeze.AutoSize = true;
             this.cbAntiFreeze.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbAntiFreeze.Location = new System.Drawing.Point(10, 60);
+            this.cbAntiFreeze.Location = new System.Drawing.Point(10, 48);
             this.cbAntiFreeze.Name = "cbAntiFreeze";
             this.cbAntiFreeze.Size = new System.Drawing.Size(96, 21);
             this.cbAntiFreeze.TabIndex = 11;
@@ -427,7 +434,7 @@
             // 
             this.cbMagicMax.AutoSize = true;
             this.cbMagicMax.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbMagicMax.Location = new System.Drawing.Point(10, 34);
+            this.cbMagicMax.Location = new System.Drawing.Point(10, 22);
             this.cbMagicMax.Name = "cbMagicMax";
             this.cbMagicMax.Size = new System.Drawing.Size(112, 21);
             this.cbMagicMax.TabIndex = 10;
@@ -439,7 +446,7 @@
             // 
             this.cbShowEquipment.AutoSize = true;
             this.cbShowEquipment.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbShowEquipment.Location = new System.Drawing.Point(170, 12);
+            this.cbShowEquipment.Location = new System.Drawing.Point(170, 11);
             this.cbShowEquipment.Name = "cbShowEquipment";
             this.cbShowEquipment.Size = new System.Drawing.Size(184, 21);
             this.cbShowEquipment.TabIndex = 9;
@@ -450,7 +457,7 @@
             // 
             this.cbVanillaMusic.AutoSize = true;
             this.cbVanillaMusic.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbVanillaMusic.Location = new System.Drawing.Point(10, 74);
+            this.cbVanillaMusic.Location = new System.Drawing.Point(10, 62);
             this.cbVanillaMusic.Name = "cbVanillaMusic";
             this.cbVanillaMusic.Size = new System.Drawing.Size(109, 21);
             this.cbVanillaMusic.TabIndex = 8;
@@ -461,7 +468,7 @@
             // 
             this.cbTournamentMode.AutoSize = true;
             this.cbTournamentMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbTournamentMode.Location = new System.Drawing.Point(10, 12);
+            this.cbTournamentMode.Location = new System.Drawing.Point(10, 11);
             this.cbTournamentMode.Name = "cbTournamentMode";
             this.cbTournamentMode.Size = new System.Drawing.Size(141, 21);
             this.cbTournamentMode.TabIndex = 7;
@@ -569,7 +576,7 @@
             // 
             this.cbRandoShop.AutoSize = true;
             this.cbRandoShop.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbRandoShop.Location = new System.Drawing.Point(187, 22);
+            this.cbRandoShop.Location = new System.Drawing.Point(187, 36);
             this.cbRandoShop.Name = "cbRandoShop";
             this.cbRandoShop.Size = new System.Drawing.Size(98, 21);
             this.cbRandoShop.TabIndex = 27;
@@ -582,7 +589,7 @@
             // 
             this.cbStartingZoneRando.AutoSize = true;
             this.cbStartingZoneRando.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbStartingZoneRando.Location = new System.Drawing.Point(187, 48);
+            this.cbStartingZoneRando.Location = new System.Drawing.Point(187, 62);
             this.cbStartingZoneRando.Name = "cbStartingZoneRando";
             this.cbStartingZoneRando.Size = new System.Drawing.Size(174, 21);
             this.cbStartingZoneRando.TabIndex = 28;
@@ -595,7 +602,7 @@
             // 
             this.cbNoPrologue.AutoSize = true;
             this.cbNoPrologue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbNoPrologue.Location = new System.Drawing.Point(183, 115);
+            this.cbNoPrologue.Location = new System.Drawing.Point(183, 103);
             this.cbNoPrologue.Name = "cbNoPrologue";
             this.cbNoPrologue.Size = new System.Drawing.Size(136, 21);
             this.cbNoPrologue.TabIndex = 28;
@@ -701,7 +708,7 @@
             // 
             this.cbCustomComplexity.AutoSize = true;
             this.cbCustomComplexity.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbCustomComplexity.Location = new System.Drawing.Point(10, 39);
+            this.cbCustomComplexity.Location = new System.Drawing.Point(10, 38);
             this.cbCustomComplexity.Name = "cbCustomComplexity";
             this.cbCustomComplexity.Size = new System.Drawing.Size(152, 21);
             this.cbCustomComplexity.TabIndex = 17;
@@ -731,7 +738,7 @@
             // 
             this.cbStartingZoneRando2.AutoSize = true;
             this.cbStartingZoneRando2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbStartingZoneRando2.Location = new System.Drawing.Point(187, 72);
+            this.cbStartingZoneRando2.Location = new System.Drawing.Point(187, 86);
             this.cbStartingZoneRando2.Name = "cbStartingZoneRando2";
             this.cbStartingZoneRando2.Size = new System.Drawing.Size(179, 21);
             this.cbStartingZoneRando2.TabIndex = 29;
@@ -745,7 +752,7 @@
             // 
             this.cbBatchGenerate.AutoSize = true;
             this.cbBatchGenerate.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbBatchGenerate.Location = new System.Drawing.Point(10, 146);
+            this.cbBatchGenerate.Location = new System.Drawing.Point(10, 118);
             this.cbBatchGenerate.Name = "cbBatchGenerate";
             this.cbBatchGenerate.Size = new System.Drawing.Size(120, 21);
             this.cbBatchGenerate.TabIndex = 26;
@@ -759,7 +766,7 @@
             // 
             this.cbItemNames.AutoSize = true;
             this.cbItemNames.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbItemNames.Location = new System.Drawing.Point(10, 128);
+            this.cbItemNames.Location = new System.Drawing.Point(10, 116);
             this.cbItemNames.Name = "cbItemNames";
             this.cbItemNames.Size = new System.Drawing.Size(101, 21);
             this.cbItemNames.TabIndex = 30;
@@ -798,8 +805,9 @@
             // 
             this.tabOptions.Controls.Add(this.Randomizations);
             this.tabOptions.Controls.Add(this.Enhancements);
-            this.tabOptions.Controls.Add(this.Tools);
             this.tabOptions.Controls.Add(this.BaseRandomizations);
+            this.tabOptions.Controls.Add(this.Tools);
+            this.tabOptions.Controls.Add(this.tabPage2);
             this.tabOptions.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabOptions.Location = new System.Drawing.Point(14, 268);
             this.tabOptions.Name = "tabOptions";
@@ -814,7 +822,6 @@
             this.Randomizations.Controls.Add(this.cbStartingZoneRando2);
             this.Randomizations.Controls.Add(this.cbStartingZoneRando);
             this.Randomizations.Controls.Add(this.cbRandoShop);
-            this.Randomizations.Controls.Add(this.cbColorRando);
             this.Randomizations.Controls.Add(this.cbEnemyStatRando);
             this.Randomizations.Controls.Add(this.cbVanillaMusic);
             this.Randomizations.Controls.Add(this.btnAROptions);
@@ -825,12 +832,14 @@
             this.Randomizations.Padding = new System.Windows.Forms.Padding(3);
             this.Randomizations.Size = new System.Drawing.Size(384, 175);
             this.Randomizations.TabIndex = 1;
-            this.Randomizations.Text = "Randomizations";
+            this.Randomizations.Text = "Randomization";
             this.Randomizations.UseVisualStyleBackColor = true;
             // 
             // Enhancements
             // 
             this.Enhancements.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
+            this.Enhancements.Controls.Add(this.cbReverseLibraryCard);
+            this.Enhancements.Controls.Add(this.cbGuaranteedDrops);
             this.Enhancements.Controls.Add(this.cbNoPrologue);
             this.Enhancements.Controls.Add(this.cbMagicMax);
             this.Enhancements.Controls.Add(this.cbMisteryMode);
@@ -845,12 +854,15 @@
             this.Enhancements.Padding = new System.Windows.Forms.Padding(3);
             this.Enhancements.Size = new System.Drawing.Size(384, 175);
             this.Enhancements.TabIndex = 0;
-            this.Enhancements.Text = "Enhancements";
+            this.Enhancements.Text = "Additions";
             this.Enhancements.UseVisualStyleBackColor = true;
+            this.Enhancements.Click += new System.EventHandler(this.Enhancements_Click);
             // 
             // Tools
             // 
             this.Tools.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
+            this.Tools.Controls.Add(this.cbCustomGoals);
+            this.Tools.Controls.Add(this.cbGoalsList);
             this.Tools.Controls.Add(this.numBatchSeeds);
             this.Tools.Controls.Add(this.cbBatchGenerate);
             this.Tools.Controls.Add(this.cbTournamentMode);
@@ -861,20 +873,18 @@
             this.Tools.Controls.Add(this.cbComplexity);
             this.Tools.Controls.Add(this.cbRelicExtension);
             this.Tools.Controls.Add(this.cbExtension);
-            this.Tools.Controls.Add(this.cbColor);
-            this.Tools.Controls.Add(this.cbMapColor);
             this.Tools.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.Tools.Location = new System.Drawing.Point(4, 24);
             this.Tools.Name = "Tools";
             this.Tools.Size = new System.Drawing.Size(384, 175);
             this.Tools.TabIndex = 2;
-            this.Tools.Text = "Tools";
+            this.Tools.Text = "Misc.";
             this.Tools.UseVisualStyleBackColor = true;
             // 
             // numBatchSeeds
             // 
             this.numBatchSeeds.Enabled = false;
-            this.numBatchSeeds.Location = new System.Drawing.Point(188, 145);
+            this.numBatchSeeds.Location = new System.Drawing.Point(188, 117);
             this.numBatchSeeds.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -912,7 +922,7 @@
             "8",
             "9",
             "10"});
-            this.cbComplexity.Location = new System.Drawing.Point(188, 39);
+            this.cbComplexity.Location = new System.Drawing.Point(188, 38);
             this.cbComplexity.Name = "cbComplexity";
             this.cbComplexity.Size = new System.Drawing.Size(160, 23);
             this.cbComplexity.TabIndex = 18;
@@ -935,7 +945,7 @@
             this.BaseRandomizations.Name = "BaseRandomizations";
             this.BaseRandomizations.Size = new System.Drawing.Size(384, 175);
             this.BaseRandomizations.TabIndex = 3;
-            this.BaseRandomizations.Text = "Base Randomizations";
+            this.BaseRandomizations.Text = "Basics";
             this.BaseRandomizations.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -1145,6 +1155,91 @@
             this.lblBatchSeeds.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblBatchSeeds.Visible = false;
             // 
+            // cbGuaranteedDrops
+            // 
+            this.cbGuaranteedDrops.AutoSize = true;
+            this.cbGuaranteedDrops.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbGuaranteedDrops.Location = new System.Drawing.Point(10, 128);
+            this.cbGuaranteedDrops.Name = "cbGuaranteedDrops";
+            this.cbGuaranteedDrops.Size = new System.Drawing.Size(139, 21);
+            this.cbGuaranteedDrops.TabIndex = 29;
+            this.cbGuaranteedDrops.Text = "Guaranteed Drops";
+            this.toolTip.SetToolTip(this.cbGuaranteedDrops, "Guarantees drops from every enemy that has one. Ring of Arcana makes them drop th" +
+        "eir rare items instead.");
+            this.cbGuaranteedDrops.UseVisualStyleBackColor = true;
+            // 
+            // cbReverseLibraryCard
+            // 
+            this.cbReverseLibraryCard.AutoSize = true;
+            this.cbReverseLibraryCard.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbReverseLibraryCard.Location = new System.Drawing.Point(183, 128);
+            this.cbReverseLibraryCard.Name = "cbReverseLibraryCard";
+            this.cbReverseLibraryCard.Size = new System.Drawing.Size(154, 21);
+            this.cbReverseLibraryCard.TabIndex = 30;
+            this.cbReverseLibraryCard.Text = "Reverse Library Card";
+            this.toolTip.SetToolTip(this.cbReverseLibraryCard, "Allows Library Cards to teleport to the 2nd Castle version of the library.\r\nHold " +
+        "down while using the Library Card to teleport there instead.\r\nOnly works after y" +
+        "ou have saved Richter.\r\n");
+            this.cbReverseLibraryCard.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
+            this.tabPage2.Controls.Add(this.cbAlucardPalette);
+            this.tabPage2.Controls.Add(this.cbColorRando);
+            this.tabPage2.Controls.Add(this.cbColor);
+            this.tabPage2.Controls.Add(this.cbMapColor);
+            this.tabPage2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(384, 175);
+            this.tabPage2.TabIndex = 4;
+            this.tabPage2.Text = "Visuals";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // cbAlucardPalette
+            // 
+            this.cbAlucardPalette.AutoSize = true;
+            this.cbAlucardPalette.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAlucardPalette.Location = new System.Drawing.Point(10, 101);
+            this.cbAlucardPalette.Name = "cbAlucardPalette";
+            this.cbAlucardPalette.Size = new System.Drawing.Size(121, 21);
+            this.cbAlucardPalette.TabIndex = 14;
+            this.cbAlucardPalette.Text = "Alucard Palette";
+            this.toolTip.SetToolTip(this.cbAlucardPalette, "Randomizes various color palettes.");
+            this.cbAlucardPalette.UseVisualStyleBackColor = true;
+            // 
+            // cbCustomGoals
+            // 
+            this.cbCustomGoals.AutoSize = true;
+            this.cbCustomGoals.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbCustomGoals.Location = new System.Drawing.Point(10, 145);
+            this.cbCustomGoals.Name = "cbCustomGoals";
+            this.cbCustomGoals.Size = new System.Drawing.Size(116, 21);
+            this.cbCustomGoals.TabIndex = 28;
+            this.cbCustomGoals.Tag = "NoInclude";
+            this.cbCustomGoals.Text = "Custom Goals:";
+            this.toolTip.SetToolTip(this.cbCustomGoals, "Changes the complexity of the preset. CAUTION: This can break a seed.");
+            this.cbCustomGoals.UseVisualStyleBackColor = true;
+            this.cbCustomGoals.CheckedChanged += new System.EventHandler(this.cbCustomGoals_CheckedChanged);
+            // 
+            // cbGoalsList
+            // 
+            this.cbGoalsList.BackColor = System.Drawing.SystemColors.InfoText;
+            this.cbGoalsList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGoalsList.Enabled = false;
+            this.cbGoalsList.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cbGoalsList.FormattingEnabled = true;
+            this.cbGoalsList.Items.AddRange(new object[] {
+            "Default",
+            "All Bosses",
+            "All Relics",
+            "All Bosses & Relics"});
+            this.cbGoalsList.Location = new System.Drawing.Point(188, 143);
+            this.cbGoalsList.Name = "cbGoalsList";
+            this.cbGoalsList.Size = new System.Drawing.Size(160, 23);
+            this.cbGoalsList.TabIndex = 29;
+            // 
             // frmRandomizer
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1191,6 +1286,8 @@
             this.RandomizationDetails.PerformLayout();
             this.AdditionalRules.ResumeLayout(false);
             this.AdditionalRules.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1275,5 +1372,11 @@
         private System.Windows.Forms.CheckBox cbBatchGenerate;
         private System.Windows.Forms.Label lblBatchSeeds;
         private System.Windows.Forms.CheckBox cbItemNames;
+        private System.Windows.Forms.CheckBox cbReverseLibraryCard;
+        private System.Windows.Forms.CheckBox cbGuaranteedDrops;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox cbAlucardPalette;
+        private System.Windows.Forms.CheckBox cbCustomGoals;
+        private System.Windows.Forms.ComboBox cbGoalsList;
     }
 }
