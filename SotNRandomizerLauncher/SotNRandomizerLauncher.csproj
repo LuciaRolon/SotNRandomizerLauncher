@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="ApiClient.cs" />
     <Compile Include="AreaRandoOptions.cs" />
+    <Compile Include="BinaryEditor.cs" />
     <Compile Include="cntLeaderboards.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -187,6 +188,7 @@
     </Compile>
     <Compile Include="LeaderboardPreset.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="ModdingClient.cs" />
     <Compile Include="PresetInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

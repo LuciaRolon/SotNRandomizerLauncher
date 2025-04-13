@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.5.3.3";
+        string launcherVersion = "v0.5.4";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
@@ -63,10 +63,26 @@ namespace SotNRandomizerLauncher
                     MessageBox.Show($"Error reaching latest version: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                LoadLastVisuals();
             }
             LoadEvents();
         }
 
+        void LoadLastVisuals()
+        {
+            string alucardPalette = LauncherClient.GetConfigValue("LastAlucardPalette");
+            string alucardLiner = LauncherClient.GetConfigValue("LastAlucardLiner");
+            if (alucardPalette != null && alucardLiner != null)
+            {
+                cbPalette.SelectedIndex = int.Parse(alucardPalette);
+                cbLiner.SelectedIndex = int.Parse(alucardLiner);
+            }
+            else
+            {
+                cbPalette.SelectedIndex = 0;
+                cbLiner.SelectedIndex = 0;
+            }
+        }
 
         void CheckForLauncherUpdates()
         {
@@ -178,8 +194,9 @@ namespace SotNRandomizerLauncher
 
         private void btnPpfFile_Click(object sender, EventArgs e)
         {
-            string ppfFileChosen = LauncherClient.RequestFile("Select your Randomizer Seed file (.ppf)", "ppf");
+            string ppfFileChosen = LauncherClient.RequestFile("Select your Randomizer Seed file (.ppf)", "ppf");            
             if(ppfFileChosen == "") return;
+            LauncherClient.SetAppConfig("LastPPFFilePath", ppfFileChosen);
             SetPPF(ppfFileChosen);            
         }
 
@@ -208,7 +225,7 @@ namespace SotNRandomizerLauncher
                 btnPlay.Enabled = false;
                 lblPlayLastSeed.Hide();
                 lblStatus.Text = "Randomizing Game...";
-                await LauncherClient.AsyncRandomizeGame(ppfFile, this);
+                await LauncherClient.AsyncRandomizeGame(ppfFile, this, GetSelectedPalette(), GetSelectedLiner());
                 string ppfFileName = Path.GetFileName(ppfFile).Split('.')[0];
                 LauncherClient.SetAppConfig("LastSeed", ppfFileName);                
                 btnPlay.Enabled = true;
@@ -224,6 +241,30 @@ namespace SotNRandomizerLauncher
                 MessageBox.Show($"Error randomizing: {ex.Message}", "Error during Randomization", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        AlucardPalettes GetSelectedPalette()
+        {
+            LauncherClient.SetAppConfig("LastAlucardPalette", cbPalette.SelectedIndex.ToString());
+            if(cbPalette.Text == "Random")
+            {
+                Random rand = new Random();
+                Array values = Enum.GetValues(typeof(AlucardPalettes));
+                return (AlucardPalettes)values.GetValue(rand.Next(values.Length));
+            }
+            return (AlucardPalettes)Enum.GetValues(typeof(AlucardPalettes)).GetValue(cbPalette.SelectedIndex);
+        }
+
+        AlucardLiner GetSelectedLiner()
+        {
+            LauncherClient.SetAppConfig("LastAlucardLiner", cbLiner.SelectedIndex.ToString());
+            if (cbLiner.Text == "Random")
+            {
+                Random rand = new Random();
+                Array values = Enum.GetValues(typeof(AlucardLiner));
+                return (AlucardLiner)values.GetValue(rand.Next(values.Length));
+            }
+            return (AlucardLiner)Enum.GetValues(typeof(AlucardLiner)).GetValue(cbLiner.SelectedIndex);
         }
 
         void OpenAreaRandoTool()
@@ -625,6 +666,18 @@ namespace SotNRandomizerLauncher
         private async void pbBizhawk_Click(object sender, EventArgs e)
         {
             await LauncherClient.UpdateBizHawk();
+        }
+
+        private void label1_Click_2(object sender, EventArgs e)
+        {
+            if (!this.isOfflineMode) Process.Start("https://i.imgur.com/OcwegLW.png");
+        }
+
+        private void btnReloadSkin_Click(object sender, EventArgs e)
+        {
+            string ppfFileChosen = LauncherClient.GetConfigValue("LastPPFFilePath");
+            if (ppfFileChosen == null) return;
+            SetPPF(ppfFileChosen);
         }
     }
 }

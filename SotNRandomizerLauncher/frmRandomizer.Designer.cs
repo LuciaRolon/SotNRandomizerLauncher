@@ -79,16 +79,21 @@
             this.cbStartingZoneRando2 = new System.Windows.Forms.CheckBox();
             this.cbBatchGenerate = new System.Windows.Forms.CheckBox();
             this.cbItemNames = new System.Windows.Forms.CheckBox();
+            this.cbGuaranteedDrops = new System.Windows.Forms.CheckBox();
+            this.cbReverseLibraryCard = new System.Windows.Forms.CheckBox();
+            this.cbCustomGoals = new System.Windows.Forms.CheckBox();
             this.btnCopySeed = new System.Windows.Forms.Button();
             this.rtbBingoInformation = new System.Windows.Forms.RichTextBox();
             this.tabOptions = new System.Windows.Forms.TabControl();
             this.Randomizations = new System.Windows.Forms.TabPage();
             this.Enhancements = new System.Windows.Forms.TabPage();
-            this.Tools = new System.Windows.Forms.TabPage();
-            this.numBatchSeeds = new System.Windows.Forms.NumericUpDown();
-            this.cbComplexity = new System.Windows.Forms.ComboBox();
             this.BaseRandomizations = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
+            this.Tools = new System.Windows.Forms.TabPage();
+            this.cbGoalsList = new System.Windows.Forms.ComboBox();
+            this.numBatchSeeds = new System.Windows.Forms.NumericUpDown();
+            this.cbComplexity = new System.Windows.Forms.ComboBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabInformation = new System.Windows.Forms.TabControl();
             this.BasicInfo = new System.Windows.Forms.TabPage();
             this.lblAuthors = new System.Windows.Forms.Label();
@@ -107,24 +112,18 @@
             this.lblCompletionPace = new System.Windows.Forms.Label();
             this.lblCastleType = new System.Windows.Forms.Label();
             this.lblBatchSeeds = new System.Windows.Forms.Label();
-            this.cbGuaranteedDrops = new System.Windows.Forms.CheckBox();
-            this.cbReverseLibraryCard = new System.Windows.Forms.CheckBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.cbAlucardPalette = new System.Windows.Forms.CheckBox();
-            this.cbCustomGoals = new System.Windows.Forms.CheckBox();
-            this.cbGoalsList = new System.Windows.Forms.ComboBox();
             this.grpRandomizations.SuspendLayout();
             this.tabOptions.SuspendLayout();
             this.Randomizations.SuspendLayout();
             this.Enhancements.SuspendLayout();
+            this.BaseRandomizations.SuspendLayout();
             this.Tools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBatchSeeds)).BeginInit();
-            this.BaseRandomizations.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tabInformation.SuspendLayout();
             this.BasicInfo.SuspendLayout();
             this.RandomizationDetails.SuspendLayout();
             this.AdditionalRules.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpRandomizations
@@ -341,7 +340,7 @@
             "Pink",
             "Black",
             "Invisible"});
-            this.cbColor.Location = new System.Drawing.Point(188, 47);
+            this.cbColor.Location = new System.Drawing.Point(188, 55);
             this.cbColor.Name = "cbColor";
             this.cbColor.Size = new System.Drawing.Size(160, 23);
             this.cbColor.TabIndex = 16;
@@ -364,7 +363,7 @@
             // 
             this.cbMapColor.AutoSize = true;
             this.cbMapColor.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbMapColor.Location = new System.Drawing.Point(10, 47);
+            this.cbMapColor.Location = new System.Drawing.Point(10, 55);
             this.cbMapColor.Name = "cbMapColor";
             this.cbMapColor.Size = new System.Drawing.Size(147, 21);
             this.cbMapColor.TabIndex = 14;
@@ -377,7 +376,7 @@
             // 
             this.cbColorRando.AutoSize = true;
             this.cbColorRando.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbColorRando.Location = new System.Drawing.Point(10, 74);
+            this.cbColorRando.Location = new System.Drawing.Point(10, 82);
             this.cbColorRando.Name = "cbColorRando";
             this.cbColorRando.Size = new System.Drawing.Size(137, 21);
             this.cbColorRando.TabIndex = 13;
@@ -775,6 +774,47 @@
         "ption of the item will tell what the original item is.");
             this.cbItemNames.UseVisualStyleBackColor = true;
             // 
+            // cbGuaranteedDrops
+            // 
+            this.cbGuaranteedDrops.AutoSize = true;
+            this.cbGuaranteedDrops.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbGuaranteedDrops.Location = new System.Drawing.Point(10, 128);
+            this.cbGuaranteedDrops.Name = "cbGuaranteedDrops";
+            this.cbGuaranteedDrops.Size = new System.Drawing.Size(139, 21);
+            this.cbGuaranteedDrops.TabIndex = 29;
+            this.cbGuaranteedDrops.Text = "Guaranteed Drops";
+            this.toolTip.SetToolTip(this.cbGuaranteedDrops, "Guarantees drops from every enemy that has one. Ring of Arcana makes them drop th" +
+        "eir rare items instead.");
+            this.cbGuaranteedDrops.UseVisualStyleBackColor = true;
+            // 
+            // cbReverseLibraryCard
+            // 
+            this.cbReverseLibraryCard.AutoSize = true;
+            this.cbReverseLibraryCard.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbReverseLibraryCard.Location = new System.Drawing.Point(183, 128);
+            this.cbReverseLibraryCard.Name = "cbReverseLibraryCard";
+            this.cbReverseLibraryCard.Size = new System.Drawing.Size(154, 21);
+            this.cbReverseLibraryCard.TabIndex = 30;
+            this.cbReverseLibraryCard.Text = "Reverse Library Card";
+            this.toolTip.SetToolTip(this.cbReverseLibraryCard, "Allows Library Cards to teleport to the 2nd Castle version of the library.\r\nHold " +
+        "down while using the Library Card to teleport there instead.\r\nOnly works after y" +
+        "ou have saved Richter.\r\n");
+            this.cbReverseLibraryCard.UseVisualStyleBackColor = true;
+            // 
+            // cbCustomGoals
+            // 
+            this.cbCustomGoals.AutoSize = true;
+            this.cbCustomGoals.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbCustomGoals.Location = new System.Drawing.Point(10, 145);
+            this.cbCustomGoals.Name = "cbCustomGoals";
+            this.cbCustomGoals.Size = new System.Drawing.Size(116, 21);
+            this.cbCustomGoals.TabIndex = 28;
+            this.cbCustomGoals.Tag = "NoInclude";
+            this.cbCustomGoals.Text = "Custom Goals:";
+            this.toolTip.SetToolTip(this.cbCustomGoals, "Changes the complexity of the preset. CAUTION: This can break a seed.");
+            this.cbCustomGoals.UseVisualStyleBackColor = true;
+            this.cbCustomGoals.CheckedChanged += new System.EventHandler(this.cbCustomGoals_CheckedChanged);
+            // 
             // btnCopySeed
             // 
             this.btnCopySeed.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -858,6 +898,36 @@
             this.Enhancements.UseVisualStyleBackColor = true;
             this.Enhancements.Click += new System.EventHandler(this.Enhancements_Click);
             // 
+            // BaseRandomizations
+            // 
+            this.BaseRandomizations.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
+            this.BaseRandomizations.Controls.Add(this.cbRelicLocations);
+            this.BaseRandomizations.Controls.Add(this.cbItemStats);
+            this.BaseRandomizations.Controls.Add(this.cbPrologueRewards);
+            this.BaseRandomizations.Controls.Add(this.label2);
+            this.BaseRandomizations.Controls.Add(this.cbStartingEquipment);
+            this.BaseRandomizations.Controls.Add(this.cbItemLocations);
+            this.BaseRandomizations.Controls.Add(this.cbTurkeyMode);
+            this.BaseRandomizations.Controls.Add(this.cbEnemyDrops);
+            this.BaseRandomizations.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.BaseRandomizations.Location = new System.Drawing.Point(4, 24);
+            this.BaseRandomizations.Name = "BaseRandomizations";
+            this.BaseRandomizations.Size = new System.Drawing.Size(384, 175);
+            this.BaseRandomizations.TabIndex = 3;
+            this.BaseRandomizations.Text = "Basics";
+            this.BaseRandomizations.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(37, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(312, 30);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "Indeterminate / Black Box in these checkboxes means \r\nusing the default setting f" +
+    "or the selected preset.";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // Tools
             // 
             this.Tools.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
@@ -880,6 +950,23 @@
             this.Tools.TabIndex = 2;
             this.Tools.Text = "Misc.";
             this.Tools.UseVisualStyleBackColor = true;
+            // 
+            // cbGoalsList
+            // 
+            this.cbGoalsList.BackColor = System.Drawing.SystemColors.InfoText;
+            this.cbGoalsList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGoalsList.Enabled = false;
+            this.cbGoalsList.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cbGoalsList.FormattingEnabled = true;
+            this.cbGoalsList.Items.AddRange(new object[] {
+            "Default",
+            "All Bosses",
+            "All Relics",
+            "All Bosses & Relics"});
+            this.cbGoalsList.Location = new System.Drawing.Point(188, 143);
+            this.cbGoalsList.Name = "cbGoalsList";
+            this.cbGoalsList.Size = new System.Drawing.Size(160, 23);
+            this.cbGoalsList.TabIndex = 29;
             // 
             // numBatchSeeds
             // 
@@ -929,35 +1016,19 @@
             this.cbComplexity.SelectedIndexChanged += new System.EventHandler(this.cbComplexity_SelectedIndexChanged);
             this.cbComplexity.EnabledChanged += new System.EventHandler(this.cbComplexity_EnabledChanged);
             // 
-            // BaseRandomizations
+            // tabPage2
             // 
-            this.BaseRandomizations.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
-            this.BaseRandomizations.Controls.Add(this.cbRelicLocations);
-            this.BaseRandomizations.Controls.Add(this.cbItemStats);
-            this.BaseRandomizations.Controls.Add(this.cbPrologueRewards);
-            this.BaseRandomizations.Controls.Add(this.label2);
-            this.BaseRandomizations.Controls.Add(this.cbStartingEquipment);
-            this.BaseRandomizations.Controls.Add(this.cbItemLocations);
-            this.BaseRandomizations.Controls.Add(this.cbTurkeyMode);
-            this.BaseRandomizations.Controls.Add(this.cbEnemyDrops);
-            this.BaseRandomizations.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.BaseRandomizations.Location = new System.Drawing.Point(4, 24);
-            this.BaseRandomizations.Name = "BaseRandomizations";
-            this.BaseRandomizations.Size = new System.Drawing.Size(384, 175);
-            this.BaseRandomizations.TabIndex = 3;
-            this.BaseRandomizations.Text = "Basics";
-            this.BaseRandomizations.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(37, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(312, 30);
-            this.label2.TabIndex = 29;
-            this.label2.Text = "Indeterminate / Black Box in these checkboxes means \r\nusing the default setting f" +
-    "or the selected preset.";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.tabPage2.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
+            this.tabPage2.Controls.Add(this.cbColorRando);
+            this.tabPage2.Controls.Add(this.cbColor);
+            this.tabPage2.Controls.Add(this.cbMapColor);
+            this.tabPage2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(384, 175);
+            this.tabPage2.TabIndex = 4;
+            this.tabPage2.Text = "Visuals";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabInformation
             // 
@@ -1155,91 +1226,6 @@
             this.lblBatchSeeds.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblBatchSeeds.Visible = false;
             // 
-            // cbGuaranteedDrops
-            // 
-            this.cbGuaranteedDrops.AutoSize = true;
-            this.cbGuaranteedDrops.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbGuaranteedDrops.Location = new System.Drawing.Point(10, 128);
-            this.cbGuaranteedDrops.Name = "cbGuaranteedDrops";
-            this.cbGuaranteedDrops.Size = new System.Drawing.Size(139, 21);
-            this.cbGuaranteedDrops.TabIndex = 29;
-            this.cbGuaranteedDrops.Text = "Guaranteed Drops";
-            this.toolTip.SetToolTip(this.cbGuaranteedDrops, "Guarantees drops from every enemy that has one. Ring of Arcana makes them drop th" +
-        "eir rare items instead.");
-            this.cbGuaranteedDrops.UseVisualStyleBackColor = true;
-            // 
-            // cbReverseLibraryCard
-            // 
-            this.cbReverseLibraryCard.AutoSize = true;
-            this.cbReverseLibraryCard.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbReverseLibraryCard.Location = new System.Drawing.Point(183, 128);
-            this.cbReverseLibraryCard.Name = "cbReverseLibraryCard";
-            this.cbReverseLibraryCard.Size = new System.Drawing.Size(154, 21);
-            this.cbReverseLibraryCard.TabIndex = 30;
-            this.cbReverseLibraryCard.Text = "Reverse Library Card";
-            this.toolTip.SetToolTip(this.cbReverseLibraryCard, "Allows Library Cards to teleport to the 2nd Castle version of the library.\r\nHold " +
-        "down while using the Library Card to teleport there instead.\r\nOnly works after y" +
-        "ou have saved Richter.\r\n");
-            this.cbReverseLibraryCard.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
-            this.tabPage2.Controls.Add(this.cbAlucardPalette);
-            this.tabPage2.Controls.Add(this.cbColorRando);
-            this.tabPage2.Controls.Add(this.cbColor);
-            this.tabPage2.Controls.Add(this.cbMapColor);
-            this.tabPage2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(384, 175);
-            this.tabPage2.TabIndex = 4;
-            this.tabPage2.Text = "Visuals";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // cbAlucardPalette
-            // 
-            this.cbAlucardPalette.AutoSize = true;
-            this.cbAlucardPalette.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbAlucardPalette.Location = new System.Drawing.Point(10, 101);
-            this.cbAlucardPalette.Name = "cbAlucardPalette";
-            this.cbAlucardPalette.Size = new System.Drawing.Size(121, 21);
-            this.cbAlucardPalette.TabIndex = 14;
-            this.cbAlucardPalette.Text = "Alucard Palette";
-            this.toolTip.SetToolTip(this.cbAlucardPalette, "Randomizes various color palettes.");
-            this.cbAlucardPalette.UseVisualStyleBackColor = true;
-            // 
-            // cbCustomGoals
-            // 
-            this.cbCustomGoals.AutoSize = true;
-            this.cbCustomGoals.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbCustomGoals.Location = new System.Drawing.Point(10, 145);
-            this.cbCustomGoals.Name = "cbCustomGoals";
-            this.cbCustomGoals.Size = new System.Drawing.Size(116, 21);
-            this.cbCustomGoals.TabIndex = 28;
-            this.cbCustomGoals.Tag = "NoInclude";
-            this.cbCustomGoals.Text = "Custom Goals:";
-            this.toolTip.SetToolTip(this.cbCustomGoals, "Changes the complexity of the preset. CAUTION: This can break a seed.");
-            this.cbCustomGoals.UseVisualStyleBackColor = true;
-            this.cbCustomGoals.CheckedChanged += new System.EventHandler(this.cbCustomGoals_CheckedChanged);
-            // 
-            // cbGoalsList
-            // 
-            this.cbGoalsList.BackColor = System.Drawing.SystemColors.InfoText;
-            this.cbGoalsList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGoalsList.Enabled = false;
-            this.cbGoalsList.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cbGoalsList.FormattingEnabled = true;
-            this.cbGoalsList.Items.AddRange(new object[] {
-            "Default",
-            "All Bosses",
-            "All Relics",
-            "All Bosses & Relics"});
-            this.cbGoalsList.Location = new System.Drawing.Point(188, 143);
-            this.cbGoalsList.Name = "cbGoalsList";
-            this.cbGoalsList.Size = new System.Drawing.Size(160, 23);
-            this.cbGoalsList.TabIndex = 29;
-            // 
             // frmRandomizer
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1274,11 +1260,13 @@
             this.Randomizations.PerformLayout();
             this.Enhancements.ResumeLayout(false);
             this.Enhancements.PerformLayout();
+            this.BaseRandomizations.ResumeLayout(false);
+            this.BaseRandomizations.PerformLayout();
             this.Tools.ResumeLayout(false);
             this.Tools.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBatchSeeds)).EndInit();
-            this.BaseRandomizations.ResumeLayout(false);
-            this.BaseRandomizations.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.tabInformation.ResumeLayout(false);
             this.BasicInfo.ResumeLayout(false);
             this.BasicInfo.PerformLayout();
@@ -1286,8 +1274,6 @@
             this.RandomizationDetails.PerformLayout();
             this.AdditionalRules.ResumeLayout(false);
             this.AdditionalRules.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1375,7 +1361,6 @@
         private System.Windows.Forms.CheckBox cbReverseLibraryCard;
         private System.Windows.Forms.CheckBox cbGuaranteedDrops;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.CheckBox cbAlucardPalette;
         private System.Windows.Forms.CheckBox cbCustomGoals;
         private System.Windows.Forms.ComboBox cbGoalsList;
     }

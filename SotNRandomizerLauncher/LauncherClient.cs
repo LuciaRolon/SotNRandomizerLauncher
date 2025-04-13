@@ -180,12 +180,12 @@ namespace SotNRandomizerLauncher
             LauncherClient.SetAppConfig("MapTrackerPath", mapTrackerPath);
         }
 
-        public static async Task AsyncRandomizeGame(string ppfFile, frmMain frmMain)
+        public static async Task AsyncRandomizeGame(string ppfFile, frmMain frmMain, AlucardPalettes palette, AlucardLiner liner)
         {
-            await Task.Run(() => RandomizeGame(ppfFile, frmMain));
+            await Task.Run(() => RandomizeGame(ppfFile, frmMain, palette, liner));
         }
 
-        public static bool RandomizeGame(string ppfFile, frmMain frmMain)
+        public static bool RandomizeGame(string ppfFile, frmMain frmMain, AlucardPalettes palette, AlucardLiner liner)
         {
             frmMain.UpdateRandomizeStatus(10, "Creating directory...");
             string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -211,6 +211,8 @@ namespace SotNRandomizerLauncher
             // Randomization Process
             frmMain.UpdateRandomizeStatus(40, "Applying PPF...");
             ExecuteCommand($"\"applyppf3_vc.exe\" a \"files/randomized/{track1FileName}\" \"{ppfFile}\"", "PPF Patching");
+            frmMain.UpdateRandomizeStatus(55, "Setting up Custom Skin...");
+            ModdingClient.InstallCustomSkin(palette, liner);
             frmMain.UpdateRandomizeStatus(75, "Executing final touch...");
             ExecuteCommand($"\"error_recalc.exe\" \"files/randomized/{track1FileName}\" \"{ppfFile}\"", "ECC Recalculation");
 

@@ -59,9 +59,16 @@
             this.lblPlayLastSeed = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.lblOfflineMode = new System.Windows.Forms.Label();
+            this.lblPalette = new System.Windows.Forms.Label();
+            this.lblLiner = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnRandomizer = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
             this.lblCore = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbPalette = new System.Windows.Forms.ComboBox();
+            this.cbLiner = new System.Windows.Forms.ComboBox();
+            this.btnReloadSkin = new System.Windows.Forms.Button();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -69,6 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbLiveSplit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRandoTools)).BeginInit();
             this.grpSeed.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpNews
@@ -320,7 +328,7 @@
             this.btnPlay.Enabled = false;
             this.btnPlay.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
             this.btnPlay.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnPlay.Location = new System.Drawing.Point(538, 335);
+            this.btnPlay.Location = new System.Drawing.Point(538, 371);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(189, 95);
             this.btnPlay.TabIndex = 7;
@@ -337,7 +345,7 @@
             this.grpSeed.Controls.Add(this.btnPpfFile);
             this.grpSeed.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.grpSeed.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.grpSeed.Location = new System.Drawing.Point(15, 329);
+            this.grpSeed.Location = new System.Drawing.Point(15, 365);
             this.grpSeed.Name = "grpSeed";
             this.grpSeed.Size = new System.Drawing.Size(517, 101);
             this.grpSeed.TabIndex = 1;
@@ -396,7 +404,7 @@
             this.lblPlayLastSeed.BackColor = System.Drawing.Color.Transparent;
             this.lblPlayLastSeed.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.lblPlayLastSeed.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblPlayLastSeed.Location = new System.Drawing.Point(538, 429);
+            this.lblPlayLastSeed.Location = new System.Drawing.Point(538, 465);
             this.lblPlayLastSeed.Name = "lblPlayLastSeed";
             this.lblPlayLastSeed.Size = new System.Drawing.Size(247, 37);
             this.lblPlayLastSeed.TabIndex = 3;
@@ -424,6 +432,49 @@
         " reload the Launcher.");
             this.lblOfflineMode.Visible = false;
             // 
+            // lblPalette
+            // 
+            this.lblPalette.AutoSize = true;
+            this.lblPalette.BackColor = System.Drawing.Color.Transparent;
+            this.lblPalette.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.lblPalette.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblPalette.Location = new System.Drawing.Point(73, 18);
+            this.lblPalette.Name = "lblPalette";
+            this.lblPalette.Size = new System.Drawing.Size(84, 13);
+            this.lblPalette.TabIndex = 14;
+            this.lblPalette.Text = "Alucard Palette";
+            this.toolTip.SetToolTip(this.lblPalette, "You have no internet connection. Restart the Launcher when you have connection to" +
+        " reload the Launcher.");
+            // 
+            // lblLiner
+            // 
+            this.lblLiner.AutoSize = true;
+            this.lblLiner.BackColor = System.Drawing.Color.Transparent;
+            this.lblLiner.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.lblLiner.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblLiner.Location = new System.Drawing.Point(222, 18);
+            this.lblLiner.Name = "lblLiner";
+            this.lblLiner.Size = new System.Drawing.Size(74, 13);
+            this.lblLiner.TabIndex = 15;
+            this.lblLiner.Text = "Alucard Liner";
+            this.toolTip.SetToolTip(this.lblLiner, "You have no internet connection. Restart the Launcher when you have connection to" +
+        " reload the Launcher.");
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Black", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(19, 35);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(15, 20);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "?";
+            this.toolTip.SetToolTip(this.label1, "Modifies the Colors of Alucard in-game. You must choose\r\nyour Palette & Liner bef" +
+        "ore selecting the PPF file.\r\nClick to see all the possible Skins (will open in y" +
+        "our browser).");
+            this.label1.Click += new System.EventHandler(this.label1_Click_2);
+            // 
             // btnRandomizer
             // 
             this.btnRandomizer.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -441,7 +492,7 @@
             this.lblVersion.BackColor = System.Drawing.Color.Transparent;
             this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 6.75F);
             this.lblVersion.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblVersion.Location = new System.Drawing.Point(1, 446);
+            this.lblVersion.Location = new System.Drawing.Point(1, 482);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(28, 12);
             this.lblVersion.TabIndex = 10;
@@ -453,7 +504,7 @@
             this.lblCore.BackColor = System.Drawing.Color.Transparent;
             this.lblCore.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.lblCore.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblCore.Location = new System.Drawing.Point(611, 319);
+            this.lblCore.Location = new System.Drawing.Point(611, 355);
             this.lblCore.Name = "lblCore";
             this.lblCore.Size = new System.Drawing.Size(116, 14);
             this.lblCore.TabIndex = 11;
@@ -461,13 +512,81 @@
             this.lblCore.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lblCore.Click += new System.EventHandler(this.label1_Click_1);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.cbPalette);
+            this.groupBox1.Controls.Add(this.cbLiner);
+            this.groupBox1.Controls.Add(this.lblLiner);
+            this.groupBox1.Controls.Add(this.lblPalette);
+            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBox1.Location = new System.Drawing.Point(15, 296);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(444, 63);
+            this.groupBox1.TabIndex = 13;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Visual Customization";
+            // 
+            // cbPalette
+            // 
+            this.cbPalette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPalette.FormattingEnabled = true;
+            this.cbPalette.Items.AddRange(new object[] {
+            "Dark Cloth (Default)",
+            "Bloody Tears",
+            "Blue Danube",
+            "Swamp Thing",
+            "White Knight",
+            "Royal Purple",
+            "Pink Passion",
+            "Shadow Prince",
+            "Random"});
+            this.cbPalette.Location = new System.Drawing.Point(50, 36);
+            this.cbPalette.Name = "cbPalette";
+            this.cbPalette.Size = new System.Drawing.Size(135, 21);
+            this.cbPalette.TabIndex = 16;
+            // 
+            // cbLiner
+            // 
+            this.cbLiner.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLiner.FormattingEnabled = true;
+            this.cbLiner.Items.AddRange(new object[] {
+            "Gold Trim (Default)",
+            "Silver Trim",
+            "Bronze Trim",
+            "Onyx Trim",
+            "Coral Trim",
+            "Random"});
+            this.cbLiner.Location = new System.Drawing.Point(194, 36);
+            this.cbLiner.Name = "cbLiner";
+            this.cbLiner.Size = new System.Drawing.Size(135, 21);
+            this.cbLiner.TabIndex = 14;
+            // 
+            // btnReloadSkin
+            // 
+            this.btnReloadSkin.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.btnReloadSkin.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnReloadSkin.Location = new System.Drawing.Point(354, 332);
+            this.btnReloadSkin.Name = "btnReloadSkin";
+            this.btnReloadSkin.Size = new System.Drawing.Size(97, 21);
+            this.btnReloadSkin.TabIndex = 13;
+            this.btnReloadSkin.Text = "Reload Skin";
+            this.toolTip.SetToolTip(this.btnReloadSkin, "Skins are loaded when you select the Randomizer Seed.\r\nPress here if you haven\'t " +
+        "selected your preferred skin\r\nbefore loading the Randomizer Seed file.");
+            this.btnReloadSkin.UseVisualStyleBackColor = true;
+            this.btnReloadSkin.Click += new System.EventHandler(this.btnReloadSkin_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::SotNRandomizerLauncher.Properties.Resources.gradient;
-            this.ClientSize = new System.Drawing.Size(739, 461);
+            this.ClientSize = new System.Drawing.Size(739, 497);
+            this.Controls.Add(this.btnReloadSkin);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblOfflineMode);
             this.Controls.Add(this.btnRandomizer);
@@ -499,6 +618,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbRandoTools)).EndInit();
             this.grpSeed.ResumeLayout(false);
             this.grpSeed.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -538,6 +659,13 @@
         private System.Windows.Forms.Button btnPlaceholder;
         private System.Windows.Forms.Label lblCore;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox cbPalette;
+        private System.Windows.Forms.ComboBox cbLiner;
+        private System.Windows.Forms.Label lblLiner;
+        private System.Windows.Forms.Label lblPalette;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnReloadSkin;
     }
 }
 
