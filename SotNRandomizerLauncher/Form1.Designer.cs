@@ -62,13 +62,13 @@
             this.lblPalette = new System.Windows.Forms.Label();
             this.lblLiner = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnReloadSkin = new System.Windows.Forms.Button();
             this.btnRandomizer = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
             this.lblCore = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbPalette = new System.Windows.Forms.ComboBox();
             this.cbLiner = new System.Windows.Forms.ComboBox();
-            this.btnReloadSkin = new System.Windows.Forms.Button();
             this.grpNews.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -475,6 +475,20 @@
         "our browser).");
             this.label1.Click += new System.EventHandler(this.label1_Click_2);
             // 
+            // btnReloadSkin
+            // 
+            this.btnReloadSkin.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.btnReloadSkin.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnReloadSkin.Location = new System.Drawing.Point(354, 332);
+            this.btnReloadSkin.Name = "btnReloadSkin";
+            this.btnReloadSkin.Size = new System.Drawing.Size(97, 21);
+            this.btnReloadSkin.TabIndex = 13;
+            this.btnReloadSkin.Text = "Reload Skin";
+            this.toolTip.SetToolTip(this.btnReloadSkin, "Skins are loaded when you select the Randomizer Seed.\r\nPress here if you haven\'t " +
+        "selected your preferred skin\r\nbefore loading the Randomizer Seed file.");
+            this.btnReloadSkin.UseVisualStyleBackColor = true;
+            this.btnReloadSkin.Click += new System.EventHandler(this.btnReloadSkin_Click);
+            // 
             // btnRandomizer
             // 
             this.btnRandomizer.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -542,6 +556,7 @@
             "Royal Purple",
             "Pink Passion",
             "Shadow Prince",
+            "Disabled",
             "Random"});
             this.cbPalette.Location = new System.Drawing.Point(50, 36);
             this.cbPalette.Name = "cbPalette";
@@ -558,25 +573,12 @@
             "Bronze Trim",
             "Onyx Trim",
             "Coral Trim",
+            "Disabled",
             "Random"});
             this.cbLiner.Location = new System.Drawing.Point(194, 36);
             this.cbLiner.Name = "cbLiner";
             this.cbLiner.Size = new System.Drawing.Size(135, 21);
             this.cbLiner.TabIndex = 14;
-            // 
-            // btnReloadSkin
-            // 
-            this.btnReloadSkin.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.btnReloadSkin.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnReloadSkin.Location = new System.Drawing.Point(354, 332);
-            this.btnReloadSkin.Name = "btnReloadSkin";
-            this.btnReloadSkin.Size = new System.Drawing.Size(97, 21);
-            this.btnReloadSkin.TabIndex = 13;
-            this.btnReloadSkin.Text = "Reload Skin";
-            this.toolTip.SetToolTip(this.btnReloadSkin, "Skins are loaded when you select the Randomizer Seed.\r\nPress here if you haven\'t " +
-        "selected your preferred skin\r\nbefore loading the Randomizer Seed file.");
-            this.btnReloadSkin.UseVisualStyleBackColor = true;
-            this.btnReloadSkin.Click += new System.EventHandler(this.btnReloadSkin_Click);
             // 
             // frmMain
             // 

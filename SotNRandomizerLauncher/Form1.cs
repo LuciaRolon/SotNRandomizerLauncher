@@ -18,7 +18,7 @@ namespace SotNRandomizerLauncher
     {
         string ppfFile;
         string seedUrl;
-        string launcherVersion = "v0.5.4";
+        string launcherVersion = "v0.5.4.1";
         bool isOfflineMode = false;
         Process liveSplitProcess = null;
         List<string> replayFiles;
@@ -47,7 +47,7 @@ namespace SotNRandomizerLauncher
             {
                 NormalVisuals();                           
             }
-
+            LoadLastVisuals();
             if (!LauncherClient.IsInitialSetup())
             {
                 isOfflineMode = !LauncherClient.HasInternetConnection();
@@ -62,8 +62,7 @@ namespace SotNRandomizerLauncher
                 {
                     MessageBox.Show($"Error reaching latest version: {ex.Message}. Check your internet connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                }
-                LoadLastVisuals();
+                }                
             }
             LoadEvents();
         }

@@ -16,7 +16,8 @@ namespace SotNRandomizerLauncher
         WhiteKnight,
         RoyalPurple,
         PinkPassion,
-        ShadowPrince        
+        ShadowPrince,
+        Disabled
     }
 
     public enum AlucardLiner
@@ -25,7 +26,8 @@ namespace SotNRandomizerLauncher
         SilverTrim,
         BronzeTrim,
         OnyxTrim,
-        CoralTrim
+        CoralTrim,
+        Disabled
     }
     public static class ModdingClient
     {
@@ -62,6 +64,39 @@ namespace SotNRandomizerLauncher
             return writes;
         }
 
+        private static List<ushort> WolfWritesFromPalette(AlucardPalettes palette)
+        {
+            List<ushort> writes = null;
+            switch (palette)
+            {
+                case AlucardPalettes.BloodyTears:
+                    writes = new List<ushort> { 0x8005, 0x802a, 0x8cad, 0xa4f6, 0x810d, 0xbdf8, 0x81f9, 0xa31f, 0x82df, 0x8003, 0x8023, 0x8447, 0x94ab, 0xa112 };
+                    break;
+                case AlucardPalettes.BlueDanube:
+                    writes = new List<ushort> { 0xa465, 0xb884, 0xc8e6, 0xd58b, 0x8d21, 0xe690, 0x9a42, 0xb6e8, 0xa360, 0x9802, 0x9423, 0xa863, 0xb908, 0xc147 };
+                    break;
+                case AlucardPalettes.SwampThing:
+                    writes = new List<ushort> { 0x8063, 0x80c7, 0x8509, 0x954e, 0xa42a, 0xadd4, 0xc454, 0xd55a, 0xe85a, 0x8021, 0x8042, 0x8064, 0x8886, 0xa4eb };
+                    break;
+                case AlucardPalettes.WhiteKnight:
+                    writes = new List<ushort> { 0x8c64, 0xa0e8, 0xad6b, 0xde52, 0xb4e0, 0xfb9a, 0xe5e0, 0xfe27, 0xfea0, 0x8422, 0x8c64, 0x9484, 0xb129, 0xd1ef };
+                    break;
+                case AlucardPalettes.RoyalPurple:
+                    writes = new List<ushort> { 0xa465, 0xb447, 0xb88b, 0xd94f, 0x98c7, 0xd9d8, 0xad8e, 0xca75, 0xbe36, 0x9802, 0x9423, 0xa445, 0xa067, 0xb0cd };
+                    break;
+                case AlucardPalettes.PinkPassion:
+                    writes = new List<ushort> { 0x9826, 0xa46c, 0xb8f2, 0xe1d8, 0x8422, 0xfaba, 0x8844, 0x9086, 0x90cb, 0x8c03, 0x8c24, 0x9c69, 0xb50d, 0xcd2f };
+                    break;
+                case AlucardPalettes.ShadowPrince:
+                    writes = new List<ushort> { 0x8822, 0x8c43, 0x98a5, 0xa0e9, 0x808d, 0xa96d, 0x80f9, 0x8d9e, 0x813f, 0x8421, 0x8822, 0x8822, 0x9063, 0x9484 };
+                    break;
+                case AlucardPalettes.Default:
+                    writes = new List<ushort> { 0xa465, 0xbc88, 0xc8ec, 0xe5cf, 0x800d, 0xff35, 0x8019, 0xa17f, 0x801f, 0x9802, 0x9423, 0xa866, 0xb908, 0xd1a9 };
+                    break;
+            }
+            return writes;
+        }
+
         private static List<ushort> WritesFromLiner(AlucardLiner liner)
         {
             List<ushort> writes = null;
@@ -85,8 +120,34 @@ namespace SotNRandomizerLauncher
             }
             return writes;
         }
+
+        private static List<ushort> WolfWritesFromLiner(AlucardLiner liner)
+        {
+            List<ushort> writes = null;
+            switch (liner)
+            {
+                case AlucardLiner.GoldTrim:
+                    writes = new List<ushort> { 0x9db5, 0xbebd, 0xff9a, 0x8888, 0x98f0, 0x90ec, 0xa990, 0xa9f6, 0x8023, 0x8049 };
+                    break;
+                case AlucardLiner.BronzeTrim:
+                    writes = new List<ushort> { 0x94eb, 0xa56e, 0xba14, 0x8445, 0x9089, 0x8c66, 0x94a8, 0xa0eb, 0x8023, 0x8445 };
+                    break;
+                case AlucardLiner.SilverTrim:
+                    writes = new List<ushort> { 0xc1cf, 0xded6, 0xff9a, 0x98a5, 0xb14b, 0xa509, 0xb9ce, 0xc611, 0x8421, 0x98a5 };
+                    break;
+                case AlucardLiner.OnyxTrim:
+                    writes = new List<ushort> { 0xa52c, 0xa98a, 0x9cc7, 0x8c44, 0x98a8, 0x9486, 0x9ce7, 0xa509, 0x8001, 0x8c44 };
+                    break;
+                case AlucardLiner.CoralTrim:
+                    writes = new List<ushort> { 0xbdf9, 0xce7d, 0xdf7c, 0x948a, 0xb553, 0xa10f, 0xbdd3, 0xbdf8, 0x8403, 0x904b };
+                    break;
+            }
+            return writes;
+        }
+
         public static void InstallCustomSkin(AlucardPalettes palette, AlucardLiner liner)
         {
+            if(palette == AlucardPalettes.Disabled && liner == AlucardLiner.Disabled) return;
             List<ushort> paletteWrites = WritesFromPalette(palette);
             List<ushort> linerWrites = WritesFromLiner(liner);
             long offset = 0x0;
@@ -98,28 +159,59 @@ namespace SotNRandomizerLauncher
             track1Path = Path.Combine(randomPath, track1FileName);
             var fs = new FileStream(track1Path, FileMode.Open, FileAccess.ReadWrite);
             BinaryEditor editor = new BinaryEditor(fs);
-
+            int i = 0;
             // Apply Palette Colors
             if (paletteWrites != null)
             {
+                List<ushort> wolfPaletteWrites = WolfWritesFromPalette(palette);
                 // Cloth Colors
                 offset = 0xEF952;
-                for (int i = 0; i < 5; i++) {
+                for (i = 0; i < 5; i++) {
                     int idx = i + 2;
                     offset = editor.WriteShort(offset, paletteWrites[idx]);
                 }
                 // Darkest Color
                 offset = 0xEF93E;
                 offset = editor.WriteShort(offset, paletteWrites[1]);
+
+                // Wolf Colors
+                offset = 0xEF9C0;
+                for (i = 0; i < 4; i++)
+                {
+                    offset = editor.WriteShort(offset, wolfPaletteWrites[i]);
+                }
+                offset += 0x0a;
+                for (i = 4; i < 9; i++)
+                {
+                    offset = editor.WriteShort(offset, wolfPaletteWrites[i]);
+                }
+                offset += 0x04;
+                for (i = 9; i < 13; i++)
+                {
+                    offset = editor.WriteShort(offset, wolfPaletteWrites[i]);
+                }
+                offset += 0x0c;
+                offset = editor.WriteShort(offset, wolfPaletteWrites[13]);
             }
 
             // Apply Liner Colors
             if (linerWrites != null)
             {
+                List<ushort> wolfLinerWrites = WolfWritesFromLiner(liner);
                 offset = 0xEF940;
-                for (int i = 0; i < 4; i++)
+                for (i = 0; i < 4; i++)
                 {
                     offset = editor.WriteShort(offset, linerWrites[i]);
+                }
+                offset = 0xEF9C8;
+                for (i = 0; i < 5; i++)
+                {
+                    offset = editor.WriteShort(offset, wolfLinerWrites[i]);
+                }
+                offset += 0x20;
+                for (i = 5; i < 10; i++)
+                {
+                    offset = editor.WriteShort(offset, wolfLinerWrites[i]);
                 }
             }
             fs.Close();
